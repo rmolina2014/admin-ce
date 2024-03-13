@@ -71,6 +71,15 @@
              <!---formulario-->
              <form method="POST" role="form" action="nuevo.php">
 
+
+             <div class="col-md-8 mb-3">
+              <label>D.N.I *</label>
+              <input name="dni" id="dni"  class="form-control" type="text" tabindex="7" maxlength="8" tabindex="9" required />
+              <br>
+              <button id="buscar_dni">Buscar D.N.I.</button>
+              <div id="resultadoBusqueda"></div>
+            </div>
+
                <div class="col-md-8 mb-3">
                  <label class="form-label">N° DNI</label>
                  <input name="codigo" class="form-control" type="text" tabindex="1" required autofocus />
@@ -199,6 +208,48 @@
                return false;
              }
            }
+
+
+            // buscar por dni 09/08/2018
+      $('#buscar_dni').click(function(){
+          event.preventDefault();
+          var vdni = $("#dni").val();
+          //alert(vdni);
+          console.log(vdni);
+          if (vdni != "") {
+              $.post("cliente/buscar_dni.php", {dni: vdni}, function(mensaje) {
+                  $("#resultadoBusqueda").html(mensaje);
+              }); 
+          } else { 
+                 ("#resultadoBusqueda").html('sin Datos.');
+                 }
+      });// fin buscar
+
+      // guardar cliente 31/07/2018
+      $('#botonGuardarCliente').click(function(){
+           event.preventDefault();
+          var vdni = $("#dni2").val();
+          //alert(vdni);
+          var vnombre = $("#nombre").val();
+          var vcuit = $("#cuit").val();
+          var vdomicilio = $("#domicilio").val();
+          var vdepartamento = $("#departamento").val();
+          var vemail = $("#email").val();
+          var vtelefono = $("#telefono").val();
+          $.post("cliente/insertar_cliente.php", {dni: vdni, nombre: vnombre,cuit: vcuit, domicilio: vdomicilio, departamento: vdepartamento,email:vemail, telefono:vtelefono }, function(mensaje) {
+                  //alert(mensaje);
+                  $("#id_cliente_nuevo").val(mensaje);
+                   $.post("cliente/buscar_dni.php", {dni: vdni}, function(mensaje) {
+                         $("#resultadoBusqueda").html(mensaje);
+$("#myModal").hide();
+                      $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+                      $('.modal-backdrop').remove();//eliminamos el backdrop del modal
+                   }); 
+              });
+       });// fin buscar
+ 
+  }) //fin jquery   
+
 
          });
        </script>
