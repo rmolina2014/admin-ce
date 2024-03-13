@@ -8,7 +8,8 @@ class Conexion{
 	if(self::$objCon == null){
 			self::$instancia = new Conexion();
 			// mysqli_connect("localhost"," nombre usuario","clve de la base de datos","nombre de la base de datos");
-    		self::$objCon = mysqli_connect("localhost","root","","bdce");
+    		//self::$objCon = mysqli_connect("localhost","root","","bdce");
+			self::$objCon = mysqli_connect("localhost","c2431315_ce","rake88loNI","c2431315_ce");
 		}
 		return self::$objCon;
 	}
