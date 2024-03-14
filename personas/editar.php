@@ -48,13 +48,13 @@
              <!--- contenido -->
 
              <!---formulario-->
-<form method="POST" role="form" action="nuevo.php">
+<form method="POST" role="form" action="editar.php">
 
   <div class="col-md-8 mb-3">
     <label class="form-label">DNI</label>
     <input name="dni"  class="form-control" type="text" tabindex="1" required value="<?php echo utf8_encode($item['dni']); ?>"/>
   </div>
-  <input type="hidden" name="id_persona" value="<?php echo $id_persona; ?>">
+  <input type="hidden" name="id_persona" value="<?php echo $item['id']; ?>">
   <div class="col-md-8 mb-3">
     <label class="form-label">Apellido y Nombre</label>
     <input name="apellido_nombre"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['apellidonombre']); ?>"/>
@@ -88,7 +88,7 @@
     </button>
     
     <button type="submit" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-       Guardar 
+       Guardar
     
     </button>
   
@@ -108,7 +108,7 @@
 if (isset($_POST['dni']) && !empty($_POST['dni']))
 {
 //   editar($id,$apellidonombre, $dni, $domicilio, $cel1, $cel2, $mail)
-$id = $_POST['id'];
+$id = $_POST['id_persona'];
 $apellidonombre= $_POST['apellido_nombre'];
 $dni = $_POST['dni'];
 $domicilio=$_POST['domicilio'];

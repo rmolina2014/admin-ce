@@ -73,9 +73,7 @@ include("persona.php");
                                         <form method="POST" role="form" action="editar.php">
                                             <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
                                             <button class="btn btn-sm btn-secondary d-inline-flex align-items-center">Editar</button>
-                                            <!--a class="btn btn-sm btn-danger d-inline-flex align-items-center" href="eliminar.php?id=<?php echo $item['id_usuario']; ?>" >
-                  Borrar
-              </a-->
+                                           
                                         </form>
                                     </td>
                                 </tr>
