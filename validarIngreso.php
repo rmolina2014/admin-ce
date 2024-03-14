@@ -5,12 +5,13 @@ include_once("bd/conexion.php");
 include("usuarios/usuario.php");
 if ($_POST['usuario']) {
 
-  $usuario = $_POST['usuario'];
+  $usuario = conexion::secure_data($_POST['usuario']);
+
   $password = MD5($_POST['password']);
 
-  // echo $usuario.' '.$password;
+   //echo $usuario.' '.$password;
 
-  //exit;
+ //exit;
   $objecto = new Usuario();
   $usuarios = $objecto->obtenerUsuario($usuario);
   if ($usuarios) {
@@ -56,15 +57,16 @@ if ($_POST['usuario']) {
         header("location: panelcontrol/index.php");
       } //fin if paswword
       else {
-        echo '<script> alert("Clave Incorrecta."); window.location="index.php"; </script>';//Password incorrecto';
+        //echo '<script> alert("Clave Incorrecta."); window.location="index.php"; </script>'; //Password incorrecto';
+        echo '<script> window.location="index.php?mensaje=1";</script>'; //Password incorrecto';
         //header("location:index.php");
         exit();
       }
     } //fin del forech
   }
-  echo '<script> alert("Usuario Incorrecto."); window.location="index.php";</script>';//Password incorrecto';
+  //echo '<script> alert("Usuario Incorrecto."); window.location="index.php";</script>'; //Password incorrecto';
+  echo '<script> window.location="index.php?mensaje=1";</script>'; //Password incorrecto';
   //header("location:index.php");
   exit();
 }
 echo '<script> alert("Datos Incorrecto final."); window.location="index.php";</script>'; //Password incorrecto'
-?>

@@ -10,7 +10,7 @@
     $registros= $objeto->obtenerId($id);
    foreach($registros as $item)
    {
-    $id_usuario= $item['id_usuario'];
+    $id_usuario= $item['id'];
    }
 ?>
 
@@ -90,7 +90,7 @@
     <label class="form-label">Perfil</label>
     <select class="form-select" name="id_perfil">
       <option >Seleccionar.....</option>
-      <option value="<?php echo utf8_encode($item['codigo']); ?>">
+      <option value="<?php echo $item['codigo']; ?>">
       <?php echo $item ['codigo']; ?>
     </option>
     <?php

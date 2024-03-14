@@ -59,13 +59,13 @@ include("usuario.php");
                             foreach ($usuarios as $item) {
                             ?>
                                 <tr>
-                                    <td><?php echo $item['id_usuario']; ?></td>
+                                    <td><?php echo $item['id']; ?></td>
                                     <td><?php echo $item['usuario']; ?></td>
-                                    <td><?php echo $item['apellido_nombre']; ?></td>
-                                    <td><?php echo $item['bloqueado']; ?></td>
+                                    <td><?php echo $item['apellidonombre']; ?></td>
+                                    <td><?php echo $item['estado']; ?></td>
                                     <td>
                                         <form method="POST" role="form" action="editar.php">
-                                            <input type="hidden" name="id" value="<?php echo $item['id_usuario']; ?>">
+                                            <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
                                             <button class="btn btn-sm btn-secondary d-inline-flex align-items-center">Editar</button>
                                             <!--a class="btn btn-sm btn-danger d-inline-flex align-items-center" href="eliminar.php?id=<?php echo $item['id_usuario']; ?>" >
                   Borrar
