@@ -1,6 +1,6 @@
 # Ignora la carpeta node_modules
 node_modules
-bd
+bd/
 # Ignora todos los archivos de texto
 *.txt
 
