@@ -57,6 +57,13 @@
           </a>
         </li>
 
+        <li class="sidebar-item ">
+          <a href="../personas/index.php" class="sidebar-link">
+            <i class="bi bi-grid-fill"></i>
+            <span>Personas</span>
+          </a>
+        </li>        
+
         <!--fin menu-->
 
       </ul>
