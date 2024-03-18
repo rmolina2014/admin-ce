@@ -15,19 +15,20 @@ class Persona
   }
 
 
-    public function verificarPersona($dni)
+  public function buscarDNI($dni)
   {
-    $consulta = "SELECT * FROM persona where dni='$dni'";
-    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
-    $resultado="No existe";
+    $data = array();
+    $sql = "SELECT id,apellidonombre FROM persona WHERE dni ='$dni'";
+
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
-        $resultado="Existe";
+        $data[] = $fila;
       }
-      return $resultado;
-    } else return $resultado;
+    }
+    return $data;
   }
-
+  
   public function lista()
   {
     $consulta = "SELECT * FROM persona";

@@ -48,7 +48,7 @@
              <!--- contenido -->
 
              <!---formulario-->
-<form method="POST" role="form" action="nuevo.php">
+<form method="POST" role="form" action="editar.php">
 
   <div class="col-md-8 mb-3">
     <label class="form-label">N° Legajo</label>

@@ -192,7 +192,7 @@ if (isset ($_POST['usuario']) && !empty ($_POST['usuario'])) {
               success: function (response) {
                 var jsonData = JSON.parse(response);
                 console.log(jsonData);
-                alert(jsonData.estado);
+                //alert(jsonData.estado);
                 if (jsonData.estado == "ok") {
                   $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'> Persona : " + jsonData.nombre + "</h6>");
                   $("#id_persona").val(jsonData.id_persona);

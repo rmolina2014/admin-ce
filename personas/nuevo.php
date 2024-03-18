@@ -116,7 +116,7 @@ $mail=$_POST['mail'];
 
                  </button>
 
-                 <button type="submit" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+                 <button id="guardar" type="submit" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
                    Guardar
 
                  </button>
@@ -142,19 +142,35 @@ $mail=$_POST['mail'];
 
 
             // buscar por dni 09/08/2018
-      $('#dni').blur(function(){
-          event.preventDefault();
-          var vdni = $("#dni").val();
-          //alert(vdni);
-          console.log(vdni);
-          if (vdni != "") {
-              $.post("personas/verificarPersona.php", {dni: vdni}, function(mensaje) {
-                  $("#resultadoBusqueda").html(mensaje);
-              }); 
-          } else { 
-                 ("#resultadoBusqueda").html('sin Datos.');
-                 }
-      });// fin buscar
+          $("#dni").blur(function () {
+            var vdni = $("#dni").val();
+            $.ajax({
+              url: "buscar_dni.php",
+              type: "POST",
+              data: { dni: vdni },
+              success: function (response) {
+                var jsonData = JSON.parse(response);
+                console.log(jsonData);
+                //alert(jsonData.estado);
+                if (jsonData.estado == "ok") {
+                  $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'> Persona : " + jsonData.nombre + ". No se puede agregar porque ya existe</h6>");
+                  $("#id_persona").val(jsonData.id_persona);
+                  document.getElementById("guardar").disabled = true;
+                }
+                else {
+                 $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'>" + jsonData.mensaje + "</h6>");
+                 document.getElementById("guardar").disabled = false;
+                     }
+
+              },
+              failure: function (data) {
+                alert(response);
+              },
+              error: function (data) {
+                alert(response);
+              }
+            });
+          });
 
  
   }) //fin jquery   

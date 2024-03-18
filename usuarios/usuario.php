@@ -68,7 +68,7 @@ VALUES (
 
   public function obtenerId($id)
   {
-    $sql = "SELECT * FROM usuario where id_usuario='$id'";
+    $sql = "SELECT * FROM usuario where id='$id'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
