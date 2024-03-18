@@ -14,6 +14,20 @@ class Persona
     } else return $rs;
   }
 
+
+    public function verificarPersona($dni)
+  {
+    $consulta = "SELECT * FROM persona where dni='$dni'";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    $resultado="No existe";
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $resultado="Existe";
+      }
+      return $resultado;
+    } else return $resultado;
+  }
+
   public function lista()
   {
     $consulta = "SELECT * FROM persona";
@@ -39,8 +53,34 @@ class Persona
                 '$cel1',
                 '$cel2',
                 '$mail');";
-    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
-    return $rs;
+  $stmt = mysqli_prepare(conexion::obtenerInstancia(), $sql);
+
+if (!$stmt) {
+  echo "Error al preparar la consulta: " . mysqli_error(conexion::obtenerInstancia()) . "\n";
+  return false;
+} else {
+  // Vincular valores y ejecutar la consulta
+  $stmt->execute();
+if ($stmt->errno) {
+  if ($stmt->errno == 1062) {
+    // Registrar el error en un archivo de errores o usar una función personalizada para manejar el error.
+    // Registrar el error en un archivo de errores.
+    error_log("Error al insertar el usuario: DNI duplicado", 0);
+    
+    // Mostrar un mensaje de error personalizado al usuario.
+    trigger_error("El DNI introducido ya está registrado.", E_USER_ERROR);    
+    return false;
+  } else {
+    echo "Error al insertar el usuario: " . $stmt->error . "\n";
+       // Mostrar un mensaje de error personalizado al usuario.
+    trigger_error("El DNI introducido ya está registrado.", E_USER_ERROR); 
+    return false;
+  }
+} else {
+  echo "Usuario insertado correctamente.\n";
+  return true;
+}
+}
   }
 
 

@@ -6,7 +6,7 @@
   $objeto = new Persona();
   if (isset($_POST['dni']) && !empty($_POST['dni'])) {
     //   nuevo($apellidonombre, $dni, $domicilio, $cel1, $cel2, $mail)
-$id = $_POST['id'];
+//$id = $_POST['id'];
 $apellidonombre= $_POST['apellido_nombre'];
 $dni = $_POST['dni'];
 $domicilio=$_POST['domicilio'];
@@ -71,27 +71,27 @@ $mail=$_POST['mail'];
              <form method="POST" role="form" action="nuevo.php">
 
 
-             <div class="col-md-8 mb-3">
+             <!--div class="col-md-8 mb-3">
               <label>D.N.I *</label>
               <input name="dni" id="dni"  class="form-control" type="text" tabindex="7" maxlength="8" tabindex="9" required />
               <br>
               <button id="buscar_dni">Buscar D.N.I.</button>
               <div id="resultadoBusqueda"></div>
-            </div>
-
+            </div-->
+               <div id="resultadoBusqueda"></div>
                <div class="col-md-8 mb-3">
-                 <label class="form-label">N° DNI</label>
-                 <input name="codigo" class="form-control" type="text" tabindex="1" required autofocus />
+                 <label class="form-label">N° DNI*</label>
+                 <input name="dni" id="dni" class="form-control" type="text" tabindex="1" required autofocus />
                </div>
 
 
   <div class="col-md-8 mb-3">
-    <label class="form-label">Apellido y Nombre</label>
+    <label class="form-label">Apellido y Nombre*</label>
     <input name="apellido_nombre"  class="form-control" type="text" tabindex="2" required />
   </div>
 
   <div class="col-md-8 mb-3">
-    <label class="form-label" >Domicilio </label>
+    <label class="form-label" >Domicilio*</label>
     <input name="domicilio"  class="form-control" type="text" tabindex="3" required />
   </div>
 
@@ -142,13 +142,13 @@ $mail=$_POST['mail'];
 
 
             // buscar por dni 09/08/2018
-      $('#buscar_dni').click(function(){
+      $('#dni').blur(function(){
           event.preventDefault();
           var vdni = $("#dni").val();
           //alert(vdni);
           console.log(vdni);
           if (vdni != "") {
-              $.post("cliente/buscar_dni.php", {dni: vdni}, function(mensaje) {
+              $.post("personas/verificarPersona.php", {dni: vdni}, function(mensaje) {
                   $("#resultadoBusqueda").html(mensaje);
               }); 
           } else { 
