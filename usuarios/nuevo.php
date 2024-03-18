@@ -1,24 +1,18 @@
 <?php
-include("../cabecera.php");
-include("../menu.php");
-include("usuario.php");
-
+include ("../cabecera.php");
+include ("../menu.php");
+include ("usuario.php");
 $objeto = new Usuario();
-if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
-  //   $nInscripcion,$nombre,$dni,$curso,$horario,$sucursal,$email,$observacion,$otros,$idCurso
-  $codigo = $_POST['codigo'];
+if (isset ($_POST['usuario']) && !empty ($_POST['usuario'])) {
   $usuario = $_POST['usuario'];
-  $dni_nro = $_POST['dni_nro'];
-  $apellido_nombre = $_POST['apellido_nombre'];
-  $password = md5($_POST['password']);
-  $id_perfil = $_POST['id_perfil'];
-  $email = $_POST['email'];
-  $bloqueado = $_POST['bloqueado'];
-
-  //$fechaingreso = date("Y-m-d");
+  $rela_persona = $_POST['id_persona'];
+  $pass = md5($_POST['password']);
+  //$id_perfil = $_POST['id_perfil'];
+  $estado = $_POST['bloqueado'];
+  $fechaingreso = date("Y-m-d");
   //$estado = 'Activo';
 
-  $todobien = $objeto->nuevo($codigo, $usuario, $dni_nro, $apellido_nombre, $password, $id_perfil, $email, $bloqueado);
+  $todobien = $objeto->nuevo($rela_persona, $usuario, $pass, $estado, $fechaingreso);
   if ($todobien) {
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
     //header('Location: listado.php');
@@ -70,29 +64,30 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
 
             <!---formulario-->
             <form>
+              <div class="col-md-8 mb-3">
+                <label>D.N.I </label>
+                <input name="dni" id="dni" class="form-control" type="number" tabindex="1" maxlength="8" required />
+                <br>
+                <button type="button" id="buscar_dni" class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar D.N.I.</button>
 
+              </div>
 
               <div class="col-md-8 mb-3">
-                <label>D.N.I *</label>
-                <input name="dni" id="dni" class="form-control" type="text" tabindex="7" maxlength="8" tabindex="9"
-                  required />
-                <br>
-                <button type="button" id="buscar_dni">Buscar D.N.I.</button>
                 <div id="resultadoBusqueda"></div>
               </div>
 
             </form>
 
+            <hr>
+
             <form method="POST" role="form" action="nuevo.php">
+
+              <input type="hidden" id="id_persona" name="id_persona">
 
               <div class="col-md-8 mb-3">
                 <label class="form-label">Nombre de Usuario</label>
                 <input name="usuario" class="form-control" type="text" tabindex="2" />
               </div>
-
-
-
-
 
               <!--div class="col-md-8 mb-3">
                  <label class="form-label">Perfil</label>
@@ -116,9 +111,9 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
               <div class="col-md-8 mb-3">
                 <label class="form-label">Password</label>
                 <input type="text" class="form-control" placeholder="8 caracteres max." id="password" name="password"
-                  tabindex="5" maxlength="8" required>
+                  tabindex="3" maxlength="8" required>
 
-                <div id="passstrength">
+                <!--div id="passstrength">
                   <h4>La contraseña debería cumplir con los siguientes requerimientos:</h4>
                   <ul>
                     <li id="letter">Debe tener 8 caracteres</li>
@@ -126,7 +121,7 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
                     <li id="number">Al menos debería tener <strong>un número</strong></li>
                     <li id="length">Al menos debería tener <strong>un carácter especial</strong> como mínimo</li>
                   </ul>
-                </div>
+                </div-->
               </div>
 
 
@@ -161,7 +156,7 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
         </div>
       </section>
       <?php
-      include("../pie.php");
+      include ("../pie.php");
       ?>
 
       <script src="../assets/js/jquery-3.6.3.min.js"></script>
@@ -171,39 +166,48 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
       <script type="text/javascript">
         $(document).ready(function () {
 
-          $('#password').blur(function (e) {
-            valor = $('#password').val();
-            checkPassword(valor);
-          });
+          /* $('#password').blur(function (e) {
+             valor = $('#password').val();
+             checkPassword(valor);
+           });
 
-          function checkPassword(valor) {
-            var myregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-            if (myregex.test(valor)) {
-              alert(valor + " es valido :-) !");
-              return true;
-            } else {
-              alert(valor + " NO es valido!");
-              return false;
-            }
-          }
+           function checkPassword(valor) {
+             var myregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+             if (myregex.test(valor)) {
+               alert(valor + " es valido :-) !");
+               return true;
+             } else {
+               alert(valor + " NO es valido!");
+               return false;
+             }
+           }*/
 
-          // buscar por dni 09/08/2018
-          $('#buscar_dni').click(function () {
-            alert(5);
-            event.preventDefault();
+          // buscar por dni 17/03/2024
+          $("#buscar_dni").click(function () {
             var vdni = $("#dni").val();
-            //alert(vdni);
-            console.log(vdni);
-            if (vdni != "") {
-              $.post("buscar_dni.php", { dni: vdni }, function (mensaje) {
-                $("#resultadoBusqueda").html(mensaje);
-              });
-            } else {
-              ("#resultadoBusqueda").html('sin Datos.');
-            }
-          });// fin buscar
-       
+            $.ajax({
+              url: "buscar_dni.php",
+              type: "POST",
+              data: { dni: vdni },
+              success: function (response) {
+                var jsonData = JSON.parse(response);
+                console.log(jsonData);
+                alert(jsonData.estado);
+                if (jsonData.estado == "ok") {
+                  $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'> Persona : " + jsonData.nombre + "</h6>");
+                  $("#id_persona").val(jsonData.id_persona);
+                }
+                else { $("#resultadoBusqueda").html(jsonData.mensaje); }
 
+              },
+              failure: function (data) {
+                alert(response);
+              },
+              error: function (data) {
+                alert(response);
+              }
+            });
+          });
         }); //fin jquery   
 
       </script>
