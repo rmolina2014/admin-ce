@@ -1,5 +1,5 @@
 <?php
-include_once("../bd/conexion.php");
+include_once ("../bd/conexion.php");
 class Usuario
 {
   public function obtenerUsuario($usuario)
@@ -37,27 +37,20 @@ FROM
   }
 
 
-  public function nuevo($codigo, $usuario, $dni_nro, $apellido_nombre, $password, $id_perfil, $email, $bloqueado)
+  public function nuevo($rela_persona, $usuario, $pass, $estado, $fechaingreso)
   {
-
     $sql = "INSERT INTO `usuario`
-            (`codigo`,
+            (`rela_persona`,
              `usuario`,
-             `dni_nro`,
-             `apellido_nombre`,
-             `password`,
-             `id_perfil`,
-             `email`,
-             `bloqueado`)
-        VALUES (
-                '$codigo',
-                '$usuario',
-                '$dni_nro',
-                '$apellido_nombre',
-                '$password',
-                '$id_perfil',
-                '$email',
-                '$bloqueado');";
+             `pass`,
+             `estado`,
+             `fechaingreso`)
+VALUES (
+        '$rela_persona',
+        '$usuario',
+        '$pass',
+        '$estado',
+        '$fechaingreso');";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
   }
@@ -65,7 +58,6 @@ FROM
 
   public function editar($id, $usuario, $nivel, $nombrereal, $password)
   {
-
     $sql = "UPDATE `usuario`
             SET `usuario` = '$usuario',
                 `nombrereal` = '$nombrereal',`nivel` = '$nivel',`password` = '$password'
@@ -108,17 +100,15 @@ FROM
   //27-07-2018 devuelve si esta repetido un dni
   public function buscarDNI($dni)
   {
-     $data=array();   
-     $sql="SELECT id,apellidonombre FROM persona WHERE dni ='$dni'";
-     
-     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
-     if(mysqli_num_rows($rs) >0)
-     {
-       while($fila = mysqli_fetch_assoc($rs))
-       {
-         $data[] = $fila;
-       }
-     }
-     return $data;
-   }
+    $data = array();
+    $sql = "SELECT id,apellidonombre FROM persona WHERE dni ='$dni'";
+
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
 }
