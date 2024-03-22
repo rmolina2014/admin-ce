@@ -58,6 +58,13 @@
         </li>
 
         <li class="sidebar-item ">
+          <a href="../usuarios/rol.php" class="sidebar-link">
+            <i class="bi bi-grid-fill"></i>
+            <span>Permisos</span>
+          </a>
+        </li>            
+
+        <li class="sidebar-item ">
           <a href="../personas/index.php" class="sidebar-link">
             <i class="bi bi-grid-fill"></i>
             <span>Personas</span>

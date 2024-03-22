@@ -15,6 +15,32 @@ class Usuario
       return $rs;
   }
 
+    public function listaPermisos()
+  {
+    $consulta = "SELECT * FROM permiso";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+      return $data;
+    } else
+      return $rs;
+  }
+
+  public function detallePermisos($id)
+  {
+    $consulta = "SELECT * FROM detalle_permiso WHERE rela_usuario = $id";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+      return $data;
+    } else
+      return $rs;
+  }
+
   public function lista()
   {
     $consulta = "SELECT
@@ -55,6 +81,12 @@ VALUES (
     return $rs;
   }
 
+public function nuevosPermisos($id_user, $permiso)
+  {
+    $sql = "INSERT INTO detalle_permiso(rela_usuario, rela_permiso) VALUES ($id_user,$permiso);";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    return $rs;
+  }
 
   public function editar($id, $usuario, $nivel, $nombrereal, $password)
   {
@@ -81,6 +113,13 @@ VALUES (
   public function eliminar($id)
   {
     $sql = "DELETE FROM usuario WHERE id ='$id'";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    return $rs;
+  }
+
+    public function eliminarPermisos($id)
+  {
+    $sql = "DELETE FROM detalle_permiso WHERE rela_usuario = '$id'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
   }
