@@ -16,7 +16,7 @@ if (isset ($_POST['dni']) && !empty ($_POST['dni']))
     }
   } else {
     $data['estado'] = 'error';
-    $data['mensasje'] = 'No Existe este DNI';
+    $data['mensaje'] = 'No Existe este DNI';
   }
   echo json_encode($data);
 }

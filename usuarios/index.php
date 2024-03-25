@@ -67,7 +67,7 @@ include("usuario.php");
                                         <form method="POST" role="form" action="editar.php">
                                             <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
                                             <button class="btn btn-sm btn-secondary d-inline-flex align-items-center">Editar</button>
-                                            <a href="rol.php?id=<?php echo $item['id']; ?>" class="btn btn-warning" title = "Modificar permisos"><i class='fas fa-key'></i></a>
+                                            <a href="rol.php?id=<?php echo $item['id']; ?>" class="btn btn-sm btn-warning d-inline-flex align-items-center" title = "Modificar permisos">Permisos</a>
                                             <!--a class="btn btn-sm btn-danger d-inline-flex align-items-center" href="eliminar.php?id=<?php echo $item['id_usuario']; ?>" >
                   Borrar
               </a-->

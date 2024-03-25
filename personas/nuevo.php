@@ -85,9 +85,10 @@ $mail=$_POST['mail'];
                </div>
 
 
+  <div id="resultadoBusquedaNombre"></div>
   <div class="col-md-8 mb-3">
     <label class="form-label">Apellido y Nombre*</label>
-    <input name="apellido_nombre"  class="form-control" type="text" tabindex="2" required />
+    <input name="apellido_nombre" id="apellido_nombre"  class="form-control" type="text" tabindex="2" required />
   </div>
 
   <div class="col-md-8 mb-3">
@@ -171,6 +172,37 @@ $mail=$_POST['mail'];
               }
             });
           });
+
+          $("#apellido_nombre").blur(function () {
+            var vnombre = $("#apellido_nombre").val();
+            $.ajax({
+              url: "buscar_nombre.php",
+              type: "POST",
+              data: { nombre: vnombre },
+              success: function (response) {
+                var jsonData = JSON.parse(response);
+                console.log(jsonData);
+                //alert(jsonData.estado);
+                if (jsonData.estado == "ok") {
+                  $("#resultadoBusquedaNombre").html("<h6 class='text-muted mb-0'> Persona : " + jsonData.nombre + ". No se puede agregar porque ya existe</h6>");
+                  $("#id_persona").val(jsonData.id_persona);
+                  document.getElementById("guardar").disabled = true;
+                }
+                else {
+                 $("#resultadoBusquedaNombre").html("<h6 class='text-muted mb-0'>" + jsonData.mensaje + "</h6>");
+                 document.getElementById("guardar").disabled = false;
+                     }
+
+              },
+              failure: function (data) {
+                alert(response);
+              },
+              error: function (data) {
+                alert(response);
+              }
+            });
+          });
+
 
  
   }) //fin jquery   

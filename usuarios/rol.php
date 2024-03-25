@@ -12,8 +12,10 @@ $usuarios = $objeto->obtenerUsuario($id);
 $consulta = $objeto->detallePermisos($id);
 //$consulta = mysqli_query($conexion, "SELECT * FROM detalle_permiso WHERE rela_usuario = $id");
 $resultUsuario = mysqli_num_rows($usuarios);
+var_dump($resultUsuario);
 if (empty($resultUsuario)) {
    // header("Location: index.php");
+    //echo "<script language=Javascript> location.href=\"index.php\"; </script>";
 }
 $datos = array();
 foreach ($consulta as $asignado) {
@@ -39,6 +41,7 @@ if (isset($_POST['permisos'])) {
                         </button>
                     </div>';
         //header("Location: index.php"); 
+        echo "<script language=Javascript> location.href=\"index.php\"; </script>";            
         exit();           
     }
 }

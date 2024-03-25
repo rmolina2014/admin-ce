@@ -14,6 +14,18 @@ class Persona
     } else return $rs;
   }
 
+  public function obtenerNombre($nombre)
+  {
+    $consulta = "SELECT * FROM persona where apellidonombre='$nombre'";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+      return $data;
+    } else return $rs;
+  }  
+
 
   public function buscarDNI($dni)
   {

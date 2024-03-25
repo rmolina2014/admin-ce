@@ -5,7 +5,7 @@
       <div class="d-flex justify-content-between align-items-center">
        
         <div class="logod">
-          <a href="index.html"><img src="./assets/logo/logoce.svg" alt="CE" height="150px" width="150px" srcset=""></a>
+          <a href="../panelcontrol/index.php"><img src="../assets/logo/logoce.jpeg" alt="CE" height="150px" width="100px" srcset=""></a>
           <!--img src="../assets/logo/logoce.svg" alt="Logo" height="150px" width="150px" /-->
 
         </div>
@@ -57,12 +57,6 @@
           </a>
         </li>
 
-        <li class="sidebar-item ">
-          <a href="../usuarios/rol.php" class="sidebar-link">
-            <i class="bi bi-grid-fill"></i>
-            <span>Permisos</span>
-          </a>
-        </li>            
 
         <li class="sidebar-item ">
           <a href="../personas/index.php" class="sidebar-link">
