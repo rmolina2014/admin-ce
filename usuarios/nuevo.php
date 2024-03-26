@@ -1,9 +1,9 @@
 <?php
-include ("../cabecera.php");
-include ("../menu.php");
-include ("usuario.php");
+include("../cabecera.php");
+include("../menu.php");
+include("usuario.php");
 $objeto = new Usuario();
-if (isset ($_POST['usuario']) && !empty ($_POST['usuario'])) {
+if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
   $usuario = $_POST['usuario'];
   $rela_persona = $_POST['id_persona'];
   $pass = md5($_POST['password']);
@@ -68,7 +68,8 @@ if (isset ($_POST['usuario']) && !empty ($_POST['usuario'])) {
                 <label>D.N.I </label>
                 <input name="dni" id="dni" class="form-control" type="number" tabindex="1" maxlength="8" required />
                 <br>
-                <button type="button" id="buscar_dni" class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar D.N.I.</button>
+                <button type="button" id="buscar_dni"
+                  class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar D.N.I.</button>
 
               </div>
 
@@ -156,7 +157,7 @@ if (isset ($_POST['usuario']) && !empty ($_POST['usuario'])) {
         </div>
       </section>
       <?php
-      include ("../pie.php");
+      include("../pie.php");
       ?>
 
       <script src="../assets/js/jquery-3.6.3.min.js"></script>
