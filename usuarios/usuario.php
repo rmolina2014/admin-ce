@@ -88,12 +88,11 @@ public function nuevosPermisos($id_user, $permiso)
     return $rs;
   }
 
-  public function editar($id, $usuario, $nivel, $nombrereal, $password)
+  public function editar($id, $usuario, $bloqueado)
   {
     $sql = "UPDATE `usuario`
             SET `usuario` = '$usuario',
-                `nombrereal` = '$nombrereal',`nivel` = '$nivel',`password` = '$password'
-            WHERE `id` = '$id';";
+                `estado` = '$bloqueado' WHERE `id` = '$id';";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
   }
@@ -109,6 +108,31 @@ public function nuevosPermisos($id_user, $permiso)
     }
     return $data;
   }
+
+
+  public function usuariosLista($id)
+  {
+    $consulta = "SELECT
+usuario.`id` AS id,
+usuario.`usuario` AS usuario,
+usuario.`estado` AS estado,
+usuario.`pass` AS pass,
+persona.`apellidonombre` AS apellidonombre,
+persona.`dni` AS dni
+FROM
+    `usuario`
+    INNER JOIN `persona` 
+        ON (`usuario`.`rela_persona` = `persona`.`id`) where usuario.id=$id";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
+
 
   public function eliminar($id)
   {
@@ -150,4 +174,21 @@ public function nuevosPermisos($id_user, $permiso)
     }
     return $data;
   }
+//verifica si el dni de la persona esta creado como usuario
+public function buscarDNIenusuario($dni)
+  {
+    $data = array();
+    $sql = "SELECT persona.id,apellidonombre FROM persona,usuario WHERE dni ='$dni' and persona.id=usuario.rela_persona  ";
+
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
+
+
 }

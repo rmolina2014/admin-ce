@@ -7,7 +7,7 @@
  if( isset($_POST['id']) && !empty($_POST['id']) )
  {
     $id=(int)$_POST['id'];
-    $registros= $objeto->obtenerId($id);
+    $registros= $objeto->usuariosLista($id);
    foreach($registros as $item)
    {
     $id_usuario= $item['id'];
@@ -51,24 +51,21 @@
 <form method="POST" role="form" action="editar.php">
 
   <div class="col-md-8 mb-3">
-    <label class="form-label">N° Legajo</label>
-    <input name="codigo"  class="form-control" type="text" tabindex="1" required value="<?php echo utf8_encode($item['codigo']); ?>"/>
+    <label class="form-label">DNI</label>
+    <input name="codigo"  class="form-control" type="text" tabindex="1" required value="<?php echo utf8_encode($item['dni']); ?>" disabled/>
   </div>
+  <input name="id_usuario"  class="form-control" type="hidden" tabindex="1" value="<?php echo utf8_encode($id_usuario); ?>" />
+
+  <div class="col-md-8 mb-3">
+    <label class="form-label" >Apellido Nombre </label>
+    <input name="apellido_nombre"  class="form-control" type="text" tabindex="3" required value="<?php echo utf8_encode($item['apellidonombre']); ?>" disabled/>
+  </div>  
   
   <div class="col-md-8 mb-3">
     <label class="form-label">Nombre de Usuario</label>
     <input name="usuario"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['usuario']); ?>"/>
   </div>
 
-  <div class="col-md-8 mb-3">
-    <label class="form-label" >Apellido Nombre </label>
-    <input name="apellido_nombre"  class="form-control" type="text" tabindex="3" required value="<?php echo utf8_encode($item['apellido_nombre']); ?>"/>
-  </div>
-
-  <div class="col-md-8 mb-3">
-    <label class="form-label">DNI</label>
-    <input name="dni_nro"  class="form-control" type="text" tabindex="4" required value="<?php echo utf8_encode($item['dni_nro']); ?>" />
-  </div>
 
   <!--div class="col-md-8 mb-3">
     <label class="form-label">Password</label>
@@ -86,42 +83,16 @@
 </div>
   </div-->
 
-  <div class="col-md-8 mb-3">
-    <label class="form-label">Perfil</label>
-    <select class="form-select" name="id_perfil">
-      <option >Seleccionar.....</option>
-      <option value="<?php echo $item['codigo']; ?>">
-      <?php echo $item ['codigo']; ?>
-    </option>
-    <?php
-   
-    $objeto = new Usuario();
-    $datos = $objeto->listaPerfil();
-    foreach($datos as $item2)
-    {
-    ?>
-    <option value="<?php echo $item2['id_perfil']; ?>">
-      <?php echo $item2['perfil']; ?>
-    </option>
-    <?php
-    }
-    ?>
-    </select>
-  </div>
+  
 
-
-  <div class="col-md-8 mb-3">
-    <label class="form-label" >Email</label>
-    <input type="email" class="form-control" name="email" required value="<?php echo $item['email'];?>" >
-  </div>
 
    <div class="col-md-8 mb-3">
     <label class="form-label">Bloqueado</label>
     <select class="form-select" name="bloqueado">
       <option >Seleccionar.....</option>
     
-      <option value="1"> SI </option>
-      <option value="0"> NO </option>
+      <option value="0"> SI </option>
+      <option value="1"> NO </option>
     </select>
   </div>
     
@@ -152,19 +123,14 @@
 if (isset($_POST['usuario']) && !empty($_POST['usuario']))
 {
 //   $nInscripcion,$nombre,$dni,$curso,$horario,$sucursal,$email,$observacion,$otros,$idCurso
-$codigo = $_POST['codigo'];
 $usuario= $_POST['usuario'];
-$dni_nro = $_POST['dni_nro'];
-$apellido_nombre=$_POST['apellido_nombre'];
-$password= md5($_POST['password']);
-$id_perfil=$_POST['id_perfil'];
-$email=$_POST['email'];
 $bloqueado=$_POST['bloqueado'];
+$id_usuario=$_POST['id_usuario'];
 
 //$fechaingreso = date("Y-m-d");
 //$estado = 'Activo';
 
-$todobien = $objeto->nuevo($codigo,$usuario,$dni_nro,$apellido_nombre,$password,$id_perfil,$email,$bloqueado);
+$todobien = $objeto->editar($id_usuario,$usuario,$bloqueado);
 if($todobien){
     echo "<script language=Javascript> location.href=\"index.php\"; </script>"; 
     //header('Location: listado.php');

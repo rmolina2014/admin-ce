@@ -97,10 +97,10 @@ if ($stmt->errno) {
   }
 
 
-  public function editar($id,$apellidonombre, $dni, $domicilio, $cel1, $cel2, $mail)
+  public function editar($id,$domicilio, $cel1, $cel2, $mail)
   {
 
-    $sql = "UPDATE `persona` SET `apellidonombre`='$apellidonombre',`dni`='$dni',`domicilio`='$domicilio',`cel1`='$cel1',`cel2`='$cel2',`mail`='$mail' WHERE `id`='$id';";
+    $sql = "UPDATE `persona` SET `domicilio`='$domicilio',`cel1`='$cel1',`cel2`='$cel2',`mail`='$mail' WHERE `id`='$id';";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
   }

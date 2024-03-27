@@ -52,12 +52,12 @@
 
   <div class="col-md-8 mb-3">
     <label class="form-label">DNI</label>
-    <input name="dni"  class="form-control" type="text" tabindex="1" required value="<?php echo utf8_encode($item['dni']); ?>"/>
+    <input name="dni"  class="form-control" type="text" tabindex="1" required value="<?php echo utf8_encode($item['dni']); ?>" disabled/>
   </div>
   <input type="hidden" name="id_persona" value="<?php echo $item['id']; ?>">
   <div class="col-md-8 mb-3">
     <label class="form-label">Apellido y Nombre</label>
-    <input name="apellido_nombre"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['apellidonombre']); ?>"/>
+    <input name="apellido_nombre"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['apellidonombre']); ?>" disabled/>
   </div>
 
   <div class="col-md-8 mb-3">
@@ -105,12 +105,12 @@
         
 }else
 {
-if (isset($_POST['dni']) && !empty($_POST['dni']))
+if (isset($_POST['id_persona']) && !empty($_POST['id_persona']))
 {
 //   editar($id,$apellidonombre, $dni, $domicilio, $cel1, $cel2, $mail)
 $id = $_POST['id_persona'];
-$apellidonombre= $_POST['apellido_nombre'];
-$dni = $_POST['dni'];
+//$apellidonombre= $_POST['apellido_nombre'];
+//$dni = $_POST['dni'];
 $domicilio=$_POST['domicilio'];
 $cel1= $_POST['cel_prin'];
 $cel2=$_POST['cel_alte'];
@@ -120,13 +120,15 @@ $mail=$_POST['mail'];
 //$fechaingreso = date("Y-m-d");
 //$estado = 'Activo';
 
-$todobien = $objeto->editar($id,$apellidonombre, $dni, $domicilio, $cel1, $cel2, $mail);
+//$todobien = $objeto->editar($id,$apellidonombre, $dni, $domicilio, $cel1, $cel2, $mail);
+$todobien = $objeto->editar($id,$domicilio, $cel1, $cel2, $mail);
 if($todobien){
     echo "<script language=Javascript> location.href=\"index.php\"; </script>"; 
     //header('Location: listado.php');
     exit;
   } 
   else {
+    echo "<script language=Javascript> location.href=\"index.php\"; </script>"; 
   ?>      
        <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
        <button data-dismiss="alert" class="close" type="button">×</button>

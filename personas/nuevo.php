@@ -81,7 +81,7 @@ $mail=$_POST['mail'];
                <div id="resultadoBusqueda"></div>
                <div class="col-md-8 mb-3">
                  <label class="form-label">N° DNI*</label>
-                 <input name="dni" id="dni" class="form-control" type="text" tabindex="1" required autofocus />
+                 <input name="dnipersona" id="dnipersona" class="form-control" type="text" tabindex="1" required autofocus />
                </div>
 
 
@@ -143,8 +143,8 @@ $mail=$_POST['mail'];
 
 
             // buscar por dni 09/08/2018
-          $("#dni").blur(function () {
-            var vdni = $("#dni").val();
+          $("#dnipersona").blur(function () {
+            var vdni = $("#dnipersona").val();
             $.ajax({
               url: "buscar_dni.php",
               type: "POST",

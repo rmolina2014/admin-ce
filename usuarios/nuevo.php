@@ -66,10 +66,10 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
             <form>
               <div class="col-md-8 mb-3">
                 <label>D.N.I </label>
-                <input name="dni" id="dni" class="form-control" type="number" tabindex="1" maxlength="8" required />
+                <input name="dniusuario" id="dniusuario" class="form-control" type="number" tabindex="1" maxlength="10" required />
                 <br>
-                <button type="button" id="buscar_dni"
-                  class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar D.N.I.</button>
+                <!--button type="button" id="buscar_dni"
+                  class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar D.N.I.</button-->
 
               </div>
 
@@ -86,8 +86,8 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
               <input type="hidden" id="id_persona" name="id_persona">
 
               <div class="col-md-8 mb-3">
-                <label class="form-label">Nombre de Usuario</label>
-                <input name="usuario" class="form-control" type="text" tabindex="2" />
+                <label class="form-label">Nombre de Usuario*</label>
+                <input name="usuario" class="form-control" type="text" tabindex="2" required />
               </div>
 
               <!--div class="col-md-8 mb-3">
@@ -110,8 +110,8 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
                </div-->
 
               <div class="col-md-8 mb-3">
-                <label class="form-label">Password</label>
-                <input type="text" class="form-control" placeholder="8 caracteres max." id="password" name="password"
+                <label class="form-label">Password*</label>
+                <input type="password" class="form-control" placeholder="8 caracteres max." id="password" name="password"
                   tabindex="3" maxlength="8" required>
 
                 <!--div id="passstrength">
@@ -131,8 +131,8 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
                 <select class="form-select" name="bloqueado">
                   <option>Seleccionar.....</option>
 
-                  <option value="1"> SI </option>
-                  <option value="0"> NO </option>
+                  <option value="0"> SI </option>
+                  <option value="1"> NO </option>
                 </select>
               </div>
 
@@ -143,7 +143,7 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
 
                 </button>
 
-                <button type="submit" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+                <button id="guardar" type="submit" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
                   Guardar
 
                 </button>
@@ -184,10 +184,10 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
            }*/
 
           // buscar por dni 17/03/2024
-          $("#buscar_dni").click(function () {
-            var vdni = $("#dni").val();
+          $("#dniusuario").blur(function () {
+            var vdni = $("#dniusuario").val();
             $.ajax({
-              url: "buscar_dni.php",
+              url: "buscar_dni_en_usuario.php",
               type: "POST",
               data: { dni: vdni },
               success: function (response) {
@@ -195,10 +195,23 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
                 console.log(jsonData);
                 //alert(jsonData.estado);
                 if (jsonData.estado == "ok") {
-                  $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'> Persona : " + jsonData.nombre + "</h6>");
-                  $("#id_persona").val(jsonData.id_persona);
+                  $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'> Persona : " + jsonData.nombre + ". Ya es Usuario del sistema</h6>");
+                  
+                  document.getElementById("guardar").disabled = true;
                 }
-                else { $("#resultadoBusqueda").html(jsonData.mensaje); }
+                else { 
+                      if (jsonData.estado == "error") {  
+                       $("#id_persona").val(jsonData.id_persona);
+                       $("#resultadoBusqueda").html(jsonData.mensaje); 
+                       document.getElementById("guardar").disabled = false; 
+                     }else{
+
+                       $("#resultadoBusqueda").html(jsonData.mensaje); 
+                       document.getElementById("guardar").disabled = true;                       
+
+                     }
+
+                 }
 
               },
               failure: function (data) {

@@ -21,7 +21,7 @@ include("usuario.php");
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="../panelcontrol/index.html">Panel de Control</a></li>
+                            <li class="breadcrumb-item"><a href="../panelcontrol/index.php">Panel de Control</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
                         </ol>
                     </nav>
@@ -62,7 +62,7 @@ include("usuario.php");
                                     <td><?php echo $item['id']; ?></td>
                                     <td><?php echo $item['usuario']; ?></td>
                                     <td><?php echo $item['apellidonombre']; ?></td>
-                                    <td><?php echo $item['estado']; ?></td>
+                                    <td><?php if ($item['estado']==1){echo "NO"; } else {echo "SI";}; ?></td>
                                     <td>
                                         <form method="POST" role="form" action="editar.php">
                                             <input type="hidden" name="id" value="<?php echo $item['id']; ?>">

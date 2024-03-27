@@ -23,7 +23,7 @@
 
         <div id="auth-left">
           <div style="text-align: center;">
-          <img src="../assets/logo/logoce.jpeg" alt="Logo" height="150px" width="150px" />
+          <img src="../admin-ce/assets/logo/logocegrande.jpeg" alt="Logo" height="150px" width="150px" />
           </div>
 
           <div class="auth-logo">
@@ -33,7 +33,7 @@
             </a-->
           </div>
           <h1 class="auth-title">Ingreso al sistema</h1>
-          <p class="auth-subtitle mb-5">
+          <p class="auth-subtitle mb-4">
             Inicie sesión con los datos que ingresó durante el registro.
           </p>
 
@@ -66,7 +66,7 @@
                   Keep me logged in
                 </label>
               </div-->
-            <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">
+            <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-4">
               Ingresar
             </button>
           </form>

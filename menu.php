@@ -5,8 +5,8 @@
       <div class="d-flex justify-content-between align-items-center">
 
         <div class="logod">
-          <a href="../panelcontrol/index.php"><img src="../assets/logo/logoce.jpeg" alt="CE" height="150px"
-              width="100px" srcset=""></a>
+          <a href="../panelcontrol/index.php"><img src="../assets/logo/sinfondologopequeño.png" alt="CE" height="150px"
+              width="50px" srcset=""></a>
           <!--img src="../assets/logo/logoce.svg" alt="Logo" height="150px" width="150px" /-->
 
         </div>
