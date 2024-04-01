@@ -1,0 +1,24 @@
+CREATE TABLE `caja_operacion` (
+  `id` INT(8) NOT NULL AUTO_INCREMENT,
+  `caja_id` INT(8) DEFAULT NULL,
+  `operacion` VARCHAR(30) DEFAULT NULL,
+  `tipo` VARCHAR(30) DEFAULT NULL,
+  `monto` DECIMAL(8,2) DEFAULT NULL,
+  `fechahora` DATETIME DEFAULT NULL,
+  `detalle` VARCHAR(60) DEFAULT NULL,
+  `usuario_id` INT(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `caja` (
+  `id` INT(6) NOT NULL AUTO_INCREMENT,
+  `importe_inicio` DECIMAL(8,2) DEFAULT NULL,
+  `fecha_apertura` DATETIME DEFAULT NULL,
+  `importe_cierre` DECIMAL(8,2) DEFAULT NULL,
+  `fecha_cierre` DATETIME DEFAULT NULL,
+  `estado` VARCHAR(15) DEFAULT NULL COMMENT 'Abierto o Cerrado',
+  `saldo` DECIMAL(8,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
