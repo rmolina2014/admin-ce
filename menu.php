@@ -104,6 +104,40 @@
             <span>Caja</span>
           </a>
         </li>
+
+        <li class="sidebar-item ">
+          <a href="../ingreso/index.php" class="sidebar-link">
+            <i class="bi bi-grid-fill"></i>
+            <span>Ingresos</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item ">
+          <a href="../tipo_ingreso/index.php" class="sidebar-link">
+            <i class="bi bi-grid-fill"></i>
+            <span>Tipo Ingresos</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item ">
+          <a href="../egresos/index.php" class="sidebar-link">
+            <i class="bi bi-grid-fill"></i>
+            <span>Egresos</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item ">
+          <a href="../tipo_egreso/index.php" class="sidebar-link">
+            <i class="bi bi-grid-fill"></i>
+            <span>Tipo Egresos</span>
+          </a>
+        </li>
+
+
+
+
+
+
         <!--fin menu-->
 
       </ul>
