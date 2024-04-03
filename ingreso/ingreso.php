@@ -18,13 +18,17 @@ class Ingreso
   public function lista()
   {
     $consulta = "SELECT
-    `id`,
-    `monto`,
-    `fecha_ingreso`,
-    `caja_id`,
-    `usuario_id`,
-    `tipo_ingreso`
-    FROM `ingreso`";
+    ingreso.`caja_id` AS caja_id,
+    ingreso.`fecha_ingreso` AS fecha_ingreso,
+    ingreso.`id` AS id,
+    ingreso.`ingreso_tipo_id` AS ingreso_tipo_id,
+    ingreso.`monto` AS monto,
+    ingreso.`usuario_id` AS usuario_id,
+    ingreso_tipo.`nombre` AS detalle
+    FROM
+        `ingreso`
+        INNER JOIN `bdce`.`ingreso_tipo` 
+            ON (`ingreso`.`ingreso_tipo_id` = `ingreso_tipo`.`id`);";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
@@ -39,24 +43,62 @@ class Ingreso
     $fecha_ingreso,
     $caja_id,
     $usuario_id,
-    $tipo_ingreso
+    $ingreso_tipo_id
   ) {
     $sql = "INSERT INTO `ingreso`
     (`monto`,
      `fecha_ingreso`,
      `caja_id`,
      `usuario_id`,
-     `tipo_ingreso`)
+     `ingreso_tipo_id`)
       VALUES ('$monto',
       '$fecha_ingreso',
       '$caja_id',
       '$usuario_id',
-      '$tipo_ingreso'
-      `);";
+      '$ingreso_tipo_id'
+      );";
     //echo $sql;
     //exit;
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     //$rs = mysqli_insert_id(conexion::obtenerInstancia());
     return $rs;
   }
+
+  public function buscarCajaAbierta()
+  {
+    $consulta = "SELECT
+    `id`,
+    `importe_inicio`,
+    `fecha_apertura`,
+    `importe_cierre`,
+    `fecha_cierre`,
+    `estado`,
+    `saldo`
+  FROM `caja`
+  where `estado`= 'Abierta';";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        //$data[] = $fila;
+        $id= $fila["id"];
+      }
+    }
+    return $id;
+  }
+
+  //lista los ingresos por tipo
+  public function listaIngresoTipo()
+   {
+      $sql="SELECT * FROM ingreso_tipo";
+      $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+      if(mysqli_num_rows($rs) >0)
+      {
+        while($fila = mysqli_fetch_assoc($rs))
+        {
+          $data[] = $fila;
+        }
+      }
+      return $data;
+      
+    }
 }

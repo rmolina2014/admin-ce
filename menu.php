@@ -97,6 +97,13 @@
           </a>
         </li>
 
+        <li class="sidebar-item ">
+          <a href="../alumno/index.php" class="sidebar-link">
+            <i class="bi bi-grid-fill"></i>
+            <span>Alumnos</span>
+          </a>
+        </li>
+
 
         <li class="sidebar-item ">
           <a href="../caja/index.php" class="sidebar-link">

@@ -62,35 +62,18 @@ include ("ingreso.php");
                       <?php echo $item['id']; ?>
                     </td>
                     <td>
-                      <?php echo $item['fecha_apertura']; ?>
+                      <?php echo $item['fecha_ingreso']; ?>
                     </td>
                     <td>
-                      <?php echo $item['importe_inicio']; ?>
+                      <?php echo $item['monto']; ?>
                     </td>
                     <td>
-                      <?php echo $item['fecha_cierre']; ?>
+                      <?php echo $item['detalle']; ?>
                     </td>
                     <td>
-                      <?php echo $item['importe_cierre']; ?>
+                      <?php echo $item['caja_id']; ?>
                     </td>
-                    <td>
-                      <?php echo $item['estado']; ?>
-                    </td>
-                    <td>
-                      <?
-                      if ($item['estado'] == 'Abierta') {
-                        ?>
-                        <a class="btn btn-danger btn-sm" href="cerrarcaja.php?caja_id=<?php echo $item['id']; ?>">Cerrar
-                          Caja</a>
-                      </td>
-                    <?
-                      } else {
-                        ?>
-                      <a class="btn btn-primary btn-sm" href="detalle_caja.php?caja_id=<?php echo $item['id']; ?>">Detalle
-                        de la Caja</a></td>
-                    <?
-                      }
-                      ?>
+                    
 
                   </tr>
                   <?php
