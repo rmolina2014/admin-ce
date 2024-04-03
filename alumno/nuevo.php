@@ -64,9 +64,10 @@ if (isset($_POST['persona_id']) && !empty($_POST['persona_id'])) {
 
             <!---formulario-->
             <form>
+              
               <div class="col-md-8 mb-3">
                 <label>D.N.I </label>
-                <input name="dniusuario" id="dniusuario" class="form-control" type="number" tabindex="1" maxlength="10" required />
+                <input name="dnialumno" id="dnialumno" class="form-control" type="text" tabindex="1" maxlength="10" required />
                 <br>
                 <!--button type="button" id="buscar_dni"
                   class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar D.N.I.</button-->
@@ -138,3 +139,51 @@ if (isset($_POST['persona_id']) && !empty($_POST['persona_id'])) {
 }
       include("../pie.php");
       ?>
+
+       <script src="../assets/js/jquery-3.6.3.min.js"></script>
+
+       <script src="../assets/js/jquery.validate.min.js"></script>
+
+       <script type="text/javascript">
+         $(document).ready(function() {
+
+
+            // buscar por dni 09/08/2018
+          $("#dnialumno").blur(function () {
+            var vdni = $("#dnialumno").val();
+            $.ajax({
+              url: "../personas/buscar_dni.php",
+              type: "POST",
+              data: { dni: vdni },
+              success: function (response) {
+                var jsonData = JSON.parse(response);
+                console.log(jsonData);
+                //alert(jsonData.estado);
+                if (jsonData.estado == "ok") {
+                  $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'> Persona : " + jsonData.nombre + ". </h6>");
+                  $("#id_persona").val(jsonData.id_persona);
+                  document.getElementById("guardar").disabled = false;
+                }
+                else {
+                 $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'>" + jsonData.mensaje + "</h6>");
+                 document.getElementById("guardar").disabled = true;
+                     }
+
+              },
+              failure: function (data) {
+                alert(response);
+              },
+              error: function (data) {
+                alert(response);
+              }
+            });
+          });
+
+
+
+
+ 
+  }) //fin jquery      
+
+       </script>
+        

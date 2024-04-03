@@ -53,7 +53,7 @@ include("alumno.php");
                         <tbody>
                             <!-- Item -->
                             <?php
-                            $objeto = new Usuario();
+                            $objeto = new Alumno();
                             $usuarios = $objeto->lista();
                             foreach ($usuarios as $item) {
                             ?>

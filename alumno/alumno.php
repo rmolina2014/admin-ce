@@ -17,6 +17,7 @@ class Alumno
 
   public function lista()
   {
+    $data = array();
     $consulta = "SELECT
     persona.`apellidonombre` AS apellidonombre,
     persona.`dni` AS dni,

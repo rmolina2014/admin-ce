@@ -66,6 +66,7 @@ class Ingreso
 
   public function buscarCajaAbierta()
   {
+    $data = array();
     $consulta = "SELECT
     `id`,
     `importe_inicio`,

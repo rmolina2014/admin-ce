@@ -17,6 +17,7 @@ class Caja
 
   public function lista()
   {
+    $data = array();
     $consulta = "SELECT `id`,
     `importe_inicio`,
     `fecha_apertura`,

@@ -123,4 +123,6 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
             </form>
           <?php
         }
+
+    include ("../pie.php");
           ?>
