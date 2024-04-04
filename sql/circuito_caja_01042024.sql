@@ -16,23 +16,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`bdce` /*!40100 DEFAULT CHARACTER SET ut
 
 USE `bdce`;
 
-/*Table structure for table `alumno` */
-
-DROP TABLE IF EXISTS `alumno`;
-
-CREATE TABLE `alumno` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `edad` int NOT NULL,
-  `gruposanguineo` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `persona_id` int NOT NULL,
-  `carrera_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `relapersona` (`persona_id`),
-  CONSTRAINT `alumno_ibfk_1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-/*Data for the table `alumno` */
-
 /*Table structure for table `caja` */
 
 DROP TABLE IF EXISTS `caja`;
@@ -70,19 +53,33 @@ CREATE TABLE `caja_operacion` (
 
 /*Data for the table `caja_operacion` */
 
-/*Table structure for table `carrera` */
+/*Table structure for table `egreso` */
 
-DROP TABLE IF EXISTS `carrera`;
+DROP TABLE IF EXISTS `egreso`;
 
-CREATE TABLE `carrera` (
+CREATE TABLE `egreso` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `monto` decimal(18,2) DEFAULT NULL,
+  `fecha_ingreso` datetime DEFAULT NULL,
+  `caja_id` int DEFAULT NULL,
+  `usuario_id` int DEFAULT NULL,
+  `egreso_tipo` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `egreso` */
+
+/*Table structure for table `egreso_tipo` */
+
+DROP TABLE IF EXISTS `egreso_tipo`;
+
+CREATE TABLE `egreso_tipo` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(90) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*Data for the table `carrera` */
-
-insert  into `carrera`(`id`,`nombre`) values (1,'Asistente '),(2,'Tecnico');
+/*Data for the table `egreso_tipo` */
 
 /*Table structure for table `ingreso` */
 

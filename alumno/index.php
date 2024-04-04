@@ -34,7 +34,7 @@ include("alumno.php");
                     <h4 class="card-title">Listado</h4>
                 </div>
                 <div class="card-body">
-                <!--- inico contenido -------------------------------------------------------------------------->
+                    <!--- inico contenido -------------------------------------------------------------------------->
 
                     <div class="buttons">
                         <a href="nuevo.php" class="btn btn-outline-primary">Agregar</a>
@@ -46,7 +46,7 @@ include("alumno.php");
                                 <th>#</th>
                                 <th>DNI</th>
                                 <th>Apellido Nombre</th>
-                                <th>Bloqueado</th>
+                                <th>Carrera</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -59,17 +59,16 @@ include("alumno.php");
                             ?>
                                 <tr>
                                     <td><?php echo $item['id']; ?></td>
-                                    <td><?php echo $item['usuario']; ?></td>
+
                                     <td><?php echo $item['apellidonombre']; ?></td>
-                                    <td><?php if ($item['estado']==1){echo "NO"; } else {echo "SI";}; ?></td>
+                                    <td><?php echo $item['carrera']; ?></td>
                                     <td>
                                         <form method="POST" role="form" action="editar.php">
                                             <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
                                             <button class="btn btn-sm btn-secondary d-inline-flex align-items-center">Editar</button>
-                                            <a href="rol.php?id=<?php echo $item['id']; ?>" class="btn btn-sm btn-warning d-inline-flex align-items-center" title = "Modificar permisos">Permisos</a>
                                             <!--a class="btn btn-sm btn-danger d-inline-flex align-items-center" href="eliminar.php?id=<?php echo $item['id_usuario']; ?>" >
-                  Borrar
-              </a-->
+                                              Borrar
+                                            </a-->
                                         </form>
                                     </td>
                                 </tr>
@@ -80,8 +79,8 @@ include("alumno.php");
                     </table>
                     <!--- fin contenido------------------------------------------------------- -->
                 </div>
-            </div>   
-        </section> 
+            </div>
+        </section>
         <?php
         include("../pie.php");
         ?>

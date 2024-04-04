@@ -70,13 +70,10 @@ if (isset($_POST['usuario']) && !empty($_POST['usuario'])) {
                 <br>
                 <!--button type="button" id="buscar_dni"
                   class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar D.N.I.</button-->
-
               </div>
-
               <div class="col-md-8 mb-3">
                 <div id="resultadoBusqueda"></div>
               </div>
-
             </form>
 
             <hr>

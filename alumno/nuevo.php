@@ -3,27 +3,27 @@ include("../cabecera.php");
 include("../menu.php");
 include("alumno.php");
 $objeto = new Alumno();
-if (isset($_POST['persona_id']) && !empty($_POST['persona_id'])) {
-  $persona_id = $_POST['persona_id'];
+if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
+  $persona_id = $_POST['id_persona'];
   $edad = $_POST['edad'];
   $gruposanguineo = $_POST['gruposanguineo'];
   $carrera_id = $_POST['carrera_id'];
 
- // $fechaingreso = date("Y-m-d");
+  // $fechaingreso = date("Y-m-d");
   //$estado = 'Activo';
 
-  $todobien = $objeto->nuevo($edad,$gruposanguineo,$persona_id,$carrera_id);
+  $todobien = $objeto->nuevo($edad, $gruposanguineo, $persona_id, $carrera_id);
   if ($todobien) {
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
     //header('Location: listado.php');
     exit;
   } else {
-    ?>
+?>
     <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
       <button data-dismiss="alert" class="close" type="button">×</button>
       Lo sentimos, no se pudo guardar ...
     </div>
-    <?php
+  <?php
   }
 } else {
   ?>
@@ -64,14 +64,13 @@ if (isset($_POST['persona_id']) && !empty($_POST['persona_id'])) {
 
             <!---formulario-->
             <form>
-              
+
               <div class="col-md-8 mb-3">
                 <label>D.N.I </label>
                 <input name="dnialumno" id="dnialumno" class="form-control" type="text" tabindex="1" maxlength="10" required />
                 <br>
                 <!--button type="button" id="buscar_dni"
                   class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar D.N.I.</button-->
-
               </div>
 
               <div class="col-md-8 mb-3">
@@ -93,13 +92,12 @@ if (isset($_POST['persona_id']) && !empty($_POST['persona_id'])) {
 
               <div class="col-md-8 mb-3">
                 <label class="form-label">Grupo Sanguineo</label>
-                <input name="edad" class="form-control" type="text" tabindex="2" required />
+                <input name="gruposanguineo" class="form-control" type="text" tabindex="2" required />
               </div>
-                        
 
               <div class="col-md-8 mb-3">
-                <label class="form-label">Tipo Ingreso</label>
-                <select class="form-control" name="ingreso_tipo_id" required autofocus tabindex="1">
+                <label class="form-label">Carrera</label>
+                <select class="form-control" name="carrera_id" required autofocus tabindex="1">
                   <option value="0">Seleccione....</option>
                   <?php
 
@@ -112,13 +110,12 @@ if (isset($_POST['persona_id']) && !empty($_POST['persona_id'])) {
                   }
                   ?>
                 </select>
-                
+
               </div>
 
               <div class="col-md-8 mb-3">
 
-                <button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center"
-                  data-dismiss="modal" onclick="location.href='index.php';"> Cancelar
+                <button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center" data-dismiss="modal" onclick="location.href='index.php';"> Cancelar
 
                 </button>
 
@@ -135,55 +132,54 @@ if (isset($_POST['persona_id']) && !empty($_POST['persona_id'])) {
           </div>
         </div>
       </section>
-      <?php
-}
-      include("../pie.php");
-      ?>
+    <?php
+  }
+  include("../pie.php");
+    ?>
 
-       <script src="../assets/js/jquery-3.6.3.min.js"></script>
+    <script src="../assets/js/jquery-3.6.3.min.js"></script>
 
-       <script src="../assets/js/jquery.validate.min.js"></script>
+    <script src="../assets/js/jquery.validate.min.js"></script>
 
-       <script type="text/javascript">
-         $(document).ready(function() {
+    <script type="text/javascript">
+      $(document).ready(function() {
 
 
-            // buscar por dni 09/08/2018
-          $("#dnialumno").blur(function () {
-            var vdni = $("#dnialumno").val();
-            $.ajax({
-              url: "../personas/buscar_dni.php",
-              type: "POST",
-              data: { dni: vdni },
-              success: function (response) {
-                var jsonData = JSON.parse(response);
-                console.log(jsonData);
-                //alert(jsonData.estado);
-                if (jsonData.estado == "ok") {
-                  $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'> Persona : " + jsonData.nombre + ". </h6>");
-                  $("#id_persona").val(jsonData.id_persona);
-                  document.getElementById("guardar").disabled = false;
-                }
-                else {
-                 $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'>" + jsonData.mensaje + "</h6>");
-                 document.getElementById("guardar").disabled = true;
-                     }
-
-              },
-              failure: function (data) {
-                alert(response);
-              },
-              error: function (data) {
-                alert(response);
+        // buscar por dni 09/08/2018
+        $("#dnialumno").blur(function() {
+          var vdni = $("#dnialumno").val();
+          $.ajax({
+            url: "../personas/buscar_dni.php",
+            type: "POST",
+            data: {
+              dni: vdni
+            },
+            success: function(response) {
+              var jsonData = JSON.parse(response);
+              console.log(jsonData);
+              //alert(jsonData.estado);
+              if (jsonData.estado == "ok") {
+                $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'> Persona : " + jsonData.nombre + ". </h6>");
+                $("#id_persona").val(jsonData.id_persona);
+                document.getElementById("guardar").disabled = false;
+              } else {
+                $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'>" + jsonData.mensaje + "</h6>");
+                document.getElementById("guardar").disabled = true;
               }
-            });
+
+            },
+            failure: function(data) {
+              alert(response);
+            },
+            error: function(data) {
+              alert(response);
+            }
           });
+        });
 
 
 
 
- 
-  }) //fin jquery      
 
-       </script>
-        
+      }) //fin jquery      
+    </script>

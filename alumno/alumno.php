@@ -22,7 +22,8 @@ class Alumno
     persona.`apellidonombre` AS apellidonombre,
     persona.`dni` AS dni,
     alumno.`edad` AS edad,
-    carrera.`nombre` AS carrera
+    carrera.`nombre` AS carrera,
+    alumno.`id` AS id
     FROM
         `alumno`
         INNER JOIN `carrera` 
@@ -76,18 +77,34 @@ VALUES (
       
     }
 
-  public function editar($id, $usuario, $bloqueado)
+  public function editar($id, $edad,$gruposanguineo,$carrera_id)
   {
-    $sql = "UPDATE `usuario`
-            SET `usuario` = '$usuario',
-                `estado` = '$bloqueado' WHERE `id` = '$id';";
+    $sql = "UPDATE `alumno`
+    SET 
+      `edad` = '$edad',
+      `gruposanguineo` = '$gruposanguineo',
+      `carrera_id` = '$carrera_id'
+       WHERE `id` = '$id';";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
   }
 
   public function obtenerId($id)
   {
-    $sql = "SELECT * FROM usuario where id='$id'";
+    $sql = "SELECT
+    alumno.`edad` AS edad,
+    alumno.`gruposanguineo` AS gruposanguineo,
+    alumno.`id` AS alumno_id,
+    persona.`apellidonombre` AS apellidonombre,
+    persona.`dni` AS dni,
+    carrera.`nombre` AS carrera_nombre
+    FROM
+        `alumno`
+        INNER JOIN `persona` 
+            ON (`alumno`.`persona_id` = `persona`.`id`)
+        INNER JOIN `carrera` 
+            ON (`alumno`.`carrera_id` = `carrera`.`id`)
+            where alumno.`id`='$id'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
