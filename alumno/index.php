@@ -47,6 +47,7 @@ include("alumno.php");
                                 <th>DNI</th>
                                 <th>Apellido Nombre</th>
                                 <th>Carrera</th>
+                                <th>Estado</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -59,9 +60,10 @@ include("alumno.php");
                             ?>
                                 <tr>
                                     <td><?php echo $item['id']; ?></td>
-
+                                    <td><?php echo $item['dni']; ?></td>
                                     <td><?php echo $item['apellidonombre']; ?></td>
                                     <td><?php echo $item['carrera']; ?></td>
+                                    <td><?php echo $item['estado']; ?></td>
                                     <td>
                                         <form method="POST" role="form" action="editar.php">
                                             <input type="hidden" name="id" value="<?php echo $item['id']; ?>">

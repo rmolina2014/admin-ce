@@ -127,9 +127,9 @@
         </li>
 
         <li class="sidebar-item ">
-          <a href="../egresos/index.php" class="sidebar-link">
+          <a href="../egreso/index.php" class="sidebar-link">
             <i class="bi bi-grid-fill"></i>
-            <span>Egresos</span>
+            <span>Egreso</span>
           </a>
         </li>
 

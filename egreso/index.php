@@ -1,7 +1,7 @@
 ﻿<?php
 include ("../cabecera.php");
 include ("../menu.php");
-include ("ingreso.php");
+include ("egreso.php");
 ?>
 <div id="main">
   <header class="mb-3">
@@ -31,7 +31,7 @@ include ("ingreso.php");
     <section class="section">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Listado de Ingresos</h4>
+          <h4 class="card-title">Listado de Egresos</h4>
         </div>
         <div class="card-body">
           <!--- inico contenido -------------------------------------------------------------------------->
@@ -44,7 +44,7 @@ include ("ingreso.php");
             <thead class="thead-light">
               <tr>
                 <th>N°</th>
-                <th>Fecha Ingreso</th>
+                <th>Fecha Egreso</th>
                 <th>Importe</th>
                 <th>Detalle</th>
                 <th>Caja</th>

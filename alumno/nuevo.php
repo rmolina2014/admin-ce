@@ -8,11 +8,12 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
   $edad = $_POST['edad'];
   $gruposanguineo = $_POST['gruposanguineo'];
   $carrera_id = $_POST['carrera_id'];
+  $estado= "Activo";
 
   // $fechaingreso = date("Y-m-d");
   //$estado = 'Activo';
 
-  $todobien = $objeto->nuevo($edad, $gruposanguineo, $persona_id, $carrera_id);
+  $todobien = $objeto->nuevo($edad, $gruposanguineo, $persona_id, $carrera_id, $estado);
   if ($todobien) {
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
     //header('Location: listado.php');
@@ -135,13 +136,10 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
     <?php
   }
   include("../pie.php");
-    ?>
-
-    <script src="../assets/js/jquery-3.6.3.min.js"></script>
-
-    <script src="../assets/js/jquery.validate.min.js"></script>
-
-    <script type="text/javascript">
+  ?>
+  <script src="../assets/js/jquery-3.6.3.min.js"></script>
+  <script src="../assets/js/jquery.validate.min.js"></script>
+  <script type="text/javascript">
       $(document).ready(function() {
 
 
@@ -176,10 +174,5 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
             }
           });
         });
-
-
-
-
-
       }) //fin jquery      
     </script>

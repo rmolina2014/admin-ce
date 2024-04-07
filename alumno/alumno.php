@@ -22,6 +22,7 @@ class Alumno
     persona.`apellidonombre` AS apellidonombre,
     persona.`dni` AS dni,
     alumno.`edad` AS edad,
+    alumno.`estado` AS estado,
     carrera.`nombre` AS carrera,
     alumno.`id` AS id
     FROM
@@ -39,52 +40,54 @@ class Alumno
     return $data;
   }
 
-
   public function nuevo(
     $edad,
     $gruposanguineo,
     $persona_id,
-    $carrera_id
+    $carrera_id,
+    $estado
   ) {
     $sql = "INSERT INTO `alumno`
     (`edad`,
      `gruposanguineo`,
      `persona_id`,
-     `carrera_id`)
+     `carrera_id`,
+     `estado`)
 VALUES (
 '$edad',
 '$gruposanguineo',
 '$persona_id',
-'$carrera_id');";
+'$carrera_id',
+'$estado');";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
   }
 
-
   //lista los ingresos por tipo
   public function listaCarrera()
-   {
-      $sql="SELECT * FROM carrera";
-      $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
-      if(mysqli_num_rows($rs) >0)
-      {
-        while($fila = mysqli_fetch_assoc($rs))
-        {
-          $data[] = $fila;
-        }
+  {
+    $sql = "SELECT * FROM carrera";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
       }
-      return $data;
-      
     }
+    return $data;
+  }
 
-  public function editar($id, $edad,$gruposanguineo,$carrera_id)
+  public function editar($id, $edad, $gruposanguineo, $carrera_id, $estado)
   {
     $sql = "UPDATE `alumno`
     SET 
       `edad` = '$edad',
       `gruposanguineo` = '$gruposanguineo',
-      `carrera_id` = '$carrera_id'
-       WHERE `id` = '$id';";
+      `carrera_id` = '$carrera_id',
+      `estado` = '$estado'
+       WHERE `id` = '$id'";
+
+    //echo $sql;
+    //exit;   
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
   }
@@ -92,18 +95,20 @@ VALUES (
   public function obtenerId($id)
   {
     $sql = "SELECT
-    alumno.`edad` AS edad,
-    alumno.`gruposanguineo` AS gruposanguineo,
-    alumno.`id` AS alumno_id,
     persona.`apellidonombre` AS apellidonombre,
     persona.`dni` AS dni,
-    carrera.`nombre` AS carrera_nombre
+    alumno.`edad` AS edad,
+    alumno.`gruposanguineo` AS gruposanguineo,
+    alumno.`estado` AS estado,
+    carrera.`nombre` AS carrera,
+    carrera.`id` AS carrera_id,
+    alumno.`id` AS alumno_id
     FROM
         `alumno`
-        INNER JOIN `persona` 
-            ON (`alumno`.`persona_id` = `persona`.`id`)
         INNER JOIN `carrera` 
             ON (`alumno`.`carrera_id` = `carrera`.`id`)
+        INNER JOIN `persona` 
+            ON (`alumno`.`persona_id` = `persona`.`id`)
             where alumno.`id`='$id'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     if (mysqli_num_rows($rs) > 0) {
