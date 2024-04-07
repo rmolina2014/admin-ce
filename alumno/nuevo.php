@@ -101,9 +101,7 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
                 <select class="form-control" name="carrera_id" required autofocus tabindex="1">
                   <option value="0">Seleccione....</option>
                   <?php
-
                   $items = $objeto->listaCarrera();
-
                   foreach ($items as $item) {
                   ?>
                     <option value="<?php echo $item['id']; ?>"> <?php echo $item['nombre']; ?> </option>
@@ -111,7 +109,6 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
                   }
                   ?>
                 </select>
-
               </div>
 
               <div class="col-md-8 mb-3">

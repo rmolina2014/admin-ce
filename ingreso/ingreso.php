@@ -1,5 +1,5 @@
 <?php
-include_once("../bd/conexion.php");
+include_once ("../bd/conexion.php");
 class Ingreso
 {
   public function obtenerUsuario($usuario)
@@ -81,7 +81,7 @@ class Ingreso
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
         //$data[] = $fila;
-        $id= $fila["id"];
+        $id = $fila["id"];
       }
     }
     return $id;
@@ -89,17 +89,55 @@ class Ingreso
 
   //lista los ingresos por tipo
   public function listaIngresoTipo()
-   {
-      $sql="SELECT * FROM ingreso_tipo";
-      $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
-      if(mysqli_num_rows($rs) >0)
-      {
-        while($fila = mysqli_fetch_assoc($rs))
-        {
-          $data[] = $fila;
-        }
+  {
+    $sql = "SELECT * FROM ingreso_tipo";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
       }
-      return $data;
-      
     }
+    return $data;
+
+  }
+
+  //lista las materias
+  public function listaCarrera()
+  {
+    $sql = "SELECT * FROM carrera";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
+
+  public function buscarDniCarrera($dni)
+  {
+    $data = array();
+    $sql = "SELECT id,apellidonombre FROM persona WHERE dni ='$dni'";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
+  public function buscarCarreraCuotas($carrera_id)
+  {
+    $data = array();
+    $sql = "SELECT * FROM cuota WHERE carrera_id ='$carrera_id'";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
 }

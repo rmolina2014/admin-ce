@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `alumno`;
 CREATE TABLE `alumno` (
   `id` int NOT NULL AUTO_INCREMENT,
   `edad` int NOT NULL,
-  `gruposanguineo` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `gruposanguineo` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `persona_id` int NOT NULL,
   `carrera_id` int DEFAULT NULL,
   `estado` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Activo, Inactivo',
-  `observacion` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `observacion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `relapersona` (`persona_id`),
   CONSTRAINT `alumno_ibfk_1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -35,7 +35,7 @@ CREATE TABLE `alumno` (
 
 /*Data for the table `alumno` */
 
-insert  into `alumno`(`id`,`edad`,`gruposanguineo`,`persona_id`,`carrera_id`,`estado`,`observacion`) values (1,8,'++',36,2,'Inactivo',NULL);
+insert  into `alumno`(`id`,`edad`,`gruposanguineo`,`persona_id`,`carrera_id`,`estado`,`observacion`) values (1,8,'++',36,1,'Inactivo',NULL);
 
 /*Table structure for table `caja` */
 
@@ -80,7 +80,7 @@ DROP TABLE IF EXISTS `carrera`;
 
 CREATE TABLE `carrera` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(90) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nombre` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `costo` decimal(18,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -88,6 +88,22 @@ CREATE TABLE `carrera` (
 /*Data for the table `carrera` */
 
 insert  into `carrera`(`id`,`nombre`,`costo`) values (1,'Asistente ',120000.00),(2,'Tecnico',150000.00),(3,'Farmacia',130000.00);
+
+/*Table structure for table `cuota` */
+
+DROP TABLE IF EXISTS `cuota`;
+
+CREATE TABLE `cuota` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `carrera_id` int DEFAULT NULL,
+  `detalle` varchar(90) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `costo` decimal(18,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `cuota` */
+
+insert  into `cuota`(`id`,`carrera_id`,`detalle`,`costo`) values (1,1,'Inscripcion',5000.00),(2,1,'Cuota 1',18000.00),(3,1,'Cuota 2',18000.00),(4,2,'Inscripcion',7000.00);
 
 /*Table structure for table `detalle_permiso` */
 
@@ -116,8 +132,8 @@ CREATE TABLE `docente` (
   `id` int NOT NULL AUTO_INCREMENT,
   `rela_persona` int NOT NULL,
   `edad` int NOT NULL,
-  `titulacion` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
-  `materias` text COLLATE utf8mb4_general_ci NOT NULL,
+  `titulacion` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `materias` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `relapersona` (`rela_persona`),
   CONSTRAINT `docente_ibfk_1` FOREIGN KEY (`rela_persona`) REFERENCES `persona` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -147,7 +163,7 @@ DROP TABLE IF EXISTS `egreso_tipo`;
 
 CREATE TABLE `egreso_tipo` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(90) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nombre` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -177,7 +193,7 @@ DROP TABLE IF EXISTS `ingreso_tipo`;
 
 CREATE TABLE `ingreso_tipo` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(60) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nombre` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `monto` decimal(16,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -192,7 +208,7 @@ DROP TABLE IF EXISTS `permiso`;
 
 CREATE TABLE `permiso` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(35) COLLATE utf8mb4_general_ci NOT NULL,
+  `nombre` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre_permiso` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -207,12 +223,12 @@ DROP TABLE IF EXISTS `persona`;
 
 CREATE TABLE `persona` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `apellidonombre` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `apellidonombre` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `dni` int NOT NULL,
-  `domicilio` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `cel1` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
-  `cel2` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
-  `mail` varchar(35) COLLATE utf8mb4_general_ci NOT NULL,
+  `domicilio` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cel1` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cel2` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `mail` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `apellidonombre` (`apellidonombre`) USING BTREE,
   UNIQUE KEY `dniunico` (`dni`)
@@ -220,7 +236,7 @@ CREATE TABLE `persona` (
 
 /*Data for the table `persona` */
 
-insert  into `persona`(`id`,`apellidonombre`,`dni`,`domicilio`,`cel1`,`cel2`,`mail`) values (1,'yanzon mauricio',22705501,'b ucc','2645056361','5555555','mauricioyan@hotmail.com'),(2,'perez jose',22705502,'sdfdsf','324234324','11','gfdg@sdasd'),(20,'Yalardo Juan',22708505,'san juan- rivadavia','24646546556','',''),(30,'rtret',22705506,'retert','','',''),(34,'asdasdewrewr',227055088,'asdsad','','',''),(36,'el 3',22705503,'sdfsdf','','','');
+insert  into `persona`(`id`,`apellidonombre`,`dni`,`domicilio`,`cel1`,`cel2`,`mail`) values (1,'yanzon mauricio',22705501,'b ucc','2645056361','5555555','mauricioyan@hotmail.com'),(2,'perez jose',22705502,'sdfdsf','324234324','11','gfdg@sdasd'),(20,'Yalardo Juan',22708505,'san juan- rivadavia','24646546556','',''),(30,'rtret',22705506,'retert','','',''),(34,'asdasdewrewr',227055088,'asdsad','','',''),(36,'alumno nuevo',22705503,'sdfsdf','','','');
 
 /*Table structure for table `usuario` */
 
@@ -229,8 +245,8 @@ DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `id` int NOT NULL AUTO_INCREMENT,
   `rela_persona` int NOT NULL,
-  `usuario` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
-  `pass` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `usuario` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `pass` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `estado` tinyint(1) NOT NULL COMMENT '0 inactivo y 1 activo',
   PRIMARY KEY (`id`),
   UNIQUE KEY `rela_persona` (`rela_persona`),
