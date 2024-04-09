@@ -61,6 +61,14 @@ include ("egreso.php");
                     <td>
                       <?php echo $item['nombre']; ?>
                     </td>
+                    <td>
+                        <form method="POST" role="form" action="editar.php">
+                           <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
+                           <button class="btn btn-sm btn-secondary d-inline-flex align-items-center">Editar</button>
+                        </form>
+                    </td>
+
+
 
                   </tr>
                   <?php

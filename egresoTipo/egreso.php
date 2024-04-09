@@ -15,38 +15,36 @@ class Egreso
       return $rs;
   }
 
-  public function lista()
+
+  public function editar($id,$detalle)
+  {
+
+    $sql = "UPDATE `egreso_tipo` SET `nombre`='$detalle' WHERE `id`='$id';";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    return $rs;
+  }
+
+
+  public function obtenerTipoEgreso($id)
   {
     $data=array();
-    $consulta = "select * from egreso e,egreso_tipo et where e.egreso_tipo=et.id ";
+    $consulta = "SELECT * FROM egreso_tipo where id='$id'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
         $data[] = $fila;
       }
-    }
-    return $data;
-  }
+      return $data;
+    } else
+      return $rs;
+  }  
 
-  public function nuevo(
-    $monto,
-    $fecha_egreso,
-    $caja_id,
-    $usuario_id,
-    $egreso_tipo
-  ) {
-    $sql = "INSERT INTO `egreso`
-    (`monto`,
-     `fecha_egreso`,
-     `caja_id`,
-     `usuario_id`,
-     `egreso_tipo`)
-      VALUES ('$monto',
-      '$fecha_egreso',
-      '$caja_id',
-      '$usuario_id',
-      '$egreso_tipo'
-      );";
+
+
+    public function nuevoEgresoTipo($nombre) {
+    $sql = "INSERT INTO `egreso_tipo`
+    (`nombre`)
+      VALUES ('$nombre');";
     //echo $sql;
     //exit;
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
@@ -54,28 +52,8 @@ class Egreso
     return $rs;
   }
 
-  public function buscarCajaAbierta()
-  {
-    $data = array();
-    $consulta = "SELECT
-    `id`,
-    `importe_inicio`,
-    `fecha_apertura`,
-    `importe_cierre`,
-    `fecha_cierre`,
-    `estado`,
-    `saldo`
-  FROM `caja`
-  where `estado`= 'Abierta';";
-    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
-    if (mysqli_num_rows($rs) > 0) {
-      while ($fila = mysqli_fetch_assoc($rs)) {
-        //$data[] = $fila;
-        $id= $fila["id"];
-      }
-    }
-    return $id;
-  }
+
+
 
   //lista los ingresos por tipo
   public function listaEgresoTipo()
