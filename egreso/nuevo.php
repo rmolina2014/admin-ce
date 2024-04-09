@@ -1,22 +1,22 @@
 <?php
 include("../cabecera.php");
 include("../menu.php");
-include("ingreso.php");
-$objeto = new Ingreso();
+include("egreso.php");
+$objeto = new Egreso();
 if (isset($_POST['monto']) && !empty($_POST['monto'])) {
 
   $monto = $_POST['monto'];
-  $fecha_ingreso = date("Y-m-d H:i:s");
+  $fecha_egreso = date("Y-m-d H:i:s");
   $caja_id = $_POST['caja_id'];
   $usuario_id = $_POST['usuario_id'];
-  $ingreso_tipo_id = $_POST['ingreso_tipo_id'];
+  $egreso_tipo = $_POST['egreso_tipo_id'];
 
   $todobien = $objeto->nuevo(
     $monto,
-    $fecha_ingreso,
+    $fecha_egreso,
     $caja_id,
     $usuario_id,
-    $ingreso_tipo_id
+    $egreso_tipo
   );
   if ($todobien) {
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
@@ -44,14 +44,14 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
       <div class="page-title">
         <div class="row">
           <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>Ingreso</h3>
+            <h3>Egreso</h3>
             <!--p class="text-subtitle text-muted">The default layout.</p-->
           </div>
           <div class="col-12 col-md-6 order-md-2 order-first">
             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../panelcontrol/index.html">Panel de Control</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Ingreso</li>
+                <li class="breadcrumb-item active" aria-current="page">Egreso</li>
               </ol>
             </nav>
           </div>
@@ -90,12 +90,12 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
               </div>
 
               <div class="col-md-8 mb-3">
-                <label class="form-label">Tipo Ingreso</label>
-                <select class="form-control" name="ingreso_tipo_id" required autofocus tabindex="1">
+                <label class="form-label">Tipo Egreso</label>
+                <select class="form-control" name="egreso_tipo_id" required autofocus tabindex="1">
                   <option value="0">Seleccione....</option>
                   <?php
 
-                  $items = $objeto->listaIngresoTipo();
+                  $items = $objeto->listaEgresoTipo();
 
                   foreach ($items as $item) {
                   ?>

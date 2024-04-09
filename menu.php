@@ -146,7 +146,7 @@
         </li>
 
         <li class="sidebar-item ">
-          <a href="../tipo_egreso/index.php" class="sidebar-link">
+          <a href="../egresoTipo/index.php" class="sidebar-link">
             <i class="bi bi-grid-fill"></i>
             <span>Tipo Egresos</span>
           </a>

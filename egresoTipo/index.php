@@ -14,14 +14,14 @@ include ("egreso.php");
     <div class="page-title">
       <div class="row">
         <div class="col-12 col-md-6 order-md-1 order-last">
-          <h3>Egresos</h3>
+          <h3>Tipos de Egresos</h3>
           <!--p class="text-subtitle text-muted">The default layout.</p-->
         </div>
         <div class="col-12 col-md-6 order-md-2 order-first">
           <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="../panelcontrol/index.php">Panel de Control</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Egresos</li>
+              <li class="breadcrumb-item active" aria-current="page">Tipos de Egresos</li>
             </ol>
           </nav>
         </div>
@@ -31,7 +31,7 @@ include ("egreso.php");
     <section class="section">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Listado de Egresos</h4>
+          <h4 class="card-title">Tipos de Egresos</h4>
         </div>
         <div class="card-body">
           <!--- inico contenido -------------------------------------------------------------------------->
@@ -44,17 +44,14 @@ include ("egreso.php");
             <thead class="thead-light">
               <tr>
                 <th>N°</th>
-                <th>Fecha Egreso</th>
-                <th>Importe</th>
                 <th>Detalle</th>
-                <th>Caja</th>
                 <th></th>
               </tr>
               <thead>
               <tbody>
                 <?php
                 $objeto = new Egreso();
-                $usuarios = $objeto->lista();
+                $usuarios = $objeto->listaEgresoTipo();
                 foreach ($usuarios as $item) {
                   ?>
                   <tr>
@@ -62,18 +59,8 @@ include ("egreso.php");
                       <?php echo $item['id']; ?>
                     </td>
                     <td>
-                      <?php echo $item['fecha_egreso']; ?>
-                    </td>
-                    <td>
-                      <?php echo $item['monto']; ?>
-                    </td>
-                    <td>
                       <?php echo $item['nombre']; ?>
                     </td>
-                    <td>
-                      <?php echo $item['caja_id']; ?>
-                    </td>
-                    
 
                   </tr>
                   <?php

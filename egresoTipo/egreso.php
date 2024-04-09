@@ -54,20 +54,6 @@ class Egreso
     return $rs;
   }
 
-
-  public function nuevoEgresoTipo(
-    $nombre) {
-    $sql = "INSERT INTO `egreso_tipo`
-    (`nombre`)
-      VALUES ('$nombre');";
-    //echo $sql;
-    //exit;
-    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
-    //$rs = mysqli_insert_id(conexion::obtenerInstancia());
-    return $rs;
-  }
-
-
   public function buscarCajaAbierta()
   {
     $data = array();
