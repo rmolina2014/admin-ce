@@ -16,19 +16,19 @@ class Carrera
   }
 
 
-  public function editar($id,$detalle)
+  public function editar($id,$nombre,$monto)
   {
 
-    $sql = "UPDATE `egreso_tipo` SET `nombre`='$detalle' WHERE `id`='$id';";
+    $sql = "UPDATE `carrera` SET `nombre`='$nombre',`costo`='$monto' WHERE `id`='$id';";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
   }
 
 
-  public function obtenerTipoEgreso($id)
+  public function obtenerCarrera($id)
   {
     $data=array();
-    $consulta = "SELECT * FROM egreso_tipo where id='$id'";
+    $consulta = "SELECT * FROM carrera where id='$id'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {

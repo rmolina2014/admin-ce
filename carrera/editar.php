@@ -1,16 +1,16 @@
  <?php
  include("../cabecera.php");
  include("../menu.php");
- include("egreso.php");
+ include("carrera.php");
 
- $objeto = new Egreso();
+ $objeto = new Carrera();
  if( isset($_POST['id']) && !empty($_POST['id']) )
  {
     $id=(int)$_POST['id'];
-    $registros= $objeto->obtenerTipoEgreso($id);
+    $registros= $objeto->obtenerCarrera($id);
    foreach($registros as $item)
    {
-    $id_egreso= $item['id'];
+    $id_carrera= $item['id'];
    }
 ?>
 
@@ -25,14 +25,14 @@
        <div class="page-title">
          <div class="row">
            <div class="col-12 col-md-6 order-md-1 order-last">
-             <h3>Tipos de Egreso</h3>
+             <h3>Carreras</h3>
              <!--p class="text-subtitle text-muted">The default layout.</p-->
            </div>
            <div class="col-12 col-md-6 order-md-2 order-first">
              <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                <ol class="breadcrumb">
                  <li class="breadcrumb-item"><a href="../panelcontrol/index.html">Panel de Control</a></li>
-                 <li class="breadcrumb-item active" aria-current="page">Egresos</li>
+                 <li class="breadcrumb-item active" aria-current="page">Carreras</li>
                </ol>
              </nav>
            </div>
@@ -42,7 +42,7 @@
        <section class="section">
          <div class="card">
            <div class="card-header">
-             <h4 class="card-title">Editar Tipo de Egreso</h4>
+             <h4 class="card-title">Editar Carreras</h4>
            </div>
            <div class="card-body">
              <!--- contenido -->
@@ -50,11 +50,18 @@
              <!---formulario-->
 <form method="POST" role="form" action="editar.php">
 
-  <input type="hidden" name="id_egreso" value="<?php echo $item['id']; ?>">
+  <input type="hidden" name="id_carrera" value="<?php echo $item['id']; ?>">
   <div class="col-md-8 mb-3">
-    <label class="form-label">Detalle</label>
-    <input name="detalle"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['nombre']); ?>" />
+    <label class="form-label">Nombre*</label>
+    <input name="nombre"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['nombre']); ?>" />
   </div>
+
+
+  <div class="col-md-8 mb-3">
+    <label class="form-label">Monto*</label>
+    <input name="monto"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['costo']); ?>" />
+  </div>
+
     
   <div class="col-md-8 mb-3">
 
@@ -80,13 +87,14 @@
         
 }else
 {
-if (isset($_POST['id_egreso']) && !empty($_POST['id_egreso']))
+if (isset($_POST['id_carrera']) && !empty($_POST['id_carrera']))
 {
-//   editar($id,$apellidonombre, $dni, $domicilio, $cel1, $cel2, $mail)
-$id = $_POST['id_egreso'];
-$detalle=$_POST['detalle'];
 
-$todobien = $objeto->editar($id,$detalle);
+$id = $_POST['id_carrera'];
+$nombre=$_POST['nombre'];
+$monto=$_POST['monto'];
+
+$todobien = $objeto->editar($id,$nombre,$monto);
 if($todobien){
     echo "<script language=Javascript> location.href=\"index.php\"; </script>"; 
     //header('Location: listado.php');
