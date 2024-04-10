@@ -117,12 +117,12 @@
           </a>
         </li>
 
-         <li class="sidebar-item ">
+         <!--li class="sidebar-item ">
           <a href="../cuota/index.php" class="sidebar-link">
             <i class="bi bi-grid-fill"></i>
             <span>Carreras - Cuotas</span>
           </a>
-        </li>
+        </li-->
 
         <li class="sidebar-item ">
           <a href="../ingreso/index.php" class="sidebar-link">
