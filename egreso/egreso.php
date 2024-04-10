@@ -17,7 +17,7 @@ class Egreso
 
   public function lista()
   {
-    $data=array();
+    $data = array();
     $consulta = "select * from egreso e,egreso_tipo et where e.egreso_tipo=et.id ";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
@@ -54,9 +54,6 @@ class Egreso
     return $rs;
   }
 
-
-
-
   public function buscarCajaAbierta()
   {
     $data = array();
@@ -74,7 +71,7 @@ class Egreso
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
         //$data[] = $fila;
-        $id= $fila["id"];
+        $id = $fila["id"];
       }
     }
     return $id;
@@ -82,17 +79,14 @@ class Egreso
 
   //lista los ingresos por tipo
   public function listaEgresoTipo()
-   {
-      $sql="SELECT * FROM egreso_tipo";
-      $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
-      if(mysqli_num_rows($rs) >0)
-      {
-        while($fila = mysqli_fetch_assoc($rs))
-        {
-          $data[] = $fila;
-        }
+  {
+    $sql = "SELECT * FROM egreso_tipo";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
       }
-      return $data;
-      
     }
+    return $data;
+  }
 }

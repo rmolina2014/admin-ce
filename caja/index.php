@@ -78,18 +78,18 @@ include ("caja.php");
                       <?php echo $item['estado']; ?>
                     </td>
                     <td>
-                      <?
+                      <?php
                       if ($item['estado'] == 'Abierta') {
                         ?>
                         <a class="btn btn-danger btn-sm" href="cerrarcaja.php?caja_id=<?php echo $item['id']; ?>">Cerrar
                           Caja</a>
                       </td>
-                    <?
+                    <?php
                       } else {
                         ?>
                       <a class="btn btn-primary btn-sm" href="detalle_caja.php?caja_id=<?php echo $item['id']; ?>">Detalle
                         de la Caja</a></td>
-                    <?
+                    <?php
                       }
                       ?>
 
