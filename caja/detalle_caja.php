@@ -5,8 +5,9 @@ include("caja.php");
 
 if( isset($_GET['caja_id']) && !empty($_GET['caja_id']) )
 {
+ $objeto=new Caja(); 
  $caja_id=(int)$_GET['caja_id'];
- $registros=caja::detalleCaja($caja_id);
+ $registros=$objeto->detalleCaja($caja_id);
  foreach($registros as $item)
  {
   $id = $item['id']; 
