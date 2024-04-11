@@ -1,5 +1,5 @@
 <?php
-include_once("../bd/conexion.php");
+include_once ("../bd/conexion.php");
 class Caja
 {
   public function obtenerUsuario($usuario)
@@ -19,12 +19,12 @@ class Caja
   {
     $data = array();
     $consulta = "SELECT `id`,
-    `importe_inicio`,
     `fecha_apertura`,
-    `importe_cierre`,
-    `fecha_cierre`,
-    `estado`,
-    `saldo`
+             `ingreso_total`,
+             `egreso_total`,
+             `fecha_cierre`,
+             `estado`,
+             `saldo`
                     FROM `caja` order by `fecha_apertura` desc ";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
@@ -36,41 +36,43 @@ class Caja
   }
 
 
-  public function nuevo($importe_inicio,$fecha_apertura,$importe_cierre,$fecha_cierre,
-  $estado,$saldo)
+  public function nuevo($fecha_apertura, $ingreso_total, $egreso_total, $fecha_cierre, $estado, $saldo)
   {
     $sql = "INSERT INTO `caja`
-    (`importe_inicio`,
-     `fecha_apertura`,
-     `importe_cierre`,
-     `fecha_cierre`,
-     `estado`,
-     `saldo`)
+            (
+             `fecha_apertura`,
+             `ingreso_total`,
+             `egreso_total`,
+             `fecha_cierre`,
+             `estado`,
+             `saldo`)
 VALUES (
-'$importe_inicio',
-'$fecha_apertura',
-'$importe_cierre',
-'$fecha_cierre',
-'$estado',
-'$saldo');";
+        '$fecha_apertura',
+        '$ingreso_total',
+        '$egreso_total',
+        '$fecha_cierre',
+        '$estado',
+        '$saldo');";
 
-//echo $sql;
-//exit;
+    //echo $sql;
+    //exit;
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     $rs = mysqli_insert_id(conexion::obtenerInstancia());
     return $rs;
   }
 
 
-  public function cerrarcaja($caja_id, $cierre, $fechacierre, $estado, $saldo)
+  public function cerrarcaja($id, $fecha_apertura, $ingreso_total, $egreso_total, $fecha_cierre, $estado, $saldo)
   {
     $sql = "UPDATE `caja`
-              SET 
-                `cierre` = '$cierre',
-                `fechacierre` = '$fechacierre',
-                `estado` = '$estado',
-                `saldo` = '$saldo'
-              WHERE `id` = '$caja_id'";
+            SET 
+              `fecha_apertura` = '$fecha_apertura',
+              `ingreso_total` = '$ingreso_total',
+              `egreso_total` = '$egreso_total',
+              `fecha_cierre` = '$fecha_cierre',
+              `estado` = '$estado',
+              `saldo` = '$saldo'
+            WHERE `id` = '$id';";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
   }
@@ -88,53 +90,9 @@ VALUES (
     return $data;
   }
 
-  //insertar detalle de apertura
-  public function insertarDetalleApertura(
-    $cajanueva_id,
-    $operacion,
-    $tipo,
-    $monto,
-    $fechahora,
-    $detalle,
-    $usuario_id
-  ) {
-    $sql = "INSERT INTO `caja`
-            (`cajanueva_id`,
-             `operacion`,
-             `tipo`,
-             `monto`,
-             `fechahora`,
-             `detalle`,
-             `usuario_id`)
-              VALUES ('$cajanueva_id',
-                      '$operacion',
-                      '$tipo',
-                      '$monto',
-                      '$fechahora',
-                      '$detalle',
-                      '$usuario_id');";
-    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
-    return $rs;
-  }
-
-  //10-7-2017 detalle de caja
-
-
-  public function detalleCaja($id)
-  {
-    $consulta = " SELECT * FROM `caja` WHERE `cajanueva`.`id`=$id;";
-    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
-    if (mysqli_num_rows($rs) > 0) {
-      while ($fila = mysqli_fetch_assoc($rs)) {
-        $data[] = $fila;
-      }
-    }
-    return $data;
-  }
-
   public function listaDetalleCaja($cajanueva_id)
   {
-    $consulta = "SELECT * FROM `caja` where caja_id=$cajanueva_id";
+    $consulta = "SELECT * FROM `caja` where id=$cajanueva_id";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
