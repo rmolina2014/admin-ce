@@ -1,7 +1,7 @@
 ﻿<?php
-include ("../cabecera.php");
-include ("../menu.php");
-include ("caja.php");
+include("../cabecera.php");
+include("../menu.php");
+include("caja.php");
 ?>
 <div id="main">
   <header class="mb-3">
@@ -41,11 +41,12 @@ include ("caja.php");
           </div>
 
           <table class="table table-flush" id="datatable">
-                        <thead class="thead-light">
+            <thead class="thead-light">
               <tr>
                 <th>N°</th>
                 <th>Fecha apertura</th>
-                <th>Importe</th>
+                <th>Total Ingresos</th>
+                <th>Total Egresos</th>
                 <th>Fecha cierre</th>
                 <th>Saldo</th>
                 <th>Estado</th>
@@ -57,7 +58,7 @@ include ("caja.php");
                 $objeto = new Caja();
                 $usuarios = $objeto->lista();
                 foreach ($usuarios as $item) {
-                  ?>
+                ?>
                   <tr>
                     <td>
                       <?php echo $item['id']; ?>
@@ -66,35 +67,43 @@ include ("caja.php");
                       <?php echo $item['fecha_apertura']; ?>
                     </td>
                     <td>
-                      <?php echo $item['importe_inicio']; ?>
+                      <?php echo $item['ingreso_total']; ?>
+                    </td>
+                    <td>
+                      <?php echo $item['egreso_total']; ?>
                     </td>
                     <td>
                       <?php echo $item['fecha_cierre']; ?>
                     </td>
+                    
                     <td>
-                      <?php echo $item['importe_cierre']; ?>
+                      <?php echo $item['saldo']; ?>
                     </td>
+
                     <td>
                       <?php echo $item['estado']; ?>
                     </td>
+                    
                     <td>
+                    <a class="btn btn-primary btn-sm" href="detalle_caja.php?caja_id=<?php echo $item['id']; ?>">Detalle
+                      de la Caja</a>
                       <?php
                       if ($item['estado'] == 'Abierta') {
-                        ?>
+                      ?>
                         <a class="btn btn-danger btn-sm" href="cerrarcaja.php?caja_id=<?php echo $item['id']; ?>">Cerrar
                           Caja</a>
-                      </td>
-                    <?php
+                    </td>
+                  <?php
                       } else {
-                        ?>
-                      <a class="btn btn-primary btn-sm" href="detalle_caja.php?caja_id=<?php echo $item['id']; ?>">Detalle
-                        de la Caja</a></td>
-                    <?php
+                  ?>
+                    <a class="btn btn-primary btn-sm" href="detalle_caja.php?caja_id=<?php echo $item['id']; ?>">Detalle
+                      de la Caja</a></td>
+                  <?php
                       }
-                      ?>
+                  ?>
 
                   </tr>
-                  <?php
+                <?php
                 }
                 ?>
               </tbody>
@@ -104,5 +113,5 @@ include ("caja.php");
       </div>
     </section>
     <?php
-    include ("../pie.php");
+    include("../pie.php");
     ?>
