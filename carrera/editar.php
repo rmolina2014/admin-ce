@@ -58,8 +58,8 @@
 
 
   <div class="col-md-8 mb-3">
-    <label class="form-label">Monto*</label>
-    <input name="monto"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['costo']); ?>" />
+    <label class="form-label">Cantidad de cuotas*</label>
+    <input name="cantidadcuotas"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['cantidad_cuotas']); ?>" />
   </div>
 
     
@@ -92,9 +92,9 @@ if (isset($_POST['id_carrera']) && !empty($_POST['id_carrera']))
 
 $id = $_POST['id_carrera'];
 $nombre=$_POST['nombre'];
-$monto=$_POST['monto'];
+$cantidadcuotas=$_POST['cantidadcuotas'];
 
-$todobien = $objeto->editar($id,$nombre,$monto);
+$todobien = $objeto->editar($id,$nombre,$cantidadcuotas);
 if($todobien){
     echo "<script language=Javascript> location.href=\"index.php\"; </script>"; 
     //header('Location: listado.php');

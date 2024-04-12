@@ -45,7 +45,7 @@ include ("carrera.php");
               <tr>
                 <th>N°</th>
                 <th>Carrera</th>
-                <th>Costo</th>
+                <th>Cantidad de Cuotas</th>
                 <th></th>
               </tr>
               <thead>
@@ -63,7 +63,7 @@ include ("carrera.php");
                       <?php echo $item['nombre']; ?>
                     </td>
                     <td>
-                      <?php echo $item['costo']; ?>
+                      <?php echo $item['cantidad_cuotas']; ?>
                     </td>                    
                     <td>
                         <form method="POST" role="form" action="editar.php">

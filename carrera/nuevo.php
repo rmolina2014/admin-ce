@@ -6,8 +6,8 @@ $objeto = new Carrera();
 if (isset($_POST['nombrecarrera']) && !empty($_POST['nombrecarrera'])) {
 
   $nombre = $_POST['nombrecarrera'];
-  $monto = $_POST['monto'];
-  $todobien = $objeto->nuevaCarrera($nombre, $monto );
+  $cantidadcuotas = $_POST['cantidadcuotas'];
+  $todobien = $objeto->nuevaCarrera($nombre, $cantidadcuotas );
 
   if ($todobien) {
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
@@ -65,8 +65,8 @@ if (isset($_POST['nombrecarrera']) && !empty($_POST['nombrecarrera'])) {
               </div>
 
               <div class="col-md-8 mb-3">
-                <label class="form-label">Monto*</label>
-                <input name="monto" class="form-control" id="monto" required  />
+                <label class="form-label">Cantidad de cuotas*</label>
+                <input name="cantidadcuotas" class="form-control" id="cantidadcuotas" required  />
               </div>              
 
               <div class="col-md-8 mb-3">

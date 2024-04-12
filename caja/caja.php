@@ -18,13 +18,7 @@ class Caja
   public function lista()
   {
     $data = array();
-    $consulta = "SELECT `id`,
-    `importe_inicio`,
-    `fecha_apertura`,
-    `importe_cierre`,
-    `fecha_cierre`,
-    `estado`,
-    `saldo`
+    $consulta = "SELECT *
                     FROM `caja` order by `fecha_apertura` desc ";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {

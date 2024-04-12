@@ -91,13 +91,7 @@ class Egreso
   {
     $data = array();
     $consulta = "SELECT
-    `id`,
-    `importe_inicio`,
-    `fecha_apertura`,
-    `importe_cierre`,
-    `fecha_cierre`,
-    `estado`,
-    `saldo`
+    *
   FROM `caja`
   where `estado`= 'Abierta';";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);

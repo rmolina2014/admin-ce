@@ -58,6 +58,7 @@ class Egreso
   //lista los ingresos por tipo
   public function listaEgresoTipo()
    {
+      $data=array();
       $sql="SELECT * FROM egreso_tipo";
       $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
       if(mysqli_num_rows($rs) >0)
