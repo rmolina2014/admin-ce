@@ -45,22 +45,34 @@ class Alumno
     $gruposanguineo,
     $persona_id,
     $carrera_id,
-    $estado
+    $estado,
+    $observacion,
+    $fecha_ingreso
   ) {
     $sql = "INSERT INTO `alumno`
-    (`edad`,
+    (
+     `edad`,
      `gruposanguineo`,
      `persona_id`,
      `carrera_id`,
-     `estado`)
-VALUES (
-'$edad',
-'$gruposanguineo',
-'$persona_id',
-'$carrera_id',
-'$estado');";
+     `estado`,
+     `observacion`,
+     `fecha_ingreso`)
+      VALUES (
+      '$edad',
+      '$gruposanguineo',
+      '$persona_id',
+      '$carrera_id',
+      '$estado',
+      '$observacion',
+      '$fecha_ingreso');";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
-    return $rs;
+
+    $alumno_id = mysqli_insert_id(conexion::obtenerInstancia());
+
+    // retornar el id del alumno
+
+    return $alumno_id;
   }
 
   //lista los ingresos por tipo
@@ -140,6 +152,7 @@ VALUES (
     }
     return $data;
   }
+
   //verifica si el dni de la persona esta creado como usuario
   public function buscarDNIenusuario($dni)
   {
@@ -153,5 +166,53 @@ VALUES (
       }
     }
     return $data;
+  }
+
+  // cantidaCuotasCarrera
+  public function cuotasCostoCarrera($carrera_id)
+  {
+    $data = array();
+    $sql = "SELECT cantidad_cuotas,costo_carrera FROM carrera WHERE id ='$carrera_id'";
+
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        //$data = $fila['cantidad_cuotas'];
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
+  // insertar en alumno_carrra_cuota
+  public function insertar_cuotas_alumno(
+    $alumno_id,
+    $carrera_id,
+    $cuota_numero,
+    $monto,
+    $estado,
+    $fecha_vencimiento,
+    $fecha_pago
+  ) {
+    $sql = "INSERT INTO `alumno_carrera_cuotas`
+    (
+     `alumno_id`,
+     `carrera_id`,
+     `cuota_numero`,
+     `monto`,
+     `estado`,
+     `fecha_vencimiento`,
+     `fecha_pago`)
+      VALUES (
+      '$alumno_id',
+      '$carrera_id',
+      '$cuota_numero',
+      '$monto',
+      '$estado',
+      '$fecha_vencimiento',
+      '$fecha_pago'); ";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+
+    return $rs;
   }
 }

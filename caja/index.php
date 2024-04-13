@@ -94,14 +94,8 @@ include("caja.php");
                           Caja</a>
                     </td>
                   <?php
-                      } else {
+                    } 
                   ?>
-                    <a class="btn btn-primary btn-sm" href="detalle_caja.php?caja_id=<?php echo $item['id']; ?>">Detalle
-                      de la Caja</a></td>
-                  <?php
-                      }
-                  ?>
-
                   </tr>
                 <?php
                 }
