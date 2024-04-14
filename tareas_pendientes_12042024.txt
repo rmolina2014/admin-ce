@@ -1,3 +1,3 @@
-1 - abm de carrera agregar el costo total de la carrera
+1 - abm de carrera agregar el costo total de la carrera, el costo de la inscripcion
 2- abm agregar fecha_ingreso alumno
 3- generar cuotas alumno

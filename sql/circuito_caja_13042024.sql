@@ -32,7 +32,7 @@ CREATE TABLE `alumno` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `relapersona` (`persona_id`),
   CONSTRAINT `alumno_ibfk_1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `alumno` */
 
@@ -45,12 +45,13 @@ CREATE TABLE `alumno_carrera_cuotas` (
   `alumno_id` int DEFAULT NULL,
   `carrera_id` int DEFAULT NULL,
   `cuota_numero` int DEFAULT NULL,
-  `monto` decimal(16,2) DEFAULT NULL,
+  `monto` decimal(18,2) DEFAULT NULL,
   `estado` varchar(30) DEFAULT NULL COMMENT 'Pagado - Impago',
   `fecha_vencimiento` date DEFAULT NULL,
   `fecha_pago` date DEFAULT NULL,
+  `detalle` varchar(60) DEFAULT NULL COMMENT 'Inscripcion - CuotaNº',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `alumno_carrera_cuotas` */
 
@@ -100,12 +101,13 @@ CREATE TABLE `carrera` (
   `nombre` varchar(90) DEFAULT NULL,
   `cantidad_cuotas` int DEFAULT NULL,
   `costo_carrera` decimal(18,2) DEFAULT NULL,
+  `inscripcion` decimal(18,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `carrera` */
 
-insert  into `carrera`(`id`,`nombre`,`cantidad_cuotas`,`costo_carrera`) values (1,'Asistente ',10,200000.00),(2,'Tecnico',12,300000.00),(3,'Farmacia',10,100000.00);
+insert  into `carrera`(`id`,`nombre`,`cantidad_cuotas`,`costo_carrera`,`inscripcion`) values (1,'Asistente ',10,200000.00,222.00),(2,'Tecnico',12,300000.00,333.00),(3,'Farmacia',10,100000.00,444.00);
 
 /*Table structure for table `carrera_precios` */
 

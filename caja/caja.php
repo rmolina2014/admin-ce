@@ -30,9 +30,14 @@ class Caja
   }
 
 
-  public function nuevo($importe_inicio,$fecha_apertura,$importe_cierre,$fecha_cierre,
-  $estado,$saldo)
-  {
+  public function nuevo(
+    $importe_inicio,
+    $fecha_apertura,
+    $importe_cierre,
+    $fecha_cierre,
+    $estado,
+    $saldo
+  ) {
     $sql = "INSERT INTO `caja`
     (`importe_inicio`,
      `fecha_apertura`,
@@ -48,8 +53,8 @@ VALUES (
 '$estado',
 '$saldo');";
 
-//echo $sql;
-//exit;
+    //echo $sql;
+    //exit;
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     $rs = mysqli_insert_id(conexion::obtenerInstancia());
     return $rs;

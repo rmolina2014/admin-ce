@@ -172,7 +172,7 @@ class Alumno
   public function cuotasCostoCarrera($carrera_id)
   {
     $data = array();
-    $sql = "SELECT cantidad_cuotas,costo_carrera FROM carrera WHERE id ='$carrera_id'";
+    $sql = "SELECT cantidad_cuotas,costo_carrera,inscripcion FROM carrera WHERE id ='$carrera_id'";
 
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     if (mysqli_num_rows($rs) > 0) {
@@ -192,7 +192,8 @@ class Alumno
     $monto,
     $estado,
     $fecha_vencimiento,
-    $fecha_pago
+    $fecha_pago,
+    $detalle
   ) {
     $sql = "INSERT INTO `alumno_carrera_cuotas`
     (
@@ -202,7 +203,8 @@ class Alumno
      `monto`,
      `estado`,
      `fecha_vencimiento`,
-     `fecha_pago`)
+     `fecha_pago`,
+      `detalle`)
       VALUES (
       '$alumno_id',
       '$carrera_id',
@@ -210,7 +212,8 @@ class Alumno
       '$monto',
       '$estado',
       '$fecha_vencimiento',
-      '$fecha_pago'); ";
+      '$fecha_pago',
+      '$detalle'); ";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
 
     return $rs;

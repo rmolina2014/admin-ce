@@ -3,7 +3,8 @@ include("../cabecera.php");
 include("../menu.php");
 include("alumno.php");
 $objeto = new Alumno();
-if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
+if (isset($_POST['id_persona']) && !empty($_POST['id_persona']))
+{
   $persona_id = $_POST['id_persona'];
   $edad = $_POST['edad'];
   $gruposanguineo = $_POST['gruposanguineo'];
@@ -12,7 +13,7 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
   $fecha_ingreso = date("Y-m-d");
   $observacion = $_POST['observacion'];
 
-  $todobien = $objeto->nuevo(
+  $insertar_alunmo = $objeto->nuevo(
     $edad,
     $gruposanguineo,
     $persona_id,
@@ -21,70 +22,108 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
     $observacion,
     $fecha_ingreso
   );
-  if (is_int($todobien))
+
+  // 1 -insertra alumno 
+
+  if (!is_int($insertar_alunmo)) {
+?>
+    <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
+      <button data-dismiss="alert" class="close" type="button">×</button>
+      Error al insertar Alumno ...
+    </div>
+  <?php
+  }
+
+  //2 -insertra cuota inscripcion
+
+  $alumno_id = $insertar_alunmo;
+
+  $datos_carrera = $objeto->cuotasCostoCarrera($carrera_id);
+  foreach ($datos_carrera as $item) {
+    $cantidad_cuotas = $item['cantidad_cuotas'];
+    $costo_carrera = $item['costo_carrera'];
+    $costo_inscripcion = $item['inscripcion'];
+  }
+
+  $estado = 'ACTIVADA'; //estado de las cuotas activada, pagada,vencida
+
+  $objeto = new Alumno();
+  $cuota_numero = 0;
+  $fecha_vencimiento = "0001-01-01";
+  $fecha_pago = "0001-01-01";
+  $detalle = "Inscripción";
+
+  $insertar_inscripcion = $objeto->insertar_cuotas_alumno($alumno_id, $carrera_id, $cuota_numero, $costo_inscripcion, $estado, $fecha_vencimiento, $fecha_pago, $detalle);
+
+  if (!$insertar_inscripcion)
   {
-    $alumno_id=$todobien;  
-    // generar las cuotas en base a el total de cuotas de la carrera y el costo
-    $datos_carrera=$objeto->cuotasCostoCarrera($carrera_id);
+  ?>
+    <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
+      <button data-dismiss="alert" class="close" type="button">×</button>
+      Lo sentimos, no se pudo generar la cuota Inscripcion
+    </div>
+  <?php
+  }
+
+
+  /*
+// generar las cuotas en base a el total de cuotas de la carrera y el costo
+    $datos_carrera = $objeto->cuotasCostoCarrera($carrera_id);
     foreach ($datos_carrera as $item) {
       $cantidad_cuotas = $item['cantidad_cuotas'];
       $costo_carrera = $item['costo_carrera'];
     }
     $monto_cuota = round($cantidadcuotas / $cantidadcuotas); // valor de la cuota
     $estado = 'ACTIVADA'; //estado de las cuotas activada, pagada,vencida
-    
-    // insertar en
-    
-    $i = 0;
-    $cuota = new Cuota();
+
     // ingresar la fecha de vencimiento de la primer cuota
     $fecha_vencimiento = $vencimiento;
     while ($cantidadcuotas > $i) {
-        if ($i > 0) {
+      if ($i > 0) {
 
-            $fecha = date_create($fecha_vencimiento);
+        $fecha = date_create($fecha_vencimiento);
 
-            date_add($fecha, date_interval_create_from_date_string($dias));
+        date_add($fecha, date_interval_create_from_date_string($dias));
 
-            $fecha_vencimiento = date_format($fecha, 'Y-m-d');
+        $fecha_vencimiento = date_format($fecha, 'Y-m-d');
 
-            $diasemana = date_format($fecha, 'w');
+        $diasemana = date_format($fecha, 'w');
 
-            if ($diasemana == 0) {
-                $fecha = date_create($fecha_vencimiento);
-                date_add($fecha, date_interval_create_from_date_string('+1 day'));
-                $fecha_vencimiento = date_format($fecha, 'Y-m-d');
-            }
-        } else $fecha_vencimiento = $vencimiento;
-
-
-        $numero_cuota = $i + 1;
-
-        $todobien = $cuota->nuevo($prestamo_id, $cliente_id, $numero_cuota, $fecha_vencimiento, $monto_cuota, $estado, $monto_cuota, $usuario_id);
-        //$vencimiento=$nuevafecha;
-
-        if ($todobien) {
-            $i++;
-        } else {
-?>
-            <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
-                <button data-dismiss="alert" class="close" type="button">×</button>
-                Lo sentimos, no se pudo generar la cuota ...<? echo $i; ?>
-            </div>
-<?php
+        if ($diasemana == 0) {
+          $fecha = date_create($fecha_vencimiento);
+          date_add($fecha, date_interval_create_from_date_string('+1 day'));
+          $fecha_vencimiento = date_format($fecha, 'Y-m-d');
         }
+      } else $fecha_vencimiento = $vencimiento;
+
+
+      $numero_cuota = $i + 1;
+
+      $todobien = $cuota->nuevo($prestamo_id, $cliente_id, $numero_cuota, $fecha_vencimiento, $monto_cuota, $estado, $monto_cuota, $usuario_id);
+      //$vencimiento=$nuevafecha;
+
+      if ($todobien) {
+        $i++;
+      } else {
+?>
+        <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
+          <button data-dismiss="alert" class="close" type="button">×</button>
+          Lo sentimos, no se pudo generar la cuota ...<? echo $i; ?>
+        </div>
+    <?php
+      }
     } //fin del while interno
-  
+
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
     exit;
   } else {
-?>
+    ?>
     <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
       <button data-dismiss="alert" class="close" type="button">×</button>
       Lo sentimos, no se pudo guardar ...
     </div>
   <?php
-  }
+  }  */
 } else {
   ?>
 
