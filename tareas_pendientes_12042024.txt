@@ -1,3 +1,4 @@
 1 - abm de carrera agregar el costo total de la carrera, el costo de la inscripcion
 2- abm agregar fecha_ingreso alumno
 3- generar cuotas alumno
+4- abm alunomo se puede editar la carrera de un alumno

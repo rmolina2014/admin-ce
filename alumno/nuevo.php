@@ -3,8 +3,7 @@ include("../cabecera.php");
 include("../menu.php");
 include("alumno.php");
 $objeto = new Alumno();
-if (isset($_POST['id_persona']) && !empty($_POST['id_persona']))
-{
+if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
   $persona_id = $_POST['id_persona'];
   $edad = $_POST['edad'];
   $gruposanguineo = $_POST['gruposanguineo'];
@@ -55,75 +54,50 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona']))
 
   $insertar_inscripcion = $objeto->insertar_cuotas_alumno($alumno_id, $carrera_id, $cuota_numero, $costo_inscripcion, $estado, $fecha_vencimiento, $fecha_pago, $detalle);
 
-  if (!$insertar_inscripcion)
-  {
+  if (!$insertar_inscripcion) {
   ?>
     <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
       <button data-dismiss="alert" class="close" type="button">×</button>
       Lo sentimos, no se pudo generar la cuota Inscripcion
     </div>
-  <?php
+    <?php
   }
 
 
   /*
-// generar las cuotas en base a el total de cuotas de la carrera y el costo
-    $datos_carrera = $objeto->cuotasCostoCarrera($carrera_id);
-    foreach ($datos_carrera as $item) {
-      $cantidad_cuotas = $item['cantidad_cuotas'];
-      $costo_carrera = $item['costo_carrera'];
-    }
-    $monto_cuota = round($cantidadcuotas / $cantidadcuotas); // valor de la cuota
-    $estado = 'ACTIVADA'; //estado de las cuotas activada, pagada,vencida
+// generar las cuotas en base a el total de cuotas de la carrera y el costo */
 
-    // ingresar la fecha de vencimiento de la primer cuota
-    $fecha_vencimiento = $vencimiento;
-    while ($cantidadcuotas > $i) {
-      if ($i > 0) {
+  $monto_cuota = round($costo_carrera / $cantidad_cuotas); // valor de la cuota
+  $estado = 'ACTIVADA'; //estado de las cuotas activada, pagada,vencida
 
-        $fecha = date_create($fecha_vencimiento);
+  // ingresar la fecha de vencimiento de la primer cuota
+  // $fecha_vencimiento = $vencimiento;
 
-        date_add($fecha, date_interval_create_from_date_string($dias));
+  $i = 0;
+  while ($cantidad_cuotas > $i) {
 
-        $fecha_vencimiento = date_format($fecha, 'Y-m-d');
+    $cuota_numero = $i + 1;
 
-        $diasemana = date_format($fecha, 'w');
+    $detalle = "Cuota Nº ".$cuota_numero;
 
-        if ($diasemana == 0) {
-          $fecha = date_create($fecha_vencimiento);
-          date_add($fecha, date_interval_create_from_date_string('+1 day'));
-          $fecha_vencimiento = date_format($fecha, 'Y-m-d');
-        }
-      } else $fecha_vencimiento = $vencimiento;
+    $insertar_cuota_mensual =
+    $objeto->insertar_cuotas_alumno($alumno_id, $carrera_id, $cuota_numero, $monto_cuota, $estado, $fecha_vencimiento, $fecha_pago, $detalle);
+    //$vencimiento=$nuevafecha;
 
-
-      $numero_cuota = $i + 1;
-
-      $todobien = $cuota->nuevo($prestamo_id, $cliente_id, $numero_cuota, $fecha_vencimiento, $monto_cuota, $estado, $monto_cuota, $usuario_id);
-      //$vencimiento=$nuevafecha;
-
-      if ($todobien) {
-        $i++;
-      } else {
-?>
-        <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
-          <button data-dismiss="alert" class="close" type="button">×</button>
-          Lo sentimos, no se pudo generar la cuota ...<? echo $i; ?>
-        </div>
-    <?php
-      }
-    } //fin del while interno
-
-    echo "<script language=Javascript> location.href=\"index.php\"; </script>";
-    exit;
-  } else {
+    if ($insertar_cuota_mensual) {
+      $i++;
+    } else {
     ?>
-    <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
-      <button data-dismiss="alert" class="close" type="button">×</button>
-      Lo sentimos, no se pudo guardar ...
-    </div>
+      <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
+        <button data-dismiss="alert" class="close" type="button">×</button>
+        Lo sentimos, no se pudo generar la cuota ...<?php echo $i; ?>
+      </div>
   <?php
-  }  */
+    }
+  } //fin del while interno
+
+  echo "<script language=Javascript> location.href=\"index.php\"; </script>";
+  exit;
 } else {
   ?>
 
