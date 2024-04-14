@@ -26,11 +26,11 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
 
   if (!is_int($insertar_alunmo)) {
 ?>
-    <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
-      <button data-dismiss="alert" class="close" type="button">×</button>
-      Error al insertar Alumno ...
-    </div>
-  <?php
+<div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
+    <button data-dismiss="alert" class="close" type="button">×</button>
+    Error al insertar Alumno ...
+</div>
+<?php
   }
 
   //2 -insertra cuota inscripcion
@@ -44,7 +44,7 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
     $costo_inscripcion = $item['inscripcion'];
   }
 
-  $estado = 'ACTIVADA'; //estado de las cuotas activada, pagada,vencida
+  $estado = 'IMPAGA'; //estado de las cuotas IMPAGA, pagada,vencida
 
   $objeto = new Alumno();
   $cuota_numero = 0;
@@ -56,11 +56,11 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
 
   if (!$insertar_inscripcion) {
   ?>
-    <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
-      <button data-dismiss="alert" class="close" type="button">×</button>
-      Lo sentimos, no se pudo generar la cuota Inscripcion
-    </div>
-    <?php
+<div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
+    <button data-dismiss="alert" class="close" type="button">×</button>
+    Lo sentimos, no se pudo generar la cuota Inscripcion
+</div>
+<?php
   }
 
 
@@ -68,10 +68,6 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
 // generar las cuotas en base a el total de cuotas de la carrera y el costo */
 
   $monto_cuota = round($costo_carrera / $cantidad_cuotas); // valor de la cuota
-  $estado = 'ACTIVADA'; //estado de las cuotas activada, pagada,vencida
-
-  // ingresar la fecha de vencimiento de la primer cuota
-  // $fecha_vencimiento = $vencimiento;
 
   $i = 0;
   while ($cantidad_cuotas > $i) {
@@ -88,11 +84,11 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
       $i++;
     } else {
     ?>
-      <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
-        <button data-dismiss="alert" class="close" type="button">×</button>
-        Lo sentimos, no se pudo generar la cuota ...<?php echo $i; ?>
-      </div>
-  <?php
+<div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
+    <button data-dismiss="alert" class="close" type="button">×</button>
+    Lo sentimos, no se pudo generar la cuota ...<?php echo $i; ?>
+</div>
+<?php
     }
   } //fin del while interno
 
@@ -101,152 +97,158 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
 } else {
   ?>
 
-  <!--inicio contenido-->
-  <div id="main">
+<!--inicio contenido-->
+<div id="main">
     <header class="mb-3">
-      <a href="#" class="burger-btn d-block d-xl-none">
-        <i class="bi bi-justify fs-3"></i>
-      </a>
+        <a href="#" class="burger-btn d-block d-xl-none">
+            <i class="bi bi-justify fs-3"></i>
+        </a>
     </header>
 
     <div class="page-heading">
-      <div class="page-title">
-        <div class="row">
-          <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>Alumnos</h3>
-            <!--p class="text-subtitle text-muted">The default layout.</p-->
-          </div>
-          <div class="col-12 col-md-6 order-md-2 order-first">
-            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="../panelcontrol/index.html">Panel de Control</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Alumnos</li>
-              </ol>
-            </nav>
-          </div>
+        <div class="page-title">
+            <div class="row">
+                <div class="col-12 col-md-6 order-md-1 order-last">
+                    <h3>Alumnos</h3>
+                    <!--p class="text-subtitle text-muted">The default layout.</p-->
+                </div>
+                <div class="col-12 col-md-6 order-md-2 order-first">
+                    <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="../panelcontrol/index.html">Panel de Control</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Alumnos</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <section class="section">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Formulario Agregar</h4>
-          </div>
-          <div class="card-body">
-            <!--- contenido ---------------------------------------------------------->
+        <section class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Formulario Agregar</h4>
+                </div>
+                <div class="card-body">
+                    <!--- contenido ---------------------------------------------------------->
 
-            <!---formulario-->
-            <form>
+                    <!---formulario-->
+                    <form>
 
-              <div class="col-md-8 mb-3">
-                <label>D.N.I </label>
-                <input name="dnialumno" id="dnialumno" class="form-control" type="text" tabindex="1" maxlength="10" required />
-                <br>
-                <!--button type="button" id="buscar_dni"
+                        <div class="col-md-8 mb-3">
+                            <label>D.N.I </label>
+                            <input name="dnialumno" id="dnialumno" class="form-control" type="text" tabindex="1"
+                                maxlength="10" required />
+                            <br>
+                            <!--button type="button" id="buscar_dni"
                   class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar D.N.I.</button-->
-              </div>
+                        </div>
 
-              <div class="col-md-8 mb-3">
-                <div id="resultadoBusqueda"></div>
-              </div>
+                        <div class="col-md-8 mb-3">
+                            <div id="resultadoBusqueda"></div>
+                        </div>
 
-            </form>
+                    </form>
 
-            <hr>
+                    <hr>
 
-            <form method="POST" role="form" action="nuevo.php">
+                    <form method="POST" role="form" action="nuevo.php">
 
-              <input type="hidden" id="id_persona" name="id_persona">
+                        <input type="hidden" id="id_persona" name="id_persona">
 
-              <div class="col-md-8 mb-3">
-                <label class="form-label">Edad</label>
-                <input name="edad" class="form-control" type="text" tabindex="2" required />
-              </div>
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label">Edad</label>
+                            <input name="edad" class="form-control" type="text" tabindex="2" required />
+                        </div>
 
-              <div class="col-md-8 mb-3">
-                <label class="form-label">Grupo Sanguineo</label>
-                <input name="gruposanguineo" class="form-control" type="text" tabindex="2" required />
-              </div>
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label">Grupo Sanguineo</label>
+                            <input name="gruposanguineo" class="form-control" type="text" tabindex="2" required />
+                        </div>
 
-              <div class="col-md-8 mb-3">
-                <label class="form-label">Carrera o Curso</label>
-                <select class="form-control" name="carrera_id" required autofocus tabindex="1">
-                  <option value="0">Seleccione....</option>
-                  <?php
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label">Carrera o Curso</label>
+                            <select class="form-control" name="carrera_id" required autofocus tabindex="1">
+                                <option value="0">Seleccione....</option>
+                                <?php
                   $items = $objeto->listaCarrera();
                   foreach ($items as $item) {
                   ?>
-                    <option value="<?php echo $item['id']; ?>"> <?php echo $item['nombre']; ?> </option>
-                  <?php
+                                <option value="<?php echo $item['id']; ?>"> <?php echo $item['nombre']; ?> </option>
+                                <?php
                   }
                   ?>
-                </select>
-              </div>
+                            </select>
+                        </div>
 
-              <div class="col-md-8 mb-3">
-                <label class="form-label">Observacion</label>
-                <input name="observacion" class="form-control" type="text" s />
-              </div>
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label">Observacion</label>
+                            <input name="observacion" class="form-control" type="text" s />
+                        </div>
 
-              <div class="col-md-8 mb-3">
+                        <div class="col-md-8 mb-3">
 
-                <button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center" data-dismiss="modal" onclick="location.href='index.php';"> Cancelar
+                            <button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center"
+                                data-dismiss="modal" onclick="location.href='index.php';"> Cancelar
 
-                </button>
+                            </button>
 
-                <button id="guardar" type="submit" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-                  Guardar
+                            <button id="guardar" type="submit"
+                                class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+                                Guardar
 
-                </button>
+                            </button>
 
-              </div>
-            </form>
+                        </div>
+                    </form>
 
-            <!--- fin ---------------------------------------------------------->
-            <!--- fin contenido -->
-          </div>
-        </div>
-      </section>
-    <?php
+                    <!--- fin ---------------------------------------------------------->
+                    <!--- fin contenido -->
+                </div>
+            </div>
+        </section>
+        <?php
   }
   include("../pie.php");
     ?>
-    <script src="../assets/js/jquery-3.6.3.min.js"></script>
-    <script src="../assets/js/jquery.validate.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function() {
+        <script src="../assets/js/jquery-3.6.3.min.js"></script>
+        <script src="../assets/js/jquery.validate.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
 
 
-        // buscar por dni 09/08/2018
-        $("#dnialumno").blur(function() {
-          var vdni = $("#dnialumno").val();
-          $.ajax({
-            url: "../personas/buscar_dni.php",
-            type: "POST",
-            data: {
-              dni: vdni
-            },
-            success: function(response) {
-              var jsonData = JSON.parse(response);
-              console.log(jsonData);
-              //alert(jsonData.estado);
-              if (jsonData.estado == "ok") {
-                $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'> Persona : " + jsonData.nombre + ". </h6>");
-                $("#id_persona").val(jsonData.id_persona);
-                document.getElementById("guardar").disabled = false;
-              } else {
-                $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'>" + jsonData.mensaje + "</h6>");
-                document.getElementById("guardar").disabled = true;
-              }
+            // buscar por dni 09/08/2018
+            $("#dnialumno").blur(function() {
+                var vdni = $("#dnialumno").val();
+                $.ajax({
+                    url: "../personas/buscar_dni.php",
+                    type: "POST",
+                    data: {
+                        dni: vdni
+                    },
+                    success: function(response) {
+                        var jsonData = JSON.parse(response);
+                        console.log(jsonData);
+                        //alert(jsonData.estado);
+                        if (jsonData.estado == "ok") {
+                            $("#resultadoBusqueda").html(
+                                "<h6 class='text-muted mb-0'> Persona : " + jsonData
+                                .nombre + ". </h6>");
+                            $("#id_persona").val(jsonData.id_persona);
+                            document.getElementById("guardar").disabled = false;
+                        } else {
+                            $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'>" +
+                                jsonData.mensaje + "</h6>");
+                            document.getElementById("guardar").disabled = true;
+                        }
 
-            },
-            failure: function(data) {
-              alert(response);
-            },
-            error: function(data) {
-              alert(response);
-            }
-          });
-        });
-      }) //fin jquery      
-    </script>
+                    },
+                    failure: function(data) {
+                        alert(response);
+                    },
+                    error: function(data) {
+                        alert(response);
+                    }
+                });
+            });
+        }) //fin jquery      
+        </script>

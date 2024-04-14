@@ -44,9 +44,8 @@ include("alumno.php");
                         <thead class="thead-light">
                             <tr>
                                 <th>#</th>
-                                <th>DNI</th>
-                                <th>Apellido Nombre</th>
-                                <th>Carrera</th>
+                                <th>Detalle</th>
+                                <th>Monto</th>
                                 <th>Estado</th>
                                 <th></th>
                             </tr>
