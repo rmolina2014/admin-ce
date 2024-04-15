@@ -102,7 +102,7 @@
         </li>
 
         <li class="sidebar-item ">
-          <a href="../ingreso/index.php" class="sidebar-link">
+          <a href="../otroingreso/index.php" class="sidebar-link">
             <i class="bi bi-grid-fill"></i>
             <span>Otros Ingresos</span>
           </a>
@@ -123,7 +123,7 @@
         </li-->
 
         <li class="sidebar-item ">
-          <a href="../tipo_ingreso/index.php" class="sidebar-link">
+          <a href="../ingresoTipo/index.php" class="sidebar-link">
             <i class="bi bi-grid-fill"></i>
             <span>Tipo Ingresos</span>
           </a>

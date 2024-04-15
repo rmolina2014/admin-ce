@@ -32,7 +32,7 @@ CREATE TABLE `alumno` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `relapersona` (`persona_id`),
   CONSTRAINT `alumno_ibfk_1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `alumno` */
 
@@ -53,7 +53,7 @@ CREATE TABLE `alumno_carrera_cuotas` (
   `fecha_pago` date DEFAULT NULL,
   `detalle` varchar(60) DEFAULT NULL COMMENT 'Inscripcion - CuotaNº',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `alumno_carrera_cuotas` */
 
@@ -107,7 +107,7 @@ CREATE TABLE `carrera` (
   `costo_carrera` decimal(18,2) DEFAULT NULL,
   `inscripcion` decimal(18,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `carrera` */
 
@@ -124,7 +124,7 @@ CREATE TABLE `carrera_precios` (
   `costo` decimal(18,2) DEFAULT NULL,
   `observacion` varchar(90) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `carrera_precios` */
 
@@ -143,7 +143,7 @@ CREATE TABLE `detalle_permiso` (
   KEY `relausuario` (`rela_usuario`),
   CONSTRAINT `detalle_permiso_ibfk_1` FOREIGN KEY (`rela_permiso`) REFERENCES `permiso` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `detalle_permiso_ibfk_2` FOREIGN KEY (`rela_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `detalle_permiso` */
 
@@ -162,7 +162,7 @@ CREATE TABLE `docente` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `relapersona` (`rela_persona`),
   CONSTRAINT `docente_ibfk_1` FOREIGN KEY (`rela_persona`) REFERENCES `persona` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `docente` */
 
@@ -178,7 +178,7 @@ CREATE TABLE `egreso` (
   `usuario_id` int DEFAULT NULL,
   `egreso_tipo` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `egreso` */
 
@@ -190,7 +190,7 @@ CREATE TABLE `egreso_tipo` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(90) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `egreso_tipo` */
 
@@ -211,7 +211,7 @@ CREATE TABLE `ingreso` (
   `recargo` decimal(10,2) DEFAULT NULL COMMENT 'pago despues del 10',
   `origen` varchar(50) DEFAULT NULL COMMENT 'Alumno - Propio',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `ingreso` */
 
@@ -226,7 +226,7 @@ CREATE TABLE `ingreso_tipo` (
   `nombre` varchar(60) DEFAULT NULL,
   `monto` decimal(16,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `ingreso_tipo` */
 
@@ -241,7 +241,7 @@ CREATE TABLE `permiso` (
   `nombre` varchar(35) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre_permiso` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `permiso` */
 
@@ -262,7 +262,7 @@ CREATE TABLE `persona` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `apellidonombre` (`apellidonombre`) USING BTREE,
   UNIQUE KEY `dniunico` (`dni`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `persona` */
 
@@ -281,7 +281,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `rela_persona` (`rela_persona`),
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`rela_persona`) REFERENCES `persona` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ;
 
 /*Data for the table `usuario` */
 
