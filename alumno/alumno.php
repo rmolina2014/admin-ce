@@ -158,7 +158,6 @@ class Alumno
   {
     $data = array();
     $sql = "SELECT persona.id,apellidonombre FROM persona,usuario WHERE dni ='$dni' and persona.id=usuario.rela_persona  ";
-
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
@@ -173,7 +172,6 @@ class Alumno
   {
     $data = array();
     $sql = "SELECT cantidad_cuotas,costo_carrera,inscripcion FROM carrera WHERE id ='$carrera_id'";
-
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
@@ -218,4 +216,55 @@ class Alumno
 
     return $rs;
   }
+  
+  public function listaAlumnoCarreraCuota($alumno_id)
+  {
+    $data = array();
+    $consulta = "SELECT
+        `id`,
+        `alumno_id`,
+        `carrera_id`,
+        `cuota_numero`,
+        `monto`,
+        `estado`,
+        `fecha_vencimiento`,
+        `fecha_pago`,
+        `detalle`
+      FROM `alumno_carrera_cuotas`
+      where `alumno_id`=$alumno_id";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
+  // pagar cuotas
+ /* public function pagarCuota($$cuota_id)
+  {
+    $data = array();
+    $consulta = "SELECT
+        `id`,
+        `alumno_id`,
+        `carrera_id`,
+        `cuota_numero`,
+        `monto`,
+        `estado`,
+        `fecha_vencimiento`,
+        `fecha_pago`,
+        `detalle`
+      FROM `alumno_carrera_cuotas`
+      where `alumno_id`=$alumno_id";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }*/
+
+  
 }
