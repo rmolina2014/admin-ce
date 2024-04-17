@@ -242,21 +242,13 @@ class Alumno
   }
 
   // pagar cuotas
- /* public function pagarCuota($$cuota_id)
+  public function pagarAlumnoCuota($cuota_id,$estado,$fecha_pago)
   {
-    $data = array();
-    $consulta = "SELECT
-        `id`,
-        `alumno_id`,
-        `carrera_id`,
-        `cuota_numero`,
-        `monto`,
-        `estado`,
-        `fecha_vencimiento`,
-        `fecha_pago`,
-        `detalle`
-      FROM `alumno_carrera_cuotas`
-      where `alumno_id`=$alumno_id";
+    $consulta = "UPDATE `alumno_carrera_cuotas`
+    SET 
+      `estado` = '$estado',
+      `fecha_pago` = '$fecha_pago'
+      WHERE `id` = '$cuota_id'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
@@ -264,7 +256,7 @@ class Alumno
       }
     }
     return $data;
-  }*/
+  }
 
   
 }

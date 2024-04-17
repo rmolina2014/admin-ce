@@ -51,7 +51,7 @@
                 <input type="number" id="dni" class="form-control" name="dni" placeholder="Ingresar DNI">
               </div>
               <div class="col-4">
-                <button type="submit" id="buscar_dni_perfil" class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar</button>
+                <button type="submit" id="buscar_dni_perfil" class="btn btn-outline-primary">Buscar</button>
               </div>
             </div>
 
