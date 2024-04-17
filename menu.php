@@ -94,12 +94,12 @@
           </a>
         </li>
 
-        <li class="sidebar-item ">
+        <!--li class="sidebar-item ">
           <a href="../ingreso/index.php" class="sidebar-link">
             <i class="bi bi-grid-fill"></i>
             <span>Pago Cuotas</span>
           </a>
-        </li>
+        </li-->
 
         <li class="sidebar-item ">
           <a href="../otroingreso/index.php" class="sidebar-link">
