@@ -26,11 +26,11 @@ class Alumno
     carrera.`nombre` AS carrera,
     alumno.`id` AS id
     FROM
-        `alumno`
+        `alumno` 
         INNER JOIN `carrera` 
             ON (`alumno`.`carrera_id` = `carrera`.`id`)
         INNER JOIN `persona` 
-            ON (`alumno`.`persona_id` = `persona`.`id`);";
+            ON (`alumno`.`persona_id` = `persona`.`id` and `persona`.`id`>1 );";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {

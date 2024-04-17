@@ -43,7 +43,8 @@ class Persona
   
   public function lista()
   {
-    $consulta = "SELECT * FROM persona";
+    //mayor a 1 para que no muestra a la persona Instituto que esta jarcodeada
+    $consulta = "SELECT * FROM persona where id>1";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
