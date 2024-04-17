@@ -17,6 +17,7 @@ class Ingreso
 
   public function lista()
   {
+    $data=array();
     $consulta = "SELECT
     ingreso.`caja_id` AS caja_id,
     ingreso.`fecha_ingreso` AS fecha_ingreso,
