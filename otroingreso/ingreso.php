@@ -118,10 +118,11 @@ class Ingreso
     return $id;
   }
 
+  
   //lista los ingresos por tipo
-  public function listaEgresoTipo()
+  public function listaIngresoTipo()
   {
-    $sql = "SELECT * FROM egreso_tipo";
+    $sql = "SELECT * FROM ingreso_tipo order by nombre";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
@@ -129,5 +130,6 @@ class Ingreso
       }
     }
     return $data;
+
   }
 }

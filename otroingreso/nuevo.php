@@ -1,15 +1,16 @@
 <?php
 include("../cabecera.php");
 include("../menu.php");
-include("egreso.php");
-$objeto = new Egreso();
+include("ingreso.php");
+$objeto = new Ingreso();
 if (isset($_POST['monto']) && !empty($_POST['monto'])) {
 
   $monto = $_POST['monto'];
-  $fecha_egreso = date("Y-m-d H:i:s");
+  $fecha_ingreso = date("Y-m-d H:i:s");
   $caja_id = $_POST['caja_id'];
   $usuario_id = $_POST['usuario_id'];
-  $egreso_tipo = $_POST['egreso_tipo_id'];
+  $ingreso_tipo = $_POST['ingreso_tipo_id'];
+  $observacion = $_POST['observacion'];
 
   $todobien = $objeto->nuevo(
     $monto,
@@ -44,14 +45,14 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
       <div class="page-title">
         <div class="row">
           <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>Egreso</h3>
+            <h3>Otros Ingresos</h3>
             <!--p class="text-subtitle text-muted">The default layout.</p-->
           </div>
           <div class="col-12 col-md-6 order-md-2 order-first">
             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../panelcontrol/index.html">Panel de Control</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Egreso</li>
+                <li class="breadcrumb-item active" aria-current="page">Otros Ingresos</li>
               </ol>
             </nav>
           </div>
@@ -90,12 +91,12 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
               </div>
 
               <div class="col-md-8 mb-3">
-                <label class="form-label">Tipo Egreso</label>
-                <select class="form-control" name="egreso_tipo_id" required autofocus tabindex="1">
+                <label class="form-label">Tipo Ingreso</label>
+                <select class="form-control" name="ingreso_tipo_id" id="ingreso_tipo_id" required autofocus tabindex="1">
                   <option value="0">Seleccione....</option>
                   <?php
 
-                  $items = $objeto->listaEgresoTipo();
+                  $items = $objeto->listaIngresoTipo();
 
                   foreach ($items as $item) {
                   ?>
@@ -107,10 +108,34 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
                 
               </div>
 
+
+                    <form >
+
+                        <div class="col-md-8 mb-3">
+                            <label id="labeldni">D.N.I </label>
+                            <input name="dnialumno" id="dnialumno" class="form-control" type="text" tabindex="1"
+                                maxlength="10" required />
+                            <br>
+                            <!--button type="button" id="buscar_dni"
+                  class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar D.N.I.</button-->
+                        </div>
+
+                        <div class="col-md-8 mb-3">
+                            <div id="resultadoBusqueda"></div>
+                        </div>
+
+                    </form>
+
+
               <div class="col-md-8 mb-3">
                 <label class="form-label">Monto</label>
-                <input name="monto" class="form-control" type="monto" onkeypress="return soloNumeros(event);" required autofocus />
+                <input name="monto" class="form-control" type="monto" onkeypress="return soloNumeros(event);" required  />
               </div>
+
+              <div class="col-md-8 mb-3">
+                <label class="form-label">Observacion</label>
+                <input name="observacion" id="observacion" class="form-control"  />
+              </div>              
 
               <div class="col-md-8 mb-3">
                 <button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center" data-dismiss="modal" onclick="location.href='index.php';"> Cancelar
@@ -126,3 +151,61 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
 
     include ("../pie.php");
           ?>
+
+        <script src="../assets/js/jquery-3.6.3.min.js"></script>
+        <script src="../assets/js/jquery.validate.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+                   
+                   $("#ingreso_tipo_id").on("click", function() {
+                   const opcionSeleccionada = $(this).find("option:selected");
+                   if (opcionSeleccionada.val()==1){
+                        document.getElementById("dnialumno").style.display = "none";
+                        document.getElementById("labeldni").style.display = "none";
+
+                        
+                   }else{
+                       document.getElementById("dnialumno").style.display = "block";
+                       document.getElementById("labeldni").style.display = "block";
+                   }
+
+                   //console.log("Valor de la opción seleccionada:", opcionSeleccionada.val());
+                   //console.log("Texto de la opción seleccionada:", opcionSeleccionada.text());
+                   });
+
+            // buscar por dni 09/08/2018
+            $("#dnialumno").blur(function() {
+                var vdni = $("#dnialumno").val();
+                $.ajax({
+                    url: "../personas/buscar_dni.php",
+                    type: "POST",
+                    data: {
+                        dni: vdni
+                    },
+                    success: function(response) {
+                        var jsonData = JSON.parse(response);
+                        console.log(jsonData);
+                        //alert(jsonData.estado);
+                        if (jsonData.estado == "ok") {
+                            $("#resultadoBusqueda").html(
+                                "<h6 class='text-muted mb-0'> Persona : " + jsonData
+                                .nombre + ". </h6>");
+                            $("#id_persona").val(jsonData.id_persona);
+                            document.getElementById("guardar").disabled = false;
+                        } else {
+                            $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'>" +
+                                jsonData.mensaje + "</h6>");
+                            document.getElementById("guardar").disabled = true;
+                        }
+
+                    },
+                    failure: function(data) {
+                        alert(response);
+                    },
+                    error: function(data) {
+                        alert(response);
+                    }
+                });
+            });
+        }) //fin jquery      
+        </script>          
