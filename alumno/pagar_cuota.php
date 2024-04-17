@@ -3,9 +3,25 @@ include("../cabecera.php");
 include("../menu.php");
 include("alumno.php");
 $objeto = new Alumno();
-if (isset($_POST['id']) && !empty($_POST['id']))
+if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id']))
 {
  $cuota_id = $_POST['id'];
+ $fecha_pago = date("Y-m-d");
+ $estado = 'PAGADO';
+ $pagar_cuota = $objeto->pagarAlumnoCuota($cuota_id,$estado,$fecha_pago);
+    if ($todobien) {
+        echo "<script language=Javascript> location.href=\"index.php\"; </script>";
+        //header('Location: listado.php');
+        exit;
+    } else {
+?>
+        <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
+            <button data-dismiss="alert" class="close" type="button">×</button>
+            Lo sentimos, no se pudo guardar ...
+        </div>
+<?php
+    }
+
 
  // continuar para pagar una cuota
 
@@ -30,5 +46,24 @@ if (isset($_POST['id']) && !empty($_POST['id']))
         </div>
 <?php
     }*/
+
+    /*
+    
+    $todobien = $objeto->pagoTotal($cuota_id);
+  
+  //-------- generar el movimiento en la caja-------
+
+  $todobien=$objeto->movimientocaja('Ingreso ',$monto,'ID Cuota: '.$cuota_id.'-N°-'.$numero_cuota.'-Pr:-'.$idPrestamo ,date("Y-m-d"),$usuario_id,'Pago Cuota Total');
+
+  if($todobien){
+			//header("Location:listado.php?idPrestamo=".$idPrestamo);
+			echo "<script language=Javascript> location.href=\"listado_cuota.php?idPrestamo=\"+$idPrestamo; </script>"; 
+      exit;
+		} else {
+			$mensaje = 'Lo sentimos, no se pudo grabar el pago ...'.$cuota_id;
+		}
+		echo $mensaje;
+} else echo 'Falta el ID';
+    */
 }
 ?>

@@ -70,9 +70,15 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                     <td><?php echo $item['monto']; ?></td>
                                     <td><?php echo $item['estado']; ?></td>
                                     <td>
-
-                                        <a class="btn btn-sm btn-secondary d-inline-flex align-items-center" id="pagar<?php echo $item['id']; ?>"> Pagar</a>
-
+                                        <a id="pagar<?php echo $item['id']; ?>" 
+                                        class="btn btn-outline-primary"
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#border-less"
+                                        data-monto="<?php echo $item['monto']; ?>"
+                                        data-detalle="<?php echo $item['detalle']; ?>"
+                                        >
+                                            Pagar
+                            </a>
                                     </td>
                                 </tr>
                             <?php
@@ -84,37 +90,88 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                 </div>
             </div>
         </section>
-        <?php
-        include("../pie.php");
-        ?>
-        <script src="../assets/js/jquery-3.6.3.min.js"></script>
-        <script src="../assets/js/jquery.validate.min.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
 
-                $("a[id^='pagar']").click(function(evento) {
-                    evento.preventDefault();
-                    vid = this.id.substr(5, 4);
-                    alert(vid);
-                    /* 14-04-2024 continuar desde aca
-                     $.ajax({
-                         type: "POST",
-                         cache: false,
-                         async: false,
-                         url: 'pagar_cuota.php',
-                         data: {
-                             id: vid
-                         },
-                         success: function(data) {
-                             if (data) {
-                                 alert(data);
-                                 location.reload(true);
-                             }
-                         }
-                     }) //fin ajax */
+        <!---modal--->
 
+        <!--BorderLess Modal Modal -->
+        <div class="modal fade text-left modal-borderless" id="border-less" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Pagar Cuota</h5>
+                        <button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="apagar">
+                            <h5>Detalle : <div id="detalle"></div>
+                            Monto : $ <div id="monto"></div></h5>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Cancelar</span>
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Pagar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                })
+    <!-- fin modal-->
 
+    <?php
+    include("../pie.php");
+    ?>
+    <script src="../assets/js/jquery-3.6.3.min.js"></script>
+    <script src="../assets/js/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("a[id^='pagar']").click(function(evento) {
+                evento.preventDefault();
+                let cuota_id = this.id.substr(5, 4);
+                let monto = $(this).data('monto');
+                let detalle = $(this).data('detalle');
+                
+               // $("#apagar").append('<h3><span class="badge badge-secondary">Saldo: $'+monto+'</span></h3>');
+                //$("#monto").html(monto);
+                $("#apagar").html("<h5>Detalle : "+detalle+" Monto : $ "+monto+"</h5>");
+
+               
             })
-        </script>
+
+            $("#aceptarpago").click( function()
+                {
+                var min_length = 0; // min caracters to display the autocomplete
+                var importeparcial = $('#importeparcial').val();
+                var idcuota = $('#idcuota').val();
+                
+                $.ajax({
+                     type: "POST",
+                     cache: false,
+                     async: false,
+                     url: 'pagar_cuota.php',
+                     data: {
+                         cuota_id: cuota_id
+                     },
+                     success: function(data) {
+                         if (data) {
+                             //alert(data);
+                             location.reload(true);
+                         }
+                     }
+                 }) //fin ajax */
+                }); 
+
+        })
+    </script>
