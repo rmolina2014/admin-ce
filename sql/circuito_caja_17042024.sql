@@ -23,20 +23,20 @@ DROP TABLE IF EXISTS `alumno`;
 CREATE TABLE `alumno` (
   `id` int NOT NULL AUTO_INCREMENT,
   `edad` int NOT NULL,
-  `gruposanguineo` varchar(10) NOT NULL,
+  `gruposanguineo` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `persona_id` int NOT NULL,
   `carrera_id` int DEFAULT NULL,
-  `estado` varchar(80) DEFAULT NULL COMMENT 'Activo, Inactivo',
-  `observacion` varchar(100) DEFAULT NULL,
+  `estado` varchar(80) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Activo, Inactivo',
+  `observacion` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `fecha_ingreso` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `relapersona` (`persona_id`),
   CONSTRAINT `alumno_ibfk_1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `alumno` */
 
-insert  into `alumno`(`id`,`edad`,`gruposanguineo`,`persona_id`,`carrera_id`,`estado`,`observacion`,`fecha_ingreso`) values (12,3,'3',36,1,'Activo','prueba','2024-04-14');
+insert  into `alumno`(`id`,`edad`,`gruposanguineo`,`persona_id`,`carrera_id`,`estado`,`observacion`,`fecha_ingreso`) values (1,1,'rh+',1,1,'Activo','aportes','2024-04-15'),(12,3,'3',36,1,'Activo','prueba','2024-04-14'),(14,18,'rh+',2,2,'Activo','inscirpcion','2024-04-15');
 
 /*Table structure for table `alumno_carrera_cuotas` */
 
@@ -48,16 +48,16 @@ CREATE TABLE `alumno_carrera_cuotas` (
   `carrera_id` int DEFAULT NULL,
   `cuota_numero` int DEFAULT NULL,
   `monto` decimal(18,2) DEFAULT NULL,
-  `estado` varchar(30) DEFAULT NULL COMMENT 'Pagado - Impago',
+  `estado` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Pagado - Impago',
   `fecha_vencimiento` date DEFAULT NULL,
   `fecha_pago` date DEFAULT NULL,
-  `detalle` varchar(60) DEFAULT NULL COMMENT 'Inscripcion - CuotaNº',
+  `detalle` varchar(60) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Inscripcion - CuotaNº',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `alumno_carrera_cuotas` */
 
-insert  into `alumno_carrera_cuotas`(`id`,`alumno_id`,`carrera_id`,`cuota_numero`,`monto`,`estado`,`fecha_vencimiento`,`fecha_pago`,`detalle`) values (16,12,1,0,222.00,'IMPAGA','0001-01-01','0001-01-01','Inscripción'),(17,12,1,1,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 1'),(18,12,1,2,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 2'),(19,12,1,3,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 3'),(20,12,1,4,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 4'),(21,12,1,5,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 5'),(22,12,1,6,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 6'),(23,12,1,7,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 7'),(24,12,1,8,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 8'),(25,12,1,9,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 9'),(26,12,1,10,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 10');
+insert  into `alumno_carrera_cuotas`(`id`,`alumno_id`,`carrera_id`,`cuota_numero`,`monto`,`estado`,`fecha_vencimiento`,`fecha_pago`,`detalle`) values (16,12,1,0,222.00,'IMPAGA','0001-01-01','0001-01-01','Inscripción'),(17,12,1,1,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 1'),(18,12,1,2,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 2'),(19,12,1,3,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 3'),(20,12,1,4,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 4'),(21,12,1,5,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 5'),(22,12,1,6,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 6'),(23,12,1,7,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 7'),(24,12,1,8,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 8'),(25,12,1,9,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 9'),(26,12,1,10,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 10'),(27,13,1,0,222.00,'IMPAGA','0001-01-01','0001-01-01','Inscripción'),(28,13,1,1,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 1'),(29,13,1,2,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 2'),(30,13,1,3,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 3'),(31,13,1,4,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 4'),(32,13,1,5,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 5'),(33,13,1,6,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 6'),(34,13,1,7,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 7'),(35,13,1,8,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 8'),(36,13,1,9,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 9'),(37,13,1,10,20000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 10'),(38,14,2,0,333.00,'PAGADO','0001-01-01','2024-04-18','Inscripción'),(39,14,2,1,25000.00,'PAGADO','0001-01-01','2024-04-18','Cuota Nº 1'),(40,14,2,2,25000.00,'PAGADO','0001-01-01','2024-04-18','Cuota Nº 2'),(41,14,2,3,25000.00,'PAGADO','0001-01-01','2024-04-18','Cuota Nº 3'),(42,14,2,4,25000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 4'),(43,14,2,5,25000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 5'),(44,14,2,6,25000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 6'),(45,14,2,7,25000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 7'),(46,14,2,8,25000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 8'),(47,14,2,9,25000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 9'),(48,14,2,10,25000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 10'),(49,14,2,11,25000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 11'),(50,14,2,12,25000.00,'IMPAGA','0001-01-01','0001-01-01','Cuota Nº 12');
 
 /*Table structure for table `caja` */
 
@@ -72,7 +72,7 @@ CREATE TABLE `caja` (
   `estado` varchar(15) DEFAULT NULL COMMENT 'Abierto o Cerrado',
   `saldo` decimal(8,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 
 /*Data for the table `caja` */
 
@@ -102,12 +102,12 @@ DROP TABLE IF EXISTS `carrera`;
 
 CREATE TABLE `carrera` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(90) DEFAULT NULL,
+  `nombre` varchar(90) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `cantidad_cuotas` int DEFAULT NULL,
   `costo_carrera` decimal(18,2) DEFAULT NULL,
   `inscripcion` decimal(18,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `carrera` */
 
@@ -120,11 +120,11 @@ DROP TABLE IF EXISTS `carrera_precios`;
 CREATE TABLE `carrera_precios` (
   `id` int NOT NULL AUTO_INCREMENT,
   `carrera_id` int DEFAULT NULL,
-  `detalle` varchar(90) DEFAULT NULL,
+  `detalle` varchar(90) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `costo` decimal(18,2) DEFAULT NULL,
-  `observacion` varchar(90) DEFAULT NULL,
+  `observacion` varchar(90) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `carrera_precios` */
 
@@ -143,7 +143,7 @@ CREATE TABLE `detalle_permiso` (
   KEY `relausuario` (`rela_usuario`),
   CONSTRAINT `detalle_permiso_ibfk_1` FOREIGN KEY (`rela_permiso`) REFERENCES `permiso` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `detalle_permiso_ibfk_2` FOREIGN KEY (`rela_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `detalle_permiso` */
 
@@ -157,12 +157,12 @@ CREATE TABLE `docente` (
   `id` int NOT NULL AUTO_INCREMENT,
   `rela_persona` int NOT NULL,
   `edad` int NOT NULL,
-  `titulacion` varchar(200) NOT NULL,
-  `materias` text NOT NULL,
+  `titulacion` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `materias` text COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `relapersona` (`rela_persona`),
   CONSTRAINT `docente_ibfk_1` FOREIGN KEY (`rela_persona`) REFERENCES `persona` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `docente` */
 
@@ -178,7 +178,7 @@ CREATE TABLE `egreso` (
   `usuario_id` int DEFAULT NULL,
   `egreso_tipo` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `egreso` */
 
@@ -188,11 +188,13 @@ DROP TABLE IF EXISTS `egreso_tipo`;
 
 CREATE TABLE `egreso_tipo` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(90) DEFAULT NULL,
+  `nombre` varchar(90) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `egreso_tipo` */
+
+insert  into `egreso_tipo`(`id`,`nombre`) values (1,'Alquiler');
 
 /*Table structure for table `ingreso` */
 
@@ -206,16 +208,17 @@ CREATE TABLE `ingreso` (
   `usuario_id` int DEFAULT NULL,
   `ingreso_tipo_id` int DEFAULT NULL,
   `alumno_id` int DEFAULT NULL,
-  `tipo_pago` varchar(20) DEFAULT NULL COMMENT 'Efectivo - Debito',
+  `tipo_pago` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Efectivo - Debito',
   `descuento` decimal(10,2) DEFAULT NULL COMMENT 'por pago efectivo y',
   `recargo` decimal(10,2) DEFAULT NULL COMMENT 'pago despues del 10',
-  `origen` varchar(50) DEFAULT NULL COMMENT 'Alumno - Propio',
+  `origen` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Alumno - Propio',
+  `detalle` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'detalle del pago',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `ingreso` */
 
-insert  into `ingreso`(`id`,`monto`,`fecha_ingreso`,`caja_id`,`usuario_id`,`ingreso_tipo_id`,`alumno_id`,`tipo_pago`,`descuento`,`recargo`,`origen`) values (1,56.00,'2024-04-03 02:45:10',1,1,3,NULL,NULL,NULL,NULL,NULL);
+insert  into `ingreso`(`id`,`monto`,`fecha_ingreso`,`caja_id`,`usuario_id`,`ingreso_tipo_id`,`alumno_id`,`tipo_pago`,`descuento`,`recargo`,`origen`,`detalle`) values (1,56.00,'2024-04-03 02:45:10',1,1,5,13,'CONTADO',NULL,NULL,NULL,NULL);
 
 /*Table structure for table `ingreso_tipo` */
 
@@ -223,14 +226,13 @@ DROP TABLE IF EXISTS `ingreso_tipo`;
 
 CREATE TABLE `ingreso_tipo` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(60) DEFAULT NULL,
-  `monto` decimal(16,2) DEFAULT NULL,
+  `nombre` varchar(60) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `ingreso_tipo` */
 
-insert  into `ingreso_tipo`(`id`,`nombre`,`monto`) values (1,'Pago Alumno',6500.00),(2,'Ingresos Propios',8000.00),(3,'Cuota 2',8000.00),(4,'Cuota 3',8000.00);
+insert  into `ingreso_tipo`(`id`,`nombre`) values (1,'Aporte externo de socios'),(2,'Otros Ingresos'),(6,'Cuotas');
 
 /*Table structure for table `permiso` */
 
@@ -238,10 +240,10 @@ DROP TABLE IF EXISTS `permiso`;
 
 CREATE TABLE `permiso` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(35) NOT NULL,
+  `nombre` varchar(35) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre_permiso` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `permiso` */
 
@@ -253,20 +255,20 @@ DROP TABLE IF EXISTS `persona`;
 
 CREATE TABLE `persona` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `apellidonombre` varchar(30) NOT NULL,
+  `apellidonombre` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `dni` int NOT NULL,
-  `domicilio` varchar(50) NOT NULL,
-  `cel1` varchar(11) NOT NULL,
-  `cel2` varchar(11) NOT NULL,
-  `mail` varchar(35) NOT NULL,
+  `domicilio` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `cel1` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
+  `cel2` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
+  `mail` varchar(35) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `apellidonombre` (`apellidonombre`) USING BTREE,
   UNIQUE KEY `dniunico` (`dni`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=2147483648 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `persona` */
 
-insert  into `persona`(`id`,`apellidonombre`,`dni`,`domicilio`,`cel1`,`cel2`,`mail`) values (1,'yanzon mauricio',22705501,'b ucc','2645056361','5555555','mauricioyan@hotmail.com'),(2,'perez jose',22705502,'sdfdsf','324234324','11','gfdg@sdasd'),(20,'Yalardo Juan',22708505,'san juan- rivadavia','24646546556','',''),(30,'rtret',22705506,'retert','','',''),(34,'asdasdewrewr',227055088,'asdsad','','',''),(36,'alumno nuevo',22705503,'sdfsdf','','','');
+insert  into `persona`(`id`,`apellidonombre`,`dni`,`domicilio`,`cel1`,`cel2`,`mail`) values (1,'Instituto CE',999,'mendoza','','',''),(2,'perez jose',22705502,'sdfdsf','324234324','11','gfdg@sdasd'),(20,'Yalardo Juan',22708505,'san juan- rivadavia','24646546556','',''),(21,'yanzon mauricio',22705501,'b ucc','2645056361','5555555','mauricioyan@hotmail.com'),(34,'asdasdewrewr',227055088,'asdsad','','',''),(36,'alumno nuevo',22705503,'sdfsdf','','','');
 
 /*Table structure for table `usuario` */
 
@@ -275,17 +277,17 @@ DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `id` int NOT NULL AUTO_INCREMENT,
   `rela_persona` int NOT NULL,
-  `usuario` varchar(15) NOT NULL,
-  `pass` varchar(255) NOT NULL,
+  `usuario` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `pass` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `estado` tinyint(1) NOT NULL COMMENT '0 inactivo y 1 activo',
   PRIMARY KEY (`id`),
   UNIQUE KEY `rela_persona` (`rela_persona`),
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`rela_persona`) REFERENCES `persona` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `usuario` */
 
-insert  into `usuario`(`id`,`rela_persona`,`usuario`,`pass`,`estado`) values (1,1,'admin','202cb962ac59075b964b07152d234b70',1);
+insert  into `usuario`(`id`,`rela_persona`,`usuario`,`pass`,`estado`) values (1,21,'admin','202cb962ac59075b964b07152d234b70',1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

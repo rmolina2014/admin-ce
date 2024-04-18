@@ -5,12 +5,12 @@ include("alumno.php");
 $objeto = new Alumno();
 if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id']))
 {
- $cuota_id = $_POST['id'];
+ $cuota_id = $_POST['cuota_id'];
  $fecha_pago = date("Y-m-d");
  $estado = 'PAGADO';
  $pagar_cuota = $objeto->pagarAlumnoCuota($cuota_id,$estado,$fecha_pago);
-    if ($todobien) {
-        echo "<script language=Javascript> location.href=\"index.php\"; </script>";
+    if ($pagar_cuota) {
+        echo "<script language=Javascript> location.href=\"alumno_carrera_cuotas.php\"; </script>";
         //header('Location: listado.php');
         exit;
     } else {

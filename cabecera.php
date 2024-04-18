@@ -14,5 +14,5 @@ include("sesion.php");
     <link rel="stylesheet" href="../assets/css/iconly.css">
 </head>
 <body>
-<script src="assets/static/js/initTheme.js"></script>
-    <div id="app">
+<script src="../assets/js/initTheme.js"></script>
+<div id="app">

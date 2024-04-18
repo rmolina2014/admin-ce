@@ -1,5 +1,6 @@
 <?php
 include_once("../bd/conexion.php");
+// da error include("../sesion.php");
 class Alumno
 {
   public function obtenerUsuario($usuario)
@@ -216,7 +217,7 @@ class Alumno
 
     return $rs;
   }
-  
+
   public function listaAlumnoCarreraCuota($alumno_id)
   {
     $data = array();
@@ -242,7 +243,7 @@ class Alumno
   }
 
   // pagar cuotas
-  public function pagarAlumnoCuota($cuota_id,$estado,$fecha_pago)
+  public function pagarAlumnoCuota($cuota_id, $estado, $fecha_pago)
   {
     $consulta = "UPDATE `alumno_carrera_cuotas`
     SET 
@@ -250,13 +251,119 @@ class Alumno
       `fecha_pago` = '$fecha_pago'
       WHERE `id` = '$cuota_id'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
-    if (mysqli_num_rows($rs) > 0) {
-      while ($fila = mysqli_fetch_assoc($rs)) {
-        $data[] = $fila;
-      }
-    }
-    return $data;
+    
+    return $rs;
   }
 
-  
+  public function buscarCajaAbierta()
+  {
+    $data = array();
+    $consulta = "SELECT
+    *
+  FROM `caja`
+  where `estado`= 'Abierta';";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        //$data[] = $fila;
+        $id = $fila["id"];
+      }
+    }
+    return $id;
+  }
+
+
+  // INSERTAR INGRESO DE PAGO DE CUOTAS
+
+  /* INSERT INTO `bdce`.`ingreso`
+            (`id`,
+             `monto`,
+             `fecha_ingreso`,
+             `caja_id`,
+             `usuario_id`,
+             `ingreso_tipo_id`,
+             `alumno_id`,
+             `tipo_pago`,
+             `descuento`,
+             `recargo`,
+             `origen`,
+             `detalle`)
+VALUES ('id',
+        aja_id',
+        'usua'monto',
+        'fecha_ingreso',
+        'crio_id',
+        'ingreso_tipo_id',
+        'alumno_id',
+        'tipo_pago',
+        'descuento',
+        'recargo',
+        'origen',
+        'detalle');*/
+
+  public function insertarIngresoAlumnoCuota($cuota_id)
+  {
+    $consulta = "SELECT
+          `id`,
+          `alumno_id`,
+          `carrera_id`,
+          `cuota_numero`,
+          `monto`,
+          `estado`,
+          `fecha_vencimiento`,
+          `fecha_pago`,
+          `detalle`
+        FROM `alumno_carrera_cuotas`
+        WHERE `id`=" . $cuota_id;
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $monto = $fila['monto'];
+        $alumno_id = $fila['alumno_id'];
+        $detalle = $fila['detalle'];
+      }
+    }
+
+    // traer la caja abierta
+
+    $cajadatos = new Alumno();
+    $caja_id = $cajadatos->buscarCajaAbierta();
+
+    // datos de ingreso
+    $fecha_ingreso=date("Y-m-d");
+    $ingreso_tipo_id=6;
+    $tipo_pago="falta";
+    $descuento="0";
+    $recargo="0";
+    $origen="Alumno";
+    $usuario_id="999";
+
+    $consulta="INSERT INTO `ingreso`
+    (
+     `monto`,
+     `fecha_ingreso`,
+     `caja_id`,
+     `usuario_id`,
+     `ingreso_tipo_id`,
+     `alumno_id`,
+     `tipo_pago`,
+     `descuento`,
+     `recargo`,
+     `origen`,
+     `detalle`)
+VALUES (
+'$monto',
+'$fecha_ingreso',
+'$caja_id',
+'$usuario_id',
+'$ingreso_tipo_id',
+'$alumno_id',
+'$tipo_pago',
+'$descuento',
+'$recargo',
+'$origen',
+'$detalle');";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    return $rs;
+  }
 }
