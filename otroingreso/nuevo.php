@@ -162,6 +162,9 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
                    if (opcionSeleccionada.val()==1){
                         document.getElementById("dnialumno").style.display = "none";
                         document.getElementById("labeldni").style.display = "none";
+                        $("#resultadoBusqueda").html(
+                                "<h6 class='text-muted mb-0'> "   + " </h6>");
+                        document.getElementById("guardar").disabled = false;
 
                         
                    }else{
