@@ -1,7 +1,7 @@
 ﻿<?php
-include ("../cabecera.php");
-include ("../menu.php");
-include ("carrera.php");
+include("../cabecera.php");
+include("../menu.php");
+include("carrera.php");
 ?>
 <div id="main">
   <header class="mb-3">
@@ -18,12 +18,13 @@ include ("carrera.php");
           <!--p class="text-subtitle text-muted">The default layout.</p-->
         </div>
         <div class="col-12 col-md-6 order-md-2 order-first">
+
           <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="../panelcontrol/index.php">Panel de Control</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Carreras</li>
+              <li class="breadcrumb-item"><?php echo "Usuario : " . $USUARIO; ?></li>
             </ol>
           </nav>
+
         </div>
       </div>
     </div>
@@ -54,7 +55,7 @@ include ("carrera.php");
                 $objeto = new Carrera();
                 $usuarios = $objeto->listaCarrera();
                 foreach ($usuarios as $item) {
-                  ?>
+                ?>
                   <tr>
                     <td>
                       <?php echo $item['id']; ?>
@@ -64,18 +65,18 @@ include ("carrera.php");
                     </td>
                     <td>
                       <?php echo $item['cantidad_cuotas']; ?>
-                    </td>                    
+                    </td>
                     <td>
-                        <form method="POST" role="form" action="editar.php">
-                           <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
-                           <button class="btn btn-sm btn-secondary d-inline-flex align-items-center">Editar</button>
-                        </form>
+                      <form method="POST" role="form" action="editar.php">
+                        <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
+                        <button class="btn btn-sm btn-secondary d-inline-flex align-items-center">Editar</button>
+                      </form>
                     </td>
 
 
 
                   </tr>
-                  <?php
+                <?php
                 }
                 ?>
               </tbody>
@@ -85,5 +86,5 @@ include ("carrera.php");
       </div>
     </section>
     <?php
-    include ("../pie.php");
+    include("../pie.php");
     ?>

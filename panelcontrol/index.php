@@ -8,6 +8,7 @@ include("../menu.php");
         <a href="#" class="burger-btn d-block d-xl-none">
             <i class="bi bi-justify fs-3"></i>
         </a>
+
     </header>
 
     <div class="page-heading">
@@ -18,12 +19,13 @@ include("../menu.php");
                     <p class="text-subtitle text-muted">The default layout.</p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
+
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.php">Panel de Control</a></li>
-                            <!--li class="breadcrumb-item active" aria-current="page">Layout Default</li-->
+                            <li class="breadcrumb-item"><?php echo "Usuario : " . $USUARIO; ?></li>
                         </ol>
-                    </nav>
+                   </nav>
+
                 </div>
             </div>
         </div>

@@ -136,12 +136,12 @@
           </a>
         </li>
 
-        <!--li class="sidebar-item ">
+        <li class="sidebar-item ">
           <a href="../egresoTipo/index.php" class="sidebar-link">
             <i class="bi bi-grid-fill"></i>
             <span>Tipo Egresos</span>
           </a>
-        </li-->
+        </li>
 
         <li class="sidebar-item ">
           <a href="../usuarios/index.php" class="sidebar-link">

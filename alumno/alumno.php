@@ -301,7 +301,7 @@ VALUES ('id',
         'origen',
         'detalle');*/
 
-  public function insertarIngresoAlumnoCuota($cuota_id)
+  public function insertarIngresoAlumnoCuota($cuota_id,$tipo_pago)
   {
     $consulta = "SELECT
           `id`,
@@ -332,7 +332,7 @@ VALUES ('id',
     // datos de ingreso
     $fecha_ingreso=date("Y-m-d");
     $ingreso_tipo_id=6;
-    $tipo_pago="falta";
+    $tipo_pago=$tipo_pago;
     $descuento="0";
     $recargo="0";
     $origen="Alumno";

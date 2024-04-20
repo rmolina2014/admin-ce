@@ -18,13 +18,14 @@ include("caja.php");
           <!--p class="text-subtitle text-muted">The default layout.</p-->
         </div>
         <div class="col-12 col-md-6 order-md-2 order-first">
-          <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="../panelcontrol/index.php">Panel de Control</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
-            </ol>
-          </nav>
-        </div>
+
+                    <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><?php echo "Usuario : " . $USUARIO; ?></li>
+                        </ol>
+                   </nav>
+
+                </div>
       </div>
     </div>
 
