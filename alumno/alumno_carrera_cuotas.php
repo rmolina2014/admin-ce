@@ -14,6 +14,18 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
     }
 }
 
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    $objeto = new Alumno();
+    $alumno_id = (int)$_GET['id'];
+    //buscar los datos del alumno
+    $datos_alumno = $objeto->obtenerId($alumno_id);
+    foreach ($datos_alumno as $item) {
+        $apellidonombre = $item['apellidonombre'];
+        $carrera = $item['carrera'];
+        $dni = $item['dni'];
+    }
+}
+
 ?>
 <div id="main">
     <header class="mb-3">
@@ -32,12 +44,13 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                     <!--p class="text-subtitle text-muted">The default layout.</p-->
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
+
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="../panelcontrol/index.php">Panel de Control</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Alumnos</li>
+                            <li class="breadcrumb-item"><?php echo "Usuario : " . $USUARIO; ?></li>
                         </ol>
                     </nav>
+
                 </div>
             </div>
         </div>
@@ -70,17 +83,14 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                     <td><?php echo $item['monto']; ?></td>
                                     <td><?php echo $item['estado']; ?></td>
                                     <td>
-
                                         <?php
                                         if ($item['estado'] == "IMPAGA") {
                                         ?>
                                             <a id="pagar<?php echo $item['id']; ?>" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#border-less<?php echo $item['id']; ?>" data-monto="<?php echo $item['monto']; ?>" data-detalle="<?php echo $item['detalle']; ?>">
                                                 Pagar
                                             </a>
-
                                         <?php
                                         }
-
                                         ?>
                                         <!---modal--->
                                         <!--BorderLess Modal Modal -->
@@ -108,15 +118,23 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                                                 <label>Importe : $</label>
                                                                 <input class="form-control" type="number" value="<?php echo $item['monto']; ?>" />
                                                                 <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
+                                                                <input type="hidden" name="alumno_id" value="<?php echo $item['alumno_id']; ?>">
                                                             </div>
-
+                                                            <div class="form-group">
+                                                                <label>Forma de Pago :</label>
+                                                                <select class="form-control" name="tipo_pago" required>
+                                                                    <option value="">Seleccionar...</option>
+                                                                    <option value="CONTADO">Contado</option>
+                                                                    <option value="DEBITO">Debito</option>
+                                                                </select>
+                                                            </div>
 
                                                             <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
                                                                 <i class="bx bx-x d-block d-sm-none"></i>
                                                                 <span class="d-none d-sm-block">Cancelar</span>
                                                             </button>
 
-                                                            <button type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal">
+                                                            <button type="submit" class="btn btn-outline-primary">
                                                                 <i class="bx bx-check d-block d-sm-none"></i>
                                                                 <span class="d-none d-sm-block">Pagar</span>
                                                             </button>
