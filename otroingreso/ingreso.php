@@ -132,4 +132,53 @@ class Ingreso
     return $data;
 
   }
+
+//insertar ingresos de otros ingresos
+
+  public function insertarIngresoOtrosIngresos($monto,
+    $fecha_ingreso,
+    $caja_id,
+    $usuario_id,
+    $ingreso_tipo,
+    $alumno_id,
+    $tipopago,$observacion)
+  {
+
+    
+    $descuento="0";
+    $recargo="0";
+    $origen="Socios";
+ 
+
+    $consulta="INSERT INTO `ingreso`
+    (
+     `monto`,
+     `fecha_ingreso`,
+     `caja_id`,
+     `usuario_id`,
+     `ingreso_tipo_id`,
+     `alumno_id`,
+     `tipo_pago`,
+     `descuento`,
+     `recargo`,
+     `origen`,`detalle`)
+VALUES (
+'$monto',
+'$fecha_ingreso',
+'$caja_id',
+'$usuario_id',
+'$ingreso_tipo',
+'$alumno_id',
+'$tipopago',
+'$descuento',
+'$recargo',
+'$origen','$observacion');";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    return $rs;
+  }        
+
+//fin insertar de otros ingresos        
+
+
+
 }

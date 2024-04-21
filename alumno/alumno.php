@@ -154,6 +154,20 @@ class Alumno
     return $data;
   }
 
+
+  public function buscarDNIalumno($dni)
+  {
+    $data = array();
+    $sql = "SELECT a.id,p.apellidonombre FROM persona p,alumno a WHERE p.dni ='$dni' and p.id=a.persona_id  ";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
   //verifica si el dni de la persona esta creado como usuario
   public function buscarDNIenusuario($dni)
   {
@@ -300,6 +314,9 @@ VALUES ('id',
         'recargo',
         'origen',
         'detalle');*/
+
+  
+
 
   public function insertarIngresoAlumnoCuota($cuota_id,$tipo_pago)
   {

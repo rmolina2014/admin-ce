@@ -3,6 +3,8 @@ include("../cabecera.php");
 include("../menu.php");
 include("ingreso.php");
 $objeto = new Ingreso();
+
+
 if (isset($_POST['monto']) && !empty($_POST['monto'])) {
 
   $monto = $_POST['monto'];
@@ -11,13 +13,18 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
   $usuario_id = $_POST['usuario_id'];
   $ingreso_tipo = $_POST['ingreso_tipo_id'];
   $observacion = $_POST['observacion'];
+  $alumno_id=$_POST['id_alumno'];
+  $tipopago=$_POST['tipo_pago'];
 
-  $todobien = $objeto->nuevo(
+  $todobien = $objeto->insertarIngresoOtrosIngresos(
     $monto,
-    $fecha_egreso,
+    $fecha_ingreso,
     $caja_id,
     $usuario_id,
-    $egreso_tipo
+    $ingreso_tipo,
+    $alumno_id,
+    $tipopago,$observacion
+
   );
   if ($todobien) {
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
@@ -50,6 +57,9 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
           </div>
           <div class="col-12 col-md-6 order-md-2 order-first">
             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><?php echo "Usuario : " . $USUARIO; ?></li>
+            </ol>             
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../panelcontrol/index.html">Panel de Control</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Otros Ingresos</li>
@@ -65,6 +75,11 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
             <h4 class="card-title">Formulario Agregar</h4>
           </div>
           <div class="card-body">
+                 
+
+
+              
+ 
             <!--- contenido ---------------------------------------------------------->
 
             <form method="POST" role="form" action="nuevo.php">
@@ -108,13 +123,10 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
                 
               </div>
 
-
-                    <form >
-
                         <div class="col-md-8 mb-3">
+                            <input name="id_alumno" id="id_alumno"  type="hidden"  />
                             <label id="labeldni">D.N.I </label>
-                            <input name="dnialumno" id="dnialumno" class="form-control" type="text" tabindex="1"
-                                maxlength="10" required />
+                            <input name="dnialumno" id="dnialumno" class="form-control" type="text"                     maxlength="10" required />
                             <br>
                             <!--button type="button" id="buscar_dni"
                   class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar D.N.I.</button-->
@@ -124,13 +136,24 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
                             <div id="resultadoBusqueda"></div>
                         </div>
 
-                    </form>
 
 
               <div class="col-md-8 mb-3">
                 <label class="form-label">Monto</label>
-                <input name="monto" class="form-control" type="monto" onkeypress="return soloNumeros(event);" required  />
+                <input name="monto" id="monto" class="form-control" type="monto" onkeypress="return soloNumeros(event);" required  />
               </div>
+
+
+              <div class="col-md-8 mb-3">
+                <label>Forma de Pago :</label>
+                    <select class="form-control" name="tipo_pago" id="tipo_pago" required>
+                         <option value="">Seleccionar...</option>
+                         <option value="CONTADO">Contado</option>
+                         <option value="DEBITO">Debito</option>
+                    </select>
+              </div>
+
+
 
               <div class="col-md-8 mb-3">
                 <label class="form-label">Observacion</label>
@@ -159,17 +182,23 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
                    
                    $("#ingreso_tipo_id").on("click", function() {
                    const opcionSeleccionada = $(this).find("option:selected");
+                   
                    if (opcionSeleccionada.val()==1){
+                        $("#dnialumno").val(999);
                         document.getElementById("dnialumno").style.display = "none";
                         document.getElementById("labeldni").style.display = "none";
                         $("#resultadoBusqueda").html(
                                 "<h6 class='text-muted mb-0'> "   + " </h6>");
                         document.getElementById("guardar").disabled = false;
+                        $("#id_alumno").val(1);
+
 
                         
                    }else{
                        document.getElementById("dnialumno").style.display = "block";
                        document.getElementById("labeldni").style.display = "block";
+                       document.getElementById("guardar").disabled = true;
+                       $("#id_alumno").val(0);
                    }
 
                    //console.log("Valor de la opción seleccionada:", opcionSeleccionada.val());
@@ -180,7 +209,7 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
             $("#dnialumno").blur(function() {
                 var vdni = $("#dnialumno").val();
                 $.ajax({
-                    url: "../personas/buscar_dni.php",
+                    url: "../alumno/buscar_dni_en_alumno.php",
                     type: "POST",
                     data: {
                         dni: vdni
@@ -191,13 +220,14 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
                         //alert(jsonData.estado);
                         if (jsonData.estado == "ok") {
                             $("#resultadoBusqueda").html(
-                                "<h6 class='text-muted mb-0'> Persona : " + jsonData
+                                "<h6 class='text-muted mb-0'> Alumno : " + jsonData
                                 .nombre + ". </h6>");
-                            $("#id_persona").val(jsonData.id_persona);
+                            $("#id_alumno").val(jsonData.id_alumno);
                             document.getElementById("guardar").disabled = false;
                         } else {
                             $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'>" +
                                 jsonData.mensaje + "</h6>");
+                            $("#id_alumno").val(0);
                             document.getElementById("guardar").disabled = true;
                         }
 
