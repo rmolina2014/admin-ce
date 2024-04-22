@@ -147,7 +147,12 @@ class Ingreso
     
     $descuento="0";
     $recargo="0";
-    $origen="Socios";
+    if ($alumno_id == 1){
+       $origen="Socios";
+     }else
+     {
+        $origen="Alumno";
+     }
  
 
     $consulta="INSERT INTO `ingreso`

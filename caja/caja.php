@@ -71,6 +71,62 @@ VALUES (
     return $rs;
   }
 
+  public function actualizaringresocaja($id, $ingreso)
+  {
+    //$data=array();
+    $consulta = "SELECT * FROM `caja` where id=$id";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        
+        $ingreso_total = $fila['ingreso_total'];
+        $saldo_total = $fila['saldo'];
+      }
+    
+    $ingreso_final = $ingreso_total + $ingreso;
+    $saldo_final = $saldo_total + $ingreso;
+
+    $sql = "UPDATE `caja`
+            SET 
+              `ingreso_total` = '$ingreso_final',
+              `saldo` = '$saldo_final'
+            WHERE `id` = '$id';";
+    $result = mysqli_query(conexion::obtenerInstancia(), $sql);
+    return $result;
+
+    }
+
+  }
+
+  public function actualizaregresocaja($id, $egreso)
+  {
+    //$data=array();
+    $consulta = "SELECT * FROM `caja` where id=$id";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        
+        $egreso_total = $fila['egreso_total'];
+        $saldo_total = $fila['saldo'];
+      }
+    
+    $egreso_final = $egreso_total + $egreso;
+    $saldo_final = $saldo_total - $egreso;
+
+    $sql = "UPDATE `caja`
+            SET 
+              `egreso_total` = '$egreso_final',
+              `saldo` = '$saldo_final'
+            WHERE `id` = '$id';";
+    $result = mysqli_query(conexion::obtenerInstancia(), $sql);
+    return $result;
+
+    }
+        
+
+  }
+
+
   //obtener cuantas cajas estan abiertas
   public function cajasAbiertas()
   {
@@ -121,4 +177,5 @@ VALUES (
     }
     return $data;
   }
+
 }
