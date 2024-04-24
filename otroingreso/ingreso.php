@@ -87,13 +87,16 @@ class Ingreso
     return $rs;
   }
 
-
-    public function editar($ingreso_id, $tipoingreso, $monto)
+   
+    public function editar($ingreso_id, $tipoingreso, $monto,$id_alumno,$tipo_pago,$origen)
   {
     $sql = "UPDATE `ingreso`
     SET 
-      `ingreso_tipo` = '$tipoingreso',
-      `monto` = '$monto'
+      `ingreso_tipo_id` = '$tipoingreso',
+      `monto` = '$monto',
+      `alumno_id` = '$id_alumno',
+      `tipo_pago` = '$tipo_pago',
+      `origen` = '$origen'
        WHERE `id` = '$ingreso_id'";
 
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);

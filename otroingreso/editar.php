@@ -106,6 +106,31 @@
                </div>
 
 
+
+              <div class="col-md-8 mb-3">
+                <label>Forma de Pago :</label>
+                    <select class="form-control" name="tipo_pago" id="tipo_pago" required>
+                         <option value="">Seleccionar...</option>
+                         <?php
+                          if ($item['tipo_pago'] == 'CONTADO')
+                            {
+                            ?>
+                             <option value="<?php echo $item['tipo_pago']; ?>" selected> Contado </option>
+                             <option value="DEBITO" > Debito </option>
+                            <?php
+                            }else{
+                            ?>
+                             <option value="CONTADO"> Contado </option>
+                             <option value="<?php echo $item['tipo_pago']; ?>" selected> Debito </option>
+                           <?php
+                           }
+                            
+                          ?>
+
+                    </select>
+              </div>               
+
+
                <div class="col-md-8 mb-3">
                  <button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center" data-dismiss="modal" onclick="location.href='index.php';"> Cancelar
                  </button>
@@ -130,9 +155,18 @@
           $ingreso_id = $_POST['ingreso_id'];
           $tipoingreso = $_POST['ingreso_tipo_id'];
           $monto = $_POST['monto'];
+          $id_alumno = $_POST['id_alumno'];
+          $tipo_pago = $_POST['tipo_pago'];
+          if ($_POST['id_alumno']==1){
+            $origen="Socios";
+          }else
+          {
+            $origen="Alumno";
+          }
 
 
-          $todobien = $objeto->editar($egreso_id, $tipoegreso, $monto);
+
+          $todobien = $objeto->editar($ingreso_id, $tipoingreso, $monto,$id_alumno,$tipo_pago,$origen);
           if ($todobien) {
             echo "<script language=Javascript> location.href=\"index.php\"; </script>";
             //header('Location: listado.php');
@@ -173,6 +207,7 @@
                        document.getElementById("labeldni").style.display = "block";
                        document.getElementById("guardar").disabled = true;
                        $("#id_alumno").val(0);
+                       $("#dnialumno").val("");
                    }
 
                    //console.log("Valor de la opción seleccionada:", opcionSeleccionada.val());

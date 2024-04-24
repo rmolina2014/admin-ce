@@ -54,6 +54,7 @@ include ("ingreso.php");
                 <th>N°</th>
                 <th>Fecha Ingreso</th>
                 <th>Importe</th>
+                <th>Forma de Pago</th>
                 <th>Detalle</th>
                 <th>Caja</th>
                 <th></th>
@@ -83,6 +84,9 @@ include ("ingreso.php");
                     <td>
                       <?php echo $item['monto']; ?>
                     </td>
+                    <td>
+                      <?php echo $item['tipo_pago']; ?>
+                    </td>                    
                     <td>
                       <?php echo $item['ingresotipo']; ?>
                     </td>
