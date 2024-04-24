@@ -7,7 +7,22 @@ class Ingreso
   public function obtenerId($id)
   {
     $data=array();
-    $consulta = "SELECT * FROM egreso where id='$id'";
+    $consulta = "SELECT * FROM ingreso where id='$id'";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+      return $data;
+    } else
+      return $rs;
+  }
+
+
+    public function obtenerIdconalumno($id)
+  {
+    $data=array();
+    $consulta = "SELECT i.*,p.dni FROM ingreso i,alumno a,persona p where i.id='$id' and a.persona_id=p.id and i.alumno_id = a.id ";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
@@ -73,13 +88,13 @@ class Ingreso
   }
 
 
-    public function editar($egreso_id, $tipoegreso, $monto)
+    public function editar($ingreso_id, $tipoingreso, $monto)
   {
-    $sql = "UPDATE `egreso`
+    $sql = "UPDATE `ingreso`
     SET 
-      `egreso_tipo` = '$tipoegreso',
+      `ingreso_tipo` = '$tipoingreso',
       `monto` = '$monto'
-       WHERE `id` = '$egreso_id'";
+       WHERE `id` = '$ingreso_id'";
 
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
