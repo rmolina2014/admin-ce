@@ -38,7 +38,7 @@ include("caja.php");
           <!--- inico contenido -------------------------------------------------------------------------->
 
           <div class="buttons">
-            <a href="nuevo.php" class="btn btn-outline-primary">Agregar</a>
+            <!--a href="nuevo.php" class="btn btn-outline-primary">Agregar</a-->
           </div>
 
           <table class="table table-flush" id="datatable">

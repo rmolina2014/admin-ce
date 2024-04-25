@@ -52,10 +52,13 @@ include ("ingreso.php");
             <thead class="thead-light">
               <tr>
                 <th>N°</th>
+                <th>Alumno</th>
+                <th>DNI</th>
                 <th>Fecha Ingreso</th>
                 <th>Importe</th>
                 <th>Forma de Pago</th>
                 <th>Detalle</th>
+                <th>Observacion</th>
                 <th>Caja</th>
                 <th></th>
               </tr>
@@ -79,6 +82,12 @@ include ("ingreso.php");
                       <?php echo $item['id']; ?>
                     </td>
                     <td>
+                      <?php echo $item['alumno']; ?>
+                    </td>
+                    <td>
+                      <?php echo ($item['dni'] == 999) ?  '' :  $item['dni']; ?>
+                    </td>                                        
+                    <td>
                       <?php echo $item['fecha_ingreso']; ?>
                     </td>
                     <td>
@@ -90,6 +99,9 @@ include ("ingreso.php");
                     <td>
                       <?php echo $item['ingresotipo']; ?>
                     </td>
+                    <td>
+                      <?php echo $item['detalle']; ?>
+                    </td>                    
                     <td>
                       <?php echo $item['caja_id']; ?>
                     </td>

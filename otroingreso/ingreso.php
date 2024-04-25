@@ -105,7 +105,7 @@ class Ingreso
 
   public function listaporcaja($caja)
   {
-    $consulta = "SELECT i.*,it.nombre as ingresotipo FROM ingreso i,ingreso_tipo it where i.ingreso_tipo_id=it.id and caja_id='$caja'";
+    $consulta = "SELECT i.*,it.nombre as ingresotipo,p.apellidonombre as alumno,p.dni FROM ingreso i,ingreso_tipo it,alumno a,persona p where i.ingreso_tipo_id=it.id and i.alumno_id=a.id and a.persona_id=p.id and caja_id='$caja'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
