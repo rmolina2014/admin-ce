@@ -19,13 +19,13 @@ include("caja.php");
         </div>
         <div class="col-12 col-md-6 order-md-2 order-first">
 
-                    <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><?php echo "Usuario : " . $USUARIO; ?></li>
-                        </ol>
-                   </nav>
+          <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><?php echo "Usuario : " . $USUARIO; ?></li>
+            </ol>
+          </nav>
 
-                </div>
+        </div>
       </div>
     </div>
 
@@ -76,7 +76,7 @@ include("caja.php");
                     <td>
                       <?php echo $item['fecha_cierre']; ?>
                     </td>
-                    
+
                     <td>
                       <?php echo $item['saldo']; ?>
                     </td>
@@ -84,19 +84,13 @@ include("caja.php");
                     <td>
                       <?php echo $item['estado']; ?>
                     </td>
-                    
                     <td>
-                    <a class="btn btn-primary btn-sm" href="detalle_caja.php?caja_id=<?php echo $item['id']; ?>">Detalle
-                      de la Caja</a>
-                      <?php
-                      if ($item['estado'] == 'Abierta') {
-                      ?>
-                        <a class="btn btn-danger btn-sm" href="cerrarcaja.php?caja_id=<?php echo $item['id']; ?>">Cerrar
-                          Caja</a>
-                    </td>
-                  <?php
-                    } 
-                  ?>
+                      <form method="POST" role="form" action="detalle_caja_abierta.php">
+                        <input type="hidden" name="caja_id" value="<?php echo $item['id']; ?>">
+                        <button class="btn btn-sm btn-secondary d-inline-flex align-items-center">Detalle
+                          de la Caja</button>
+                      </form>
+
                   </tr>
                 <?php
                 }

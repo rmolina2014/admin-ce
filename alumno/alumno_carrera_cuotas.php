@@ -75,6 +75,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                         <tbody>
                             <!-- Item -->
                             <?php
+                            $unosolo=True;
                             $usuarios = $objeto->listaAlumnoCarreraCuota($alumno_id);
                             foreach ($usuarios as $item) {
                             ?>
@@ -84,7 +85,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                     <td><?php echo $item['estado']; ?></td>
                                     <td>
                                         <?php
-                                        if ($item['estado'] == "IMPAGA") {
+                                        if ($item['estado'] == "IMPAGA" and $unosolo) {
+                                        $unosolo=False;
                                         ?>
                                             <a id="pagar<?php echo $item['id']; ?>" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#border-less<?php echo $item['id']; ?>" data-monto="<?php echo $item['monto']; ?>" data-detalle="<?php echo $item['detalle']; ?>">
                                                 Pagar

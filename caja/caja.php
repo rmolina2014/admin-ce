@@ -178,4 +178,57 @@ VALUES (
     return $data;
   }
 
+  // listado de ingresos
+  public function listadoIngresos($caja_id)
+  {
+    $consulta = "SELECT
+    `id`,
+    `monto`,
+    `fecha_ingreso`,
+    `caja_id`,
+    `usuario_id`,
+    `ingreso_tipo_id`,
+    `alumno_id`,
+    `tipo_pago`,
+    `descuento`,
+    `recargo`,
+    `origen`,
+    `detalle`
+  FROM `ingreso`
+  WHERE `caja_id`=$caja_id
+  order by fecha_ingreso desc;";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
+  // listado de ingresos
+  public function listadoEgresos($caja_id)
+  {
+    $consulta = "SELECT
+    egreso.`id` AS id,
+egreso.`caja_id` AS caja_id,
+egreso.`fecha_egreso` AS fecha_egreso,
+egreso.`monto` AS monto,
+egreso_tipo.`nombre` AS egreso_tipo
+FROM
+    `egreso`
+    INNER JOIN `bdce`.`egreso_tipo` 
+        ON (`egreso`.`egreso_tipo` = `egreso_tipo`.`id`)
+  WHERE egreso.`caja_id` =$caja_id
+  order by fecha_egreso Desc";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
+
 }
