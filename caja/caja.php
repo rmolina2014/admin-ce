@@ -217,7 +217,7 @@ egreso.`monto` AS monto,
 egreso_tipo.`nombre` AS egreso_tipo
 FROM
     `egreso`
-    INNER JOIN `bdce`.`egreso_tipo` 
+    INNER JOIN `egreso_tipo` 
         ON (`egreso`.`egreso_tipo` = `egreso_tipo`.`id`)
   WHERE egreso.`caja_id` =$caja_id
   order by fecha_egreso Desc";
