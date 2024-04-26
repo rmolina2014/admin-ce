@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 
-include_once("bd/conexion.php");
+include("bd/conexion.php");
 include("usuarios/usuario.php");
 
 if ($_POST['usuario']) {
