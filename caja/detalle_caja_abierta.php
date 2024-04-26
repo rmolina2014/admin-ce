@@ -161,7 +161,6 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                 </div>
 
                  <!--- saldos------------------------------------------------------- -->
-
                 <div class="row">
                 <div class="col-6 col-lg-3 col-md-6">
                     <div class="card">
