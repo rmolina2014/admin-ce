@@ -45,7 +45,7 @@ include("alumno.php");
                                 <th>#</th>
                                 <th>DNI</th>
                                 <th>Apellido Nombre</th>
-                                <th>Carrera</th>
+                                <th>Curso</th>
                                 <th>Estado</th>
                                 <th></th>
                             </tr>

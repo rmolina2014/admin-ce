@@ -71,8 +71,8 @@
                </div>
 
                <div class="col-md-8 mb-3">
-                 <label class="form-label">Carrera</label>
-                 <select class="form-control" name="carrera_id" required autofocus tabindex="1">
+                 <label class="form-label">Curso</label>
+                 <select disabled class="form-control" name="carrera_id" required autofocus tabindex="1">
                    <option value="0">Seleccione....</option>
                    <?php
                     $carreras = $objeto->listaCarrera();
