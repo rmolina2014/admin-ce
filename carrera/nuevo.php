@@ -35,14 +35,14 @@ if (isset($_POST['nombrecarrera']) && !empty($_POST['nombrecarrera'])) {
       <div class="page-title">
         <div class="row">
           <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>Carrera</h3>
+            <h3>Curso</h3>
             <!--p class="text-subtitle text-muted">The default layout.</p-->
           </div>
           <div class="col-12 col-md-6 order-md-2 order-first">
             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../panelcontrol/index.html">Panel de Control</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Carrera</li>
+                <li class="breadcrumb-item active" aria-current="page">Curso</li>
               </ol>
             </nav>
           </div>

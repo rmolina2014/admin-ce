@@ -111,7 +111,7 @@
         <li class="sidebar-item ">
           <a href="../carrera/index.php" class="sidebar-link">
             <i class="bi bi-grid-fill"></i>
-            <span>Carreras</span>
+            <span>Cursos</span>
           </a>
         </li>
 

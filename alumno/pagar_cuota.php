@@ -5,7 +5,7 @@ include("alumno.php");
 $objeto = new Alumno();
 if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
     $cuota_id = $_POST['cuota_id'];
-    $fecha_pago = date("Y-m-d");
+    $fecha_pago = date("Y-m-d H:i:s");
     $estado = 'PAGADO';
     $alumno_id = $_POST['alumno_id'];
     $tipo_pago = $_POST['tipo_pago'];

@@ -59,7 +59,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
             <div class="card">
                 <div class="card-header">
                     <div class="ms-3 name">
-                        <h5 class="text-muted mb-0">Carrera : <?php echo $carrera; ?></h5>
+                        <h5 class="text-muted mb-0">Curso : <?php echo $carrera; ?></h5>
                     </div>
                 </div>
                 <div class="card-body">
@@ -126,8 +126,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                                                 <label>Forma de Pago :</label>
                                                                 <select class="form-control" name="tipo_pago" required>
                                                                     <option value="">Seleccionar...</option>
-                                                                    <option value="CONTADO">Contado</option>
-                                                                    <option value="DEBITO">Debito</option>
+                                                                    <option value="EFECTIVO">Efectivo</option>
+                                                                    <option value="VIRTUAL">Virtual</option>
                                                                 </select>
                                                             </div>
 

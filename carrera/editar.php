@@ -25,14 +25,14 @@
        <div class="page-title">
          <div class="row">
            <div class="col-12 col-md-6 order-md-1 order-last">
-             <h3>Carreras</h3>
+             <h3>Curso</h3>
              <!--p class="text-subtitle text-muted">The default layout.</p-->
            </div>
            <div class="col-12 col-md-6 order-md-2 order-first">
              <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                <ol class="breadcrumb">
                  <li class="breadcrumb-item"><a href="../panelcontrol/index.html">Panel de Control</a></li>
-                 <li class="breadcrumb-item active" aria-current="page">Carreras</li>
+                 <li class="breadcrumb-item active" aria-current="page">Cursos</li>
                </ol>
              </nav>
            </div>
@@ -42,7 +42,7 @@
        <section class="section">
          <div class="card">
            <div class="card-header">
-             <h4 class="card-title">Editar Carreras</h4>
+             <h4 class="card-title">Editar Cursos</h4>
            </div>
            <div class="card-body">
              <!--- contenido -->

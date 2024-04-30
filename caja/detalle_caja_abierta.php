@@ -168,7 +168,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                             <div class="row">
                                
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Debito</font></font></h6>
+                                    <h6 class="text-muted font-semibold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Virtual</font></font></h6>
                                     <h6 class="font-extrabold mb-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">112.000</font></font></h6>
                                 </div>
                             </div> 
@@ -181,7 +181,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                             <div class="row">
                                
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Contado</font></font></h6>
+                                    <h6 class="text-muted font-semibold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Efectivo</font></font></h6>
                                     <h6 class="font-extrabold mb-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">183.000</font></font></h6>
                                 </div>
                             </div>

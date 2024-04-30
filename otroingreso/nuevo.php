@@ -153,8 +153,8 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
                 <label>Forma de Pago :</label>
                     <select class="form-control" name="tipo_pago" id="tipo_pago" required>
                          <option value="">Seleccionar...</option>
-                         <option value="CONTADO">Contado</option>
-                         <option value="DEBITO">Debito</option>
+                         <option value="EFECTIVO">Efectivo</option>
+                         <option value="VIRTUAL">Virtual</option>
                     </select>
               </div>
 
