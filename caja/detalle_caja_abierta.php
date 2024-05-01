@@ -62,8 +62,16 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                 <tbody>
                                                     <?php
 
+                                                    $sub_total_virtual=0;
+                                                    $sub_total_efectivo=0;
+
                                                     $ingresos = $objeto->listadoIngresos($caja_id);
                                                     foreach ($ingresos as $item) {
+                                                    
+                                                        if($item['tipo_pago']=="VIRTUAL")
+                                                        { $sub_total_virtual=$sub_total_virtual+$item['monto'];}
+                                                        else {$sub_total_efectivo=$sub_total_efectivo +$item['monto'];}
+                                                    
                                                     ?>
                                                         <tr>
                                                             <td>
@@ -123,7 +131,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                 <th>Fecha </th>
                                                 <th>Monto $</th>
                                                 <th>Detalle</th>
-                                               
+
                                             </tr>
                                             <thead>
                                             <tbody>
@@ -145,7 +153,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                         <td>
                                                             <?php echo $item['egreso_tipo']; ?>
                                                         </td>
-                                                      
+
 
                                                     </tr>
                                                 <?php
@@ -160,79 +168,121 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                     </div>
                 </div>
 
-                 <!--- saldos------------------------------------------------------- -->
+                <!--- saldos------------------------------------------------------- -->
                 <div class="row">
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                               
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Virtual</font></font></h6>
-                                    <h6 class="font-extrabold mb-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">112.000</font></font></h6>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card"> 
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                               
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Efectivo</font></font></h6>
-                                    <h6 class="font-extrabold mb-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">183.000</font></font></h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Total Ingreso</font></font></h6>
-                                    <h6 class="font-extrabold mb-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">80.000</font></font></h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Total Egresos</font></font></h6>
-                                    <h6 class="font-extrabold mb-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">112</font></font></h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Saldo de Caja</font></font></h6>
-                                    <h6 class="font-extrabold mb-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">112</font></font></h6>
-                                </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
 
-                               
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Virtual</font>
+                                            </font>
+                                        </h6>
+                                        <h6 class="font-extrabold mb-0">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;"><?php echo number_format($sub_total_, 2, ',', '.');
+                                                ?></font>
+                                            </font>
+                                        </h6>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Efectivo</font>
+                                            </font>
+                                        </h6>
+                                        <h6 class="font-extrabold mb-0">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;"><?php echo number_format($sub_total_efectivo, 2, ',', '.');
+                                                ?></font>
+                                            </font>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Total Ingreso</font>
+                                            </font>
+                                        </h6>
+                                        <h6 class="font-extrabold mb-0">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">80.000</font>
+                                            </font>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Total Egresos</font>
+                                            </font>
+                                        </h6>
+                                        <h6 class="font-extrabold mb-0">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">112</font>
+                                            </font>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Saldo de Caja</font>
+                                            </font>
+                                        </h6>
+                                        <h6 class="font-extrabold mb-0">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">112</font>
+                                            </font>
+                                        </h6>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a id="pagar23" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#border-less23" data-monto="20000.00" data-detalle="Cuota Nº 7">
+                        Cerrar Caja
+                    </a>
                 </div>
-                <a id="pagar23" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#border-less23" data-monto="20000.00" data-detalle="Cuota Nº 7">
-                                                Cerrar Caja
-                                            </a>
-            </div>
             </section>
         <?php
     }
