@@ -75,7 +75,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                         <tbody>
                             <!-- Item -->
                             <?php
-                            $unosolo=True;
+                            $unosolo = True;
                             $usuarios = $objeto->listaAlumnoCarreraCuota($alumno_id);
                             foreach ($usuarios as $item) {
                             ?>
@@ -86,21 +86,24 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                     <td>
                                         <?php
                                         if ($item['estado'] == "IMPAGA" and $unosolo) {
-                                        $unosolo=False;
+                                            $unosolo = False;
                                         ?>
-                                            <a id="pagar<?php echo $item['id']; ?>" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#border-less<?php echo $item['id']; ?>" data-monto="<?php echo $item['monto']; ?>" data-detalle="<?php echo $item['detalle']; ?>">
-                                                Pagar
+                                            <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#pago-total<?php echo $item['id']; ?>">
+                                                Pago Total
+                                            </a>
+                                            <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#pago-parcial<?php echo $item['id']; ?>">
+                                                Pago Parcial
                                             </a>
                                         <?php
                                         }
                                         ?>
-                                        <!---modal--->
-                                        <!--BorderLess Modal Modal -->
-                                        <div class="modal fade text-left modal-borderless" id="border-less<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true" style="display: none;">
+
+                                        <!--Modal - PAGO TOTAL Modal -->
+                                        <div class="modal fade text-left modal-borderless" id="pago-total<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true" style="display: none;">
                                             <div class="modal-dialog modal-dialog-scrollable" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">Pagar Cuota</h5>
+                                                        <h5 class="modal-title">Pagar Cuota Total</h5>
                                                         <button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
                                                                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -131,11 +134,20 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                                                 </select>
                                                             </div>
 
+                                                            <div class="form-group">
+                                                                <label>Descuento : $</label>
+                                                                <input class="form-control" name="descuento" type="number"  />
+
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Recargo : $</label>
+                                                                <input class="form-control" name="recargo" type="number"  />
+                                                            </div>
                                                             <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
                                                                 <i class="bx bx-x d-block d-sm-none"></i>
                                                                 <span class="d-none d-sm-block">Cancelar</span>
                                                             </button>
-
                                                             <button type="submit" class="btn btn-outline-primary">
                                                                 <i class="bx bx-check d-block d-sm-none"></i>
                                                                 <span class="d-none d-sm-block">Pagar</span>
@@ -151,59 +163,85 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 </div>
             </div>
             <!-- fin modal-->
-            </td>
-            </tr>
-        <?php
-                            }
-        ?>
-        </tbody>
-        </table>
-        <!--- fin contenido------------------------------------------------------- -->
+            <!--Modal - PAGO PARCIAL Modal -->
+            <div class="modal fade text-left modal-borderless" id="pago-parcial<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Pagar Cuota Parcial</h5>
+                            <button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <!-- formulario post--->
+                            <form id="form" method="post" action="pagar_cuota.php">
+                                <div class="form-group">
+                                    <label>Detalle :</label>
+                                    <input class="form-control" type="text" value="<?php echo $item['detalle']; ?>" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Importe : $</label>
+                                    <input class="form-control" type="number" name="monto_pago_parcial" />
+                                    <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
+                                    <input type="hidden" name="alumno_id" value="<?php echo $item['alumno_id']; ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Forma de Pago :</label>
+                                    <select class="form-control" name="tipo_pago" required>
+                                        <option value="">Seleccionar...</option>
+                                        <option value="EFECTIVO">Efectivo</option>
+                                        <option value="VIRTUAL">Virtual</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Descuento : $</label>
+                                    <input class="form-control" name="descuento" type="number"  />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Recargo : $</label>
+                                    <input class="form-control" name="recargo" type="number"  />
+                                </div>
+
+                                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
+                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Cancelar</span>
+                                </button>
+
+                                <button type="submit" class="btn btn-outline-primary">
+                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Pagar</span>
+                                </button>
+                            </form>
+                            <!-- fin formulario--->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
     </div>
+</div>
+<!-- fin modal-->
+
+</td>
+</tr>
+<?php
+                            }
+?>
+</tbody>
+</table>
+<!--- fin contenido------------------------------------------------------- -->
+</div>
 </div>
 </section>
 
 <?php
 include("../pie.php");
 ?>
-<script src="../assets/js/jquery-3.6.3.min.js"></script>
-<script src="../assets/js/jquery.validate.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-
-        $("a[id^='pagar888']").click(function(evento) {
-            evento.preventDefault();
-            let cuota_id = this.id.substr(5, 4);
-            let monto = $(this).data('monto');
-            let detalle = $(this).data('detalle');
-
-            // $("#apagar").append('<h3><span class="badge badge-secondary">Saldo: $'+monto+'</span></h3>');
-            //$("#monto").html(monto);
-            $("#apagar").html("<h5>Detalle : " + detalle + " Monto : $ " + monto + "</h5>");
-            $("#cuotaApagar").val(cuota_id);
-
-        })
-
-        $("#aceptarpago").click(function() {
-            let cuotaId = $("#cuotaApagar").val();
-            alert(cuotaId);
-            /*    
-            $.ajax({
-                 type: "POST",
-                 cache: false,
-                 async: false,
-                 url: 'pagar_cuota.php',
-                 data: {
-                     cuota_id: cuotaId
-                 },
-                 success: function(data) {
-                     if (data) {
-                         //alert(data);
-                         location.reload(true);
-                     }
-                 }
-             }) //fin ajax */
-        });
-
-    })
-</script>

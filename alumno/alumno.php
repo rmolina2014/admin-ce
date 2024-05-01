@@ -265,7 +265,7 @@ class Alumno
       `fecha_pago` = '$fecha_pago'
       WHERE `id` = '$cuota_id'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
-    
+
     return $rs;
   }
 
@@ -315,10 +315,10 @@ VALUES ('id',
         'origen',
         'detalle');*/
 
-  
 
 
-  public function insertarIngresoAlumnoCuota($cuota_id,$tipo_pago)
+
+  public function insertarIngresoAlumnoCuota($cuota_id, $tipo_pago)
   {
     $consulta = "SELECT
           `id`,
@@ -347,15 +347,15 @@ VALUES ('id',
     $caja_id = $cajadatos->buscarCajaAbierta();
 
     // datos de ingreso
-    $fecha_ingreso=date("Y-m-d");
-    $ingreso_tipo_id=6;
-    $tipo_pago=$tipo_pago;
-    $descuento="0";
-    $recargo="0";
-    $origen="Alumno";
-    $usuario_id="999";
+    $fecha_ingreso = date("Y-m-d");
+    $ingreso_tipo_id = 6;
+    $tipo_pago = $tipo_pago;
+    $descuento = "0";
+    $recargo = "0";
+    $origen = "Alumno";
+    $usuario_id = "999";
 
-    $consulta="INSERT INTO `ingreso`
+    $consulta = "INSERT INTO `ingreso`
     (
      `monto`,
      `fecha_ingreso`,

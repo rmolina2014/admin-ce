@@ -1,0 +1,23 @@
+1-En busqueda por dni: que muestre la ventana para pagar las cuaotas
+
+----------- Roberto ---------------------
+2-Si se hace algun descuento que lo grabe en el campo descuento y si se hace un recargo en la campo recargo
+  Aclaracion
+  hay dos tipos de descuento  por pago antes del 10 (10%) y por pago en efectivo (10%)
+  En el caso que pague antes del 10 y en efectivo seria un 20% 
+
+3-Dar la posibilidad de hacer pagos parciales
+
+Solucion : boton de pago parcial , la cuota no se cancela esta pendiente del pago total
+
+---------------------------------------
+
+
+4-Cuando pague cargar la hora del pago, ahora esta guardando la fecha solamente
+5-Cambiar la palabra Carrera por Curso
+6-Cambiar la palabra Debito por Virtual
+7-Cambiar la palabra Contado por Efectivo
+8-En el detalle de caja en la parte de ingresos agregar una columna con el nombre del alumno que esta pagando
+9-Cuando se cierre la caja hay que indicar a donde va el saldo puede ser una parte a Caja Fuerte
+ otra parte al Banco y otra parte a formar parte de la caja siguiente
+10-Imprimir un recibo de pago

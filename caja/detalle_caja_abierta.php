@@ -62,16 +62,18 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                 <tbody>
                                                     <?php
 
-                                                    $sub_total_virtual=0;
-                                                    $sub_total_efectivo=0;
+                                                    $sub_total_virtual = 0;
+                                                    $sub_total_efectivo = 0;
 
                                                     $ingresos = $objeto->listadoIngresos($caja_id);
                                                     foreach ($ingresos as $item) {
-                                                    
-                                                        if($item['tipo_pago']=="VIRTUAL")
-                                                        { $sub_total_virtual=$sub_total_virtual+$item['monto'];}
-                                                        else {$sub_total_efectivo=$sub_total_efectivo +$item['monto'];}
-                                                    
+
+                                                        if ($item['tipo_pago'] == "VIRTUAL") {
+                                                            $sub_total_virtual = $sub_total_virtual + $item['monto'];
+                                                        } else {
+                                                            $sub_total_efectivo = $sub_total_efectivo + $item['monto'];
+                                                        }
+
                                                     ?>
                                                         <tr>
                                                             <td>
@@ -120,7 +122,6 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
 
                                 </div>
 
-
                                 <!-- Table with outer spacing -->
                                 <div class="table-responsive">
                                     <table class="table table-lg">
@@ -136,9 +137,10 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                             <thead>
                                             <tbody>
                                                 <?php
-
+                                                $total_egreso = 0;
                                                 $ingresos = $objeto->listadoEgresos($caja_id);
                                                 foreach ($ingresos as $item) {
+                                                    $total_egreso = $total_egreso + $item['monto'];
                                                 ?>
                                                     <tr>
                                                         <td>
@@ -153,8 +155,6 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                         <td>
                                                             <?php echo $item['egreso_tipo']; ?>
                                                         </td>
-
-
                                                     </tr>
                                                 <?php
                                                 }
@@ -183,8 +183,8 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                         </h6>
                                         <h6 class="font-extrabold mb-0">
                                             <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;"><?php echo number_format($sub_total_, 2, ',', '.');
-                                                ?></font>
+                                                <font style="vertical-align: inherit;"><?php echo number_format($sub_total_efectivo, 2, ',', '.');
+                                                                                        ?></font>
                                             </font>
                                         </h6>
                                     </div>
@@ -206,7 +206,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                         <h6 class="font-extrabold mb-0">
                                             <font style="vertical-align: inherit;">
                                                 <font style="vertical-align: inherit;"><?php echo number_format($sub_total_efectivo, 2, ',', '.');
-                                                ?></font>
+                                                                                        ?></font>
                                             </font>
                                         </h6>
                                     </div>
@@ -227,7 +227,11 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                         </h6>
                                         <h6 class="font-extrabold mb-0">
                                             <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;">80.000</font>
+                                                <font style="vertical-align: inherit;">
+                                                    <?php
+                                                    $total_ingreso = $sub_total_efectivo + $sub_total_virtual;
+                                                    echo number_format($total_ingreso, 2, ',', '.');
+                                                    ?></font>
                                             </font>
                                         </h6>
                                     </div>
@@ -248,7 +252,8 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                         </h6>
                                         <h6 class="font-extrabold mb-0">
                                             <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;">112</font>
+                                                <font style="vertical-align: inherit;"><?php echo number_format($total_egreso, 2, ',', '.');
+                                                                                        ?></font>
                                             </font>
                                         </h6>
                                     </div>
@@ -269,7 +274,12 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                         </h6>
                                         <h6 class="font-extrabold mb-0">
                                             <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;">112</font>
+                                                <font style="vertical-align: inherit;">
+                                                    <?php
+                                                    $saldo = $total_ingreso - $total_egreso;
+                                                    echo number_format($saldo, 2, ',', '.');
+                                                    ?>
+                                                </font>
                                             </font>
                                         </h6>
                                     </div>

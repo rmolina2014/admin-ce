@@ -23,7 +23,7 @@ include("alumno.php");
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><?php echo "Usuario : " . $USUARIO; ?></li>
                         </ol>
-                   </nav>
+                    </nav>
 
                 </div>
             </div>
@@ -57,32 +57,30 @@ include("alumno.php");
                             $usuarios = $objeto->lista();
                             foreach ($usuarios as $item) {
                             ?>
-                            <tr>
-                                <td><?php echo $item['id']; ?></td>
-                                <td><?php echo $item['dni']; ?></td>
-                                <td><?php echo $item['apellidonombre']; ?></td>
-                                <td><?php echo $item['carrera']; ?></td>
-                                <td><?php echo $item['estado']; ?></td>
-                                <td>
-                                    <form method="POST" role="form" action="editar.php">
-                                        <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
-                                        <button
-                                            class="btn btn-sm btn-secondary d-inline-flex align-items-center">Editar</button>
-                                        <!--a class="btn btn-sm btn-danger d-inline-flex align-items-center" href="eliminar.php?id=<?php echo $item['id_usuario']; ?>" >
-                                              Borrar
-                                            </a-->
-                                    </form>
+                                <tr>
+                                    <td><?php echo $item['id']; ?></td>
+                                    <td><?php echo $item['dni']; ?></td>
+                                    <td><?php echo $item['apellidonombre']; ?></td>
+                                    <td><?php echo $item['carrera']; ?></td>
+                                    <td><?php echo $item['estado']; ?></td>
+                                    <td>
+                                        <div class="buttons" style="margin:0 auto">
 
-                                    <form method="POST" role="form" action="alumno_carrera_cuotas.php">
-                                        <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
-                                        <button
-                                            class="btn btn-sm btn-secondary d-inline-flex align-items-center">Cuotas</button>
-                                        <!--a class="btn btn-sm btn-danger d-inline-flex align-items-center" href="eliminar.php?id=<?php echo $item['id_usuario']; ?>" >
-                                              Borrar
-                                            </a-->
-                                    </form>
-                                </td>
-                            </tr>
+                                            <form method="POST" role="form" action="editar.php" style="margin:0 auto">
+                                                <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
+                                                <button class="btn btn-outline-primary">Editar</button>
+
+                                            </form>
+
+                                            <form method="POST" role="form" action="alumno_carrera_cuotas.php" style="margin:0 auto">
+                                                <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
+                                                <button class="btn btn-outline-primary">Cuotas</button>
+
+                                            </form>
+                                        </div>
+
+                                    </td>
+                                </tr>
                             <?php
                             }
                             ?>
