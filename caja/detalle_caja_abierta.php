@@ -183,7 +183,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                         </h6>
                                         <h6 class="font-extrabold mb-0">
                                             <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;"><?php echo number_format($sub_total_efectivo, 2, ',', '.');
+                                                <font style="vertical-align: inherit;"><?php echo number_format($sub_total_virtual, 2, ',', '.');
                                                                                         ?></font>
                                             </font>
                                         </h6>

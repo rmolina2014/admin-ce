@@ -115,35 +115,49 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
                                                         <!-- formulario post--->
                                                         <form id="form" method="post" action="pagar_cuota.php">
+                                                            <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
+                                                            <input type="hidden" name="alumno_id" value="<?php echo $item['alumno_id']; ?>">
                                                             <div class="form-group">
                                                                 <label>Detalle :</label>
                                                                 <input class="form-control" type="text" value="<?php echo $item['detalle']; ?>" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Importe : $</label>
-                                                                <input class="form-control" type="number" value="<?php echo $item['monto']; ?>" />
-                                                                <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
-                                                                <input type="hidden" name="alumno_id" value="<?php echo $item['alumno_id']; ?>">
+                                                                <input class="form-control" id="monto" type="number" value="<?php echo $item['monto']; ?>" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Forma de Pago :</label>
-                                                                <select class="form-control" name="tipo_pago" required>
+                                                                <select class="form-control" onchange="getval(this,<?php echo $item['id']; ?>);" id="tipo_pago<?php echo $item['id']; ?>" name="tipo_pago" required>
                                                                     <option value="">Seleccionar...</option>
                                                                     <option value="EFECTIVO">Efectivo</option>
                                                                     <option value="VIRTUAL">Virtual</option>
                                                                 </select>
+                                                                
                                                             </div>
+
+                                                            <div id="descuento_efectivo<?php echo $item['id']; ?>">
+                                                                    
+                                                                </div>
+
+
 
                                                             <div class="form-group">
-                                                                <label>Descuento : $</label>
-                                                                <input class="form-control" name="descuento" type="number"  />
+                                                                <label>Descuento Pago antes del dia 10 : $</label>
+                                                                <input class="form-control" id="descuento" name="descuento" type="number" />
 
                                                             </div>
-
                                                             <div class="form-group">
                                                                 <label>Recargo : $</label>
-                                                                <input class="form-control" name="recargo" type="number"  />
+                                                                <input class="form-control" name="recargo" type="number" />
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label>A pagar : $</label>
+                                                                <input class="form-control" name="a_pagar" id="apagar" type="number" />
+                                                            </div>
+
+
+
+
                                                             <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
                                                                 <i class="bx bx-x d-block d-sm-none"></i>
                                                                 <span class="d-none d-sm-block">Cancelar</span>
@@ -192,7 +206,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                 </div>
                                 <div class="form-group">
                                     <label>Forma de Pago :</label>
-                                    <select class="form-control" name="tipo_pago" required>
+                                    <select class="form-control" name="tipo_pago2" required>
                                         <option value="">Seleccionar...</option>
                                         <option value="EFECTIVO">Efectivo</option>
                                         <option value="VIRTUAL">Virtual</option>
@@ -201,12 +215,12 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
                                 <div class="form-group">
                                     <label>Descuento : $</label>
-                                    <input class="form-control" name="descuento" type="number"  />
+                                    <input class="form-control" name="descuento" type="number" />
                                 </div>
 
                                 <div class="form-group">
                                     <label>Recargo : $</label>
-                                    <input class="form-control" name="recargo" type="number"  />
+                                    <input class="form-control" name="recargo" type="number" />
                                 </div>
 
                                 <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
@@ -245,3 +259,19 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 <?php
 include("../pie.php");
 ?>
+<script src="../assets/js/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+   
+
+  
+});// fin ready
+
+function getval(sel,id)
+{
+    alert(sel.value);
+    $("#descuento_efectivo"+id).html("<span class='red'> -10</span>");
+
+}
+
+  </script>
