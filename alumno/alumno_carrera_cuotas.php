@@ -88,6 +88,11 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                         if ($item['estado'] == "IMPAGA" and $unosolo) {
                                             $unosolo = False;
                                         ?>
+
+<form action="pago_total.php" method="POST">
+                             <input type="hidden" name="cuota_id" value="<?php echo $item['id'];?>"> >
+                             <button type="submit">Pago Total post</button>
+                            </form>
                                             <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#pago-total<?php echo $item['id']; ?>">
                                                 Pago Total
                                             </a>
@@ -132,12 +137,12 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                                                     <option value="EFECTIVO">Efectivo</option>
                                                                     <option value="VIRTUAL">Virtual</option>
                                                                 </select>
-                                                                
+
                                                             </div>
 
                                                             <div id="descuento_efectivo<?php echo $item['id']; ?>">
-                                                                    
-                                                                </div>
+
+                                                            </div>
 
 
 
@@ -261,17 +266,15 @@ include("../pie.php");
 ?>
 <script src="../assets/js/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-   
+    $(document).ready(function() {
 
-  
-});// fin ready
 
-function getval(sel,id)
-{
-    alert(sel.value);
-    $("#descuento_efectivo"+id).html("<span class='red'> -10</span>");
 
-}
+    }); // fin ready
 
-  </script>
+    function getval(sel, id) {
+        alert(sel.value);
+        $("#descuento_efectivo" + id).html("<span class='red'> -10</span>");
+
+    }
+</script>

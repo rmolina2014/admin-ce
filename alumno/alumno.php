@@ -383,4 +383,35 @@ VALUES (
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     return $rs;
   }
+
+  public function obtenerCuotaId($id)
+  {
+    $data = array();
+    $consulta = "SELECT
+    persona.`apellidonombre` AS apellidonombre,
+    persona.`dni` AS dni,
+    carrera.`nombre` AS carrera,
+    alumno_carrera_cuotas.`cuota_numero` AS cuota_numero,
+    alumno_carrera_cuotas.`detalle` AS cuota_detalle,
+    alumno_carrera_cuotas.`monto` AS cuota_monto,
+    alumno_carrera_cuotas.`id` AS cuota_id,
+    alumno.`id` AS alumno_id
+    FROM
+        `alumno_carrera_cuotas`
+        INNER JOIN `alumno` 
+            ON (`alumno_carrera_cuotas`.`alumno_id` = `alumno`.`id`)
+        INNER JOIN `carrera` 
+            ON (`alumno_carrera_cuotas`.`carrera_id` = `carrera`.`id`)
+        INNER JOIN `persona` 
+            ON (`alumno`.`persona_id` = `persona`.`id`)
+      where alumno_carrera_cuotas.`id`=$id";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
 }
