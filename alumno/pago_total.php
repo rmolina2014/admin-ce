@@ -49,25 +49,32 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Formulario PagoCuota Total</h4>
+                    <h4 class="card-title">Formulario Pago Cuota Total</h4>
                 </div>
                 <div class="card-body">
                     <!--- contenido ---------------------------------------------------------->
 
-                        <h5 class="text-muted mb-0">Curso : <?php echo $carrera; ?></h5>
+                    <h5 class="text-muted mb-0">Curso : <?php echo $carrera; ?></h5>
+                    <br>
 
                     <!-- formulario post--->
                     <form id="form" method="post" action="pagar_cuota.php">
                         <input type="hidden" name="cuota_id" value="<?php echo $cuota_id; ?>">
                         <input type="hidden" name="alumno_id" value="<?php echo $alumno_id; ?>">
+                        <input type="hidden" name="detalle" value="<?php echo $detalle; ?>">
+                        <input type="hidden" name="monto" value="<?php echo $monto; ?>">
+
                         <div class="form-group">
                             <label>Detalle :</label>
-                            <input class="form-control" type="text" value="<?php echo $detalle; ?>" />
+                            <label><?php echo $detalle; ?></label>
+
                         </div>
                         <div class="form-group">
                             <label>Importe : $</label>
-                            <input class="form-control" id="monto" type="number" value="<?php echo $monto; ?>" />
+                            <label><?php echo $monto; ?></label>
+
                         </div>
+
                         <div class="form-group">
                             <label>Forma de Pago :</label>
                             <select class="form-control" onchange="getval(this,<?php echo $cuota_id; ?>);" id="tipo_pago<?php echo $cuota_id; ?>" name="tipo_pago" required>
@@ -124,8 +131,10 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
 
             }); // fin ready
 
-            function getval(sel, id) {
-                alert(sel.value);
+            function descuentoFormaPago(sel, id) {
+                alert("descuento por forma de pago"+sel.value);
+                // traer el valor de la cuota
+                
                 $("#descuento_efectivo" + id).html("<span class='red'> -10</span>");
 
             }

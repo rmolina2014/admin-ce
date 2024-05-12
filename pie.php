@@ -14,6 +14,7 @@
 <script src="../assets/js/dark.js"></script>
 <script src="../assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/script.js"></script>
 <script>
     
 </script>
