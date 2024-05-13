@@ -62,55 +62,70 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                         <input type="hidden" name="cuota_id" value="<?php echo $cuota_id; ?>">
                         <input type="hidden" name="alumno_id" value="<?php echo $alumno_id; ?>">
                         <input type="hidden" name="detalle" value="<?php echo $detalle; ?>">
-                        <input type="hidden" name="monto" value="<?php echo $monto; ?>">
+                        <input type="hidden" name="monto" id="monto" value="<?php echo $monto; ?>">
+                        <input type="hidden" name="descuentoFormaPago" id="descuentoFormaPago">
+                        <input type="hidden" name="descuentoPagoaAntesDiaDiez" id="descuentoPagoaAntesDiaDiez">
 
                         <div class="form-group">
                             <label>Detalle :</label>
                             <label><?php echo $detalle; ?></label>
 
                         </div>
+
                         <div class="form-group">
-                            <label>Importe : $</label>
-                            <label><?php echo $monto; ?></label>
+                            <!--label>Importe : $</label>
+                            <label><?php echo $monto; ?></label-->
+                            <h6 class="font-extrabold mb-0">Importe : $ <?php echo $monto; ?></h6>
 
                         </div>
 
+                        <hr>
+
                         <div class="form-group">
                             <label>Forma de Pago :</label>
-                            <select class="form-control" onchange="getval(this,<?php echo $cuota_id; ?>);" id="tipo_pago<?php echo $cuota_id; ?>" name="tipo_pago" required>
+                            <select class="form-control" onchange="formaPago(this,<?php echo $cuota_id; ?>);" id="tipo_pago" name="tipo_pago" required>
                                 <option value="">Seleccionar...</option>
                                 <option value="EFECTIVO">Efectivo</option>
                                 <option value="VIRTUAL">Virtual</option>
                             </select>
                         </div>
 
-                        <div id="descuento_efectivo<?php echo $cuota_id; ?>">
+                        <div id="descuento_efectivo">
 
                         </div>
 
                         <div class="form-group">
-                            <label>Descuento Pago antes del dia 10 : $</label>
-                            <select class="form-control" id="descuento" name="descuento" onchange="getval(this,<?php echo $cuota_id; ?>);" id="tipo_pago<?php echo $item['id']; ?>" name="tipo_pago" required>
+                            <label>Descuento Pago antes del dia 10 :</label>
+                            <select class="form-control" id="descuento" name="descuento" onchange="descuentoPorDiaDiez(this,<?php echo $cuota_id; ?>);" id="tipo_pago<?php echo $item['id']; ?>" name="tipo_pago" required>
                                 <option value="">Seleccionar...</option>
                                 <option value="Aplicar">Aplicar</option>
                                 <option value="NoAplicar">No Aplicar</option>
                             </select>
                         </div>
 
+                        <div id="descuento_pago_antes_diez">
+
+                        </div>
+
                         <div class="form-group">
                             <label>Recargo : $</label>
-                            <input class="form-control" name="recargo" type="number" />
+                            <input class="form-control" name="recargo" id="recargo" type="number" value="0" />
                         </div>
 
-                        <div class="form-group">
-                            <label>A pagar : $</label>
-                            <input class="form-control" name="a_pagar" id="apagar" type="number" />
+                        <hr>
+
+                        <div id="apagar">
+
                         </div>
+
+                        <hr>
+
+
 
                         <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
-                            <i class="bx bx-x d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Cancelar</span>
+                            <i class="bx bx-x d-block d-sm-none"></i>Cancelar
                         </button>
+
                         <button type="submit" class="btn btn-outline-primary">
                             <i class="bx bx-check d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Pagar</span>
@@ -131,11 +146,53 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
 
             }); // fin ready
 
-            function descuentoFormaPago(sel, id) {
-                alert("descuento por forma de pago"+sel.value);
-                // traer el valor de la cuota
-                
-                $("#descuento_efectivo" + id).html("<span class='red'> -10</span>");
+            let apagar = $("#monto").val();
+            $("#apagar").html("<h5 class='font - extrabold mb - 0 '>A pagar : $ " + apagar + "</h5>");
+
+            function formaPago(sel, id) {
+                // alert("descuento por forma de pago" + sel.value);
+
+                if ('EFECTIVO' === sel.value) {
+                    alert("efectivo");
+                    let monto = $("#monto").val();
+
+                    console.log(monto);
+
+                    let porcentaje = calcularPorcentaje(monto, 10);
+
+                    $("#descuentoFormaPago").val(porcentaje);
+
+                    $("#descuento_efectivo").html("<h6 class='font - extrabold mb - 0 '>Descuento Pago Efectivo : $ " + porcentaje + "</h6>");
+                    apagar = apagar - porcentaje;
+                    $("#apagar").html("<h5 class='font - extrabold mb - 0 '>A pagar : $ " + apagar + "</h5>");
+
+                } else {
+                    alert("virtual");
+                    $("#descuentoFormaPago").val(0);
+                    $("#descuento_efectivo").empty();
+                }
+            }
+
+            function descuentoPorDiaDiez(sel, id) {
+                // alert("descuento por forma de pago" + sel.value);
+
+                if ('Aplicar' === sel.value) {
+                    alert("aplica descuento");
+                    let monto = $("#monto").val();
+
+                    console.log(monto);
+
+                    let porcentaje = calcularPorcentaje(monto, 10);
+
+                    $("#descuentoPagoaAntesDiaDiez").val(porcentaje);
+
+                    $("#descuento_pago_antes_diez").html("<h6 class='font - extrabold mb - 0 '>Descuento Pago antes dia 10 : $ " + porcentaje + "</h6>");
+
+                } else {
+                    alert("virtual");
+                    $("#descuentoPagoaAntesDiaDiez").val(0);
+                    $("#descuentoPagoaAntesDiaDiez").empty();
+                }
 
             }
         </script>

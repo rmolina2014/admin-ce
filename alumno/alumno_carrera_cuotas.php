@@ -89,10 +89,10 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                             $unosolo = False;
                                         ?>
 
-<form action="pago_total.php" method="POST">
-                             <input type="hidden" name="cuota_id" value="<?php echo $item['id'];?>"> >
-                             <button type="submit">Pago Total post</button>
-                            </form>
+                                            <form action="pago_total.php" method="POST">
+                                                <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>"> >
+                                                <button type="submit">Pago Total post</button>
+                                            </form>
                                             <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#pago-total<?php echo $item['id']; ?>">
                                                 Pago Total
                                             </a>
@@ -144,8 +144,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
                                                             </div>
 
-
-
                                                             <div class="form-group">
                                                                 <label>Descuento Pago antes del dia 10 : $</label>
                                                                 <input class="form-control" id="descuento" name="descuento" type="number" />
@@ -159,9 +157,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                                                 <label>A pagar : $</label>
                                                                 <input class="form-control" name="a_pagar" id="apagar" type="number" />
                                                             </div>
-
-
-
 
                                                             <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
                                                                 <i class="bx bx-x d-block d-sm-none"></i>
