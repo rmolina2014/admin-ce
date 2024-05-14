@@ -259,6 +259,23 @@ class Alumno
   // pagar cuotas
   public function pagarAlumnoCuota($cuota_id, $estado, $fecha_pago)
   {
+
+
+    /*
+    
+    UPDATE `bdce`.`alumno_carrera_cuotas`
+SET `id` = 'id',
+  `alumno_id` = 'alumno_id',
+  `carrera_id` = 'carrera_id',
+  `cuota_numero` = 'cuota_numero',
+  `monto` = 'monto',
+  `estado` = 'estado',
+  `fecha_vencimiento` = 'fecha_vencimiento',
+  `fecha_pago` = 'fecha_pago',
+  `detalle` = 'detalle'
+WHERE `id` = 'id';
+    
+    */
     $consulta = "UPDATE `alumno_carrera_cuotas`
     SET 
       `estado` = '$estado',

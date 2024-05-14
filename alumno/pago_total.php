@@ -63,8 +63,12 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                         <input type="hidden" name="alumno_id" value="<?php echo $alumno_id; ?>">
                         <input type="hidden" name="detalle" value="<?php echo $detalle; ?>">
                         <input type="hidden" name="monto" id="monto" value="<?php echo $monto; ?>">
+                        <input type="hidden" name="tipo_pago" id="tipo_pago" >
+
+                        <input type="hidden" name="recargo" id="recargo" value="0">
                         <input type="hidden" name="descuentoFormaPago" id="descuentoFormaPago">
                         <input type="hidden" name="descuentoPagoaAntesDiaDiez" id="descuentoPagoaAntesDiaDiez">
+                        <input type="hidden" name="apagar" id="apagar">
 
                         <div class="form-group">
                             <label>Detalle :</label>
@@ -107,14 +111,19 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
 
                         </div>
 
-                        <div class="form-group">
+                        <!--div class="form-group">
                             <label>Recargo : $</label>
                             <input class="form-control" name="recargo" id="recargo" type="number" value="0" />
-                        </div>
+                        </div-->
 
                         <hr>
 
-                        <div id="apagar">
+                        <div id="descuento_todos">
+
+                        </div>
+
+                        <hr>
+                        <div id="total_apagar">
 
                         </div>
 
@@ -140,36 +149,42 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
         <?php
         include("../pie.php");
         ?>
+
         <script src="../assets/js/jquery-3.6.3.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
 
             }); // fin ready
 
-            let apagar = $("#monto").val();
-            $("#apagar").html("<h5 class='font - extrabold mb - 0 '>A pagar : $ " + apagar + "</h5>");
+            let monto = $("#monto").val();
+            $("#apagar").html("<h5 class='font - extrabold mb - 0 '>A pagar : $ " + monto + "</h5>");
+
+            let apagar = monto;
 
             function formaPago(sel, id) {
                 // alert("descuento por forma de pago" + sel.value);
 
                 if ('EFECTIVO' === sel.value) {
                     alert("efectivo");
-                    let monto = $("#monto").val();
-
-                    console.log(monto);
 
                     let porcentaje = calcularPorcentaje(monto, 10);
 
+                    apagar = monto - porcentaje;
+
                     $("#descuentoFormaPago").val(porcentaje);
 
-                    $("#descuento_efectivo").html("<h6 class='font - extrabold mb - 0 '>Descuento Pago Efectivo : $ " + porcentaje + "</h6>");
-                    apagar = apagar - porcentaje;
-                    $("#apagar").html("<h5 class='font - extrabold mb - 0 '>A pagar : $ " + apagar + "</h5>");
+                    $("#descuento_todos").append("<h6 class='font - extrabold mb - 0 '>Descuento Pago Efectivo : $ " + porcentaje + "</h6>");
+
+                    $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + apagar + "</h5>");
 
                 } else {
                     alert("virtual");
                     $("#descuentoFormaPago").val(0);
-                    $("#descuento_efectivo").empty();
+                    apagar = monto;
+                    $("#descuento_todos").empty();
+                    $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + apagar + "</h5>");
+                    $("#descuentoPagoaAntesDiaDiez").val(0);
+
                 }
             }
 
@@ -177,21 +192,18 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                 // alert("descuento por forma de pago" + sel.value);
 
                 if ('Aplicar' === sel.value) {
-                    alert("aplica descuento");
-                    let monto = $("#monto").val();
+                    alert("aplicar");
 
-                    console.log(monto);
+                    let porcentaje2 = calcularPorcentaje(apagar, 10);
 
-                    let porcentaje = calcularPorcentaje(monto, 10);
+                    $("#descuentoPagoaAntesDiaDiez").val(porcentaje2);
 
-                    $("#descuentoPagoaAntesDiaDiez").val(porcentaje);
+                    $("#descuento_todos").append("<h6 class='font - extrabold mb - 0 '>Descuento Pago antes del 10. : $ " + porcentaje2 + "</h6>");
 
-                    $("#descuento_pago_antes_diez").html("<h6 class='font - extrabold mb - 0 '>Descuento Pago antes dia 10 : $ " + porcentaje + "</h6>");
+                    apagar = apagar - porcentaje2;
 
-                } else {
-                    alert("virtual");
-                    $("#descuentoPagoaAntesDiaDiez").val(0);
-                    $("#descuentoPagoaAntesDiaDiez").empty();
+                    $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + apagar + "</h5>");
+
                 }
 
             }
