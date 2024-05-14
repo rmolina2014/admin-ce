@@ -94,10 +94,6 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                             </select>
                         </div>
 
-                        <div id="descuento_efectivo">
-
-                        </div>
-
                         <div class="form-group">
                             <label>Descuento Pago antes del dia 10 :</label>
                             <select class="form-control" id="descuento" name="descuento" onchange="descuentoPorDiaDiez(this,<?php echo $cuota_id; ?>);" id="tipo_pago<?php echo $item['id']; ?>" name="tipo_pago" required>
@@ -106,11 +102,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                                 <option value="NoAplicar">No Aplicar</option>
                             </select>
                         </div>
-
-                        <div id="descuento_pago_antes_diez">
-
-                        </div>
-
+           
                         <!--div class="form-group">
                             <label>Recargo : $</label>
                             <input class="form-control" name="recargo" id="recargo" type="number" value="0" />
@@ -126,14 +118,10 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                         <div id="total_apagar">
 
                         </div>
-
                         <hr>
+                        
 
-
-
-                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
-                            <i class="bx bx-x d-block d-sm-none"></i>Cancelar
-                        </button>
+                        <a href="alumno_carrera_cuotas.php?id=<?php echo $alumno_id; ?>" class="btn btn-outline-primary">Cancelar</a>
 
                         <button type="submit" class="btn btn-outline-primary">
                             <i class="bx bx-check d-block d-sm-none"></i>
@@ -165,7 +153,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                 // alert("descuento por forma de pago" + sel.value);
 
                 if ('EFECTIVO' === sel.value) {
-                    alert("efectivo");
+                   // alert("efectivo");
 
                     let porcentaje = calcularPorcentaje(monto, 10);
 
@@ -173,12 +161,12 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
 
                     $("#descuentoFormaPago").val(porcentaje);
 
-                    $("#descuento_todos").append("<h6 class='font - extrabold mb - 0 '>Descuento Pago Efectivo : $ " + porcentaje + "</h6>");
+                    $("#descuento_todos").append("<h6 class='font - extrabold mb - 0 '>Descuento Pago Efectivo : - $ " + porcentaje + "</h6>");
 
                     $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + apagar + "</h5>");
 
                 } else {
-                    alert("virtual");
+                    //alert("virtual");
                     $("#descuentoFormaPago").val(0);
                     apagar = monto;
                     $("#descuento_todos").empty();
@@ -192,13 +180,13 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                 // alert("descuento por forma de pago" + sel.value);
 
                 if ('Aplicar' === sel.value) {
-                    alert("aplicar");
+                   // alert("aplicar");
 
                     let porcentaje2 = calcularPorcentaje(apagar, 10);
 
                     $("#descuentoPagoaAntesDiaDiez").val(porcentaje2);
 
-                    $("#descuento_todos").append("<h6 class='font - extrabold mb - 0 '>Descuento Pago antes del 10. : $ " + porcentaje2 + "</h6>");
+                    $("#descuento_todos").append("<h6 class='font - extrabold mb - 0 '>Descuento Pago antes del 10. : - $ " + porcentaje2 + "</h6>");
 
                     apagar = apagar - porcentaje2;
 
