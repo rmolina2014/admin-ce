@@ -88,17 +88,22 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                         if ($item['estado'] == "IMPAGA" and $unosolo) {
                                             $unosolo = False;
                                         ?>
+                                                   <form action="pago_total.php" method="POST">
+                                                        <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
+                                                        <button class="btn btn-outline-primary" type="submit">Pago Total </button>
+                                                    </form>
+                                                    <form action="pago_parcial.php" method="POST">
+                                                        <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
+                                                        <button class="btn btn-outline-primary" type="submit">Pago Parcial </button>
+                                                    </form>
+                                            
 
-                                            <form action="pago_total.php" method="POST">
-                                                <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>"> >
-                                                <button type="submit">Pago Total post</button>
-                                            </form>
-                                            <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#pago-total<?php echo $item['id']; ?>">
+                                            <!--a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#pago-total<?php echo $item['id']; ?>">
                                                 Pago Total
-                                            </a>
-                                            <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#pago-parcial<?php echo $item['id']; ?>">
+                                            </a-->
+                                            <!--a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#pago-parcial<?php echo $item['id']; ?>">
                                                 Pago Parcial
-                                            </a>
+                                            </a-->
                                         <?php
                                         }
                                         ?>

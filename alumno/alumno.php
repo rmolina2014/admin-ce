@@ -257,13 +257,12 @@ class Alumno
   }
 
   // pagar cuotas
-  public function pagarAlumnoCuota($cuota_id, $estado, $fecha_pago)
+
+  public function pagarAlumnoCuota($cuota_id, $estado, $fecha_pago, $descuento_tipo_pago, $descuento_antes_dia_10, $apagar, $usuario)
   {
-
-
     /*
     
-    UPDATE `bdce`.`alumno_carrera_cuotas`
+   UPDATE `bdce`.`alumno_carrera_cuotas`
 SET `id` = 'id',
   `alumno_id` = 'alumno_id',
   `carrera_id` = 'carrera_id',
@@ -272,14 +271,20 @@ SET `id` = 'id',
   `estado` = 'estado',
   `fecha_vencimiento` = 'fecha_vencimiento',
   `fecha_pago` = 'fecha_pago',
-  `detalle` = 'detalle'
+  `detalle` = 'detalle',
+  `descuento_tipo_pago` = 'descuento_tipo_pago',
+  `descuento_antes_dia_10` = 'descuento_antes_dia_10',
+  `apagar` = 'apagar'
 WHERE `id` = 'id';
-    
     */
     $consulta = "UPDATE `alumno_carrera_cuotas`
     SET 
       `estado` = '$estado',
-      `fecha_pago` = '$fecha_pago'
+      `fecha_pago` = '$fecha_pago',
+      `descuento_tipo_pago` = '$descuento_tipo_pago',
+      `descuento_antes_dia_10` = '$descuento_antes_dia_10',
+      `apagar` = '$apagar',
+      `usuario` = '$usuario'
       WHERE `id` = '$cuota_id'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
 
@@ -302,7 +307,6 @@ WHERE `id` = 'id';
     }
     return $id;
   }
-
 
   // INSERTAR INGRESO DE PAGO DE CUOTAS
 
@@ -332,31 +336,13 @@ VALUES ('id',
         'origen',
         'detalle');*/
 
-
-
-
-  public function insertarIngresoAlumnoCuota($cuota_id, $tipo_pago)
+  public function insertarIngresoAlumnoCuota($cuota_id, $tipo_pago, $apagar, $alumno_id, $usuario_id, $detalle, $descuento)
   {
-    $consulta = "SELECT
-          `id`,
-          `alumno_id`,
-          `carrera_id`,
-          `cuota_numero`,
-          `monto`,
-          `estado`,
-          `fecha_vencimiento`,
-          `fecha_pago`,
-          `detalle`
-        FROM `alumno_carrera_cuotas`
-        WHERE `id`=" . $cuota_id;
-    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
-    if (mysqli_num_rows($rs) > 0) {
-      while ($fila = mysqli_fetch_assoc($rs)) {
-        $monto = $fila['monto'];
-        $alumno_id = $fila['alumno_id'];
-        $detalle = $fila['detalle'];
-      }
-    }
+    $monto = $apagar;
+    $alumno_id = $alumno_id;
+    $origen = "Alumno";
+    $detalle = $detalle;
+    $cuota_id = $cuota_id;
 
     // traer la caja abierta
 
@@ -367,17 +353,17 @@ VALUES ('id',
     $fecha_ingreso = date("Y-m-d");
     $ingreso_tipo_id = 6;
     $tipo_pago = $tipo_pago;
-    $descuento = "0";
+    $descuento = $descuento;
     $recargo = "0";
-    $origen = "Alumno";
-    $usuario_id = "999";
+
+    $usuario_id = $usuario_id;
 
     $consulta = "INSERT INTO `ingreso`
     (
      `monto`,
      `fecha_ingreso`,
      `caja_id`,
-     `usuario_id`,
+     `usuario`,
      `ingreso_tipo_id`,
      `alumno_id`,
      `tipo_pago`,
@@ -430,5 +416,4 @@ VALUES (
     }
     return $data;
   }
-
 }

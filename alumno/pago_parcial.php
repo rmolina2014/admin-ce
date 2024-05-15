@@ -49,7 +49,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Formulario Pago Cuota Total</h4>
+                    <h4 class="card-title">Formulario Pago Cuota Parcial</h4>
                 </div>
                 <div class="card-body">
                     <!--- contenido ---------------------------------------------------------->
