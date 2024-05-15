@@ -2,6 +2,8 @@
   include("../cabecera.php");
   include("../menu.php");
   include("egreso.php");
+  include("../caja/caja.php");
+  $caja = new Caja();
 
   $objeto = new Egreso();
   if (isset($_POST['id']) && !empty($_POST['id']))
@@ -11,6 +13,8 @@
     foreach ($registros as $item)
     {
       $egreso_id = $item['id'];
+      $caja_id = $item['caja_id'];
+      $monto_original= $item['monto'];
   ?>
 
    <div id="main">
@@ -49,6 +53,8 @@
              <!---formulario-->
              <form method="POST" role="form" action="editar.php">
                <input type="hidden" name="egreso_id" value= "<?php echo $egreso_id; ?>" />
+               <input type="hidden" name="caja_id" value= "<?php echo $caja_id; ?>" />
+               <input type="hidden" name="monto_original" value= "<?php echo $monto_original; ?>" />
                
                <div class="col-md-8 mb-3">
                  <label class="form-label">Tipo Egreso</label>
@@ -101,11 +107,15 @@
           $egreso_id = $_POST['egreso_id'];
           $tipoegreso = $_POST['egreso_tipo_id'];
           $monto = $_POST['monto'];
-
+          $caja_id = $_POST['caja_id'];
+          $monto_original = $_POST['monto_original'];
 
           $todobien = $objeto->editar($egreso_id, $tipoegreso, $monto);
           if ($todobien) {
+            $monto_actualizado =  $monto - $monto_original;
+            $todobien = $caja->actualizaregresocaja($caja_id, $monto_actualizado ); 
             echo "<script language=Javascript> location.href=\"index.php\"; </script>";
+
             //header('Location: listado.php');
             exit;
           } else {

@@ -2,7 +2,9 @@
 include ("../cabecera.php");
 include ("../menu.php");
 include ("ingreso.php");
+include("../caja/caja.php");
 $objeto = new Ingreso();
+$caja = new Caja();
 if (isset ($_POST['monto']) && !empty ($_POST['monto'])) {
 
   $monto = $_POST['monto'];
@@ -20,6 +22,7 @@ if (isset ($_POST['monto']) && !empty ($_POST['monto'])) {
   );
   if ($todobien) {
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
+    $todobien = $caja->actualizaringresocaja($caja_id, $monto );
     //header('Location: listado.php');
     exit;
   } else {

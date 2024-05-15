@@ -13,6 +13,8 @@
     foreach ($registros as $item)
     {
       $ingreso_id = $item['id'];
+      $caja_id = $item['caja_id'];
+      $monto_original= $item['monto'];
   ?>
 
    <div id="main">
@@ -51,6 +53,8 @@
              <!---formulario-->
              <form method="POST" role="form" action="editar.php">
                <input type="hidden" name="ingreso_id" value= "<?php echo $ingreso_id; ?>" />
+               <input type="hidden" name="caja_id" value= "<?php echo $caja_id; ?>" />
+               <input type="hidden" name="monto_original" value= "<?php echo $monto_original; ?>" />               
                
                <div class="col-md-8 mb-3">
                  <label class="form-label">Tipo Ingreso</label>
@@ -163,11 +167,14 @@
           {
             $origen="Alumno";
           }
-
+          $caja_id = $_POST['caja_id'];
+          $monto_original = $_POST['monto_original'];
 
 
           $todobien = $objeto->editar($ingreso_id, $tipoingreso, $monto,$id_alumno,$tipo_pago,$origen);
           if ($todobien) {
+            $monto_actualizado =  $monto - $monto_original;
+            $todobien = $caja->actualizaringresocaja($caja_id, $monto_actualizado );             
             echo "<script language=Javascript> location.href=\"index.php\"; </script>";
             //header('Location: listado.php');
             exit;

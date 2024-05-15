@@ -3,6 +3,9 @@ include("../cabecera.php");
 include("../menu.php");
 include("egreso.php");
 $objeto = new Egreso();
+
+include("../caja/caja.php");
+$caja = new Caja();
 if (isset($_POST['monto']) && !empty($_POST['monto'])) {
 
   $monto = $_POST['monto'];
@@ -20,6 +23,7 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
   );
   if ($todobien) {
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
+     $todobien = $caja->actualizaregresocaja($caja_id, $monto );
     //header('Location: listado.php');
     exit;
   } else {
