@@ -2,6 +2,68 @@
 include_once("../bd/conexion.php");
 class Caja
 {
+  
+  public static function busarCajaAbierta()
+  {
+     $data[]=0;
+   $sql="SELECT * FROM caja where estado='Abierta'";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if(mysqli_num_rows($rs) >0)
+    {
+      while($fila = mysqli_fetch_assoc($rs))
+      {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+    }
+
+
+  public static function totalesIngresoCaja($idcaja)
+  {
+     $data[]=0;
+   $sql="SELECT
+    sum(ingreso.monto) as totalingresos
+    FROM
+        `ingreso`
+            WHERE `ingreso`.`caja_id`='$idcaja'";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if(mysqli_num_rows($rs) >0)
+    {
+      while($fila = mysqli_fetch_assoc($rs))
+      {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+    }  
+
+      public static function totalesEgresoCaja($idcaja)
+  {
+     $data[]=0;
+   $sql="SELECT
+    sum(egreso.monto) as totalegresos
+    FROM
+        `egreso`
+            WHERE `egreso`.`caja_id`='$idcaja'";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if(mysqli_num_rows($rs) >0)
+    {
+      while($fila = mysqli_fetch_assoc($rs))
+      {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+    }    
+
+
+
+
+
+
+
+
   public function obtenerUsuario($usuario)
   {
     $consulta = "SELECT * FROM usuario where usuario='$usuario'";
@@ -196,7 +258,7 @@ VALUES (
     `detalle`
   FROM `ingreso`
   WHERE `caja_id`=$caja_id
-  order by fecha_ingreso desc;";
+  order by id desc;";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
@@ -229,6 +291,38 @@ FROM
     }
     return $data;
   }
+
+
+  public function totalIngresos($caja_id)
+  {
+    $consulta = "SELECT sum(monto) as totalingresos 
+  FROM `ingreso`
+  WHERE `caja_id`=$caja_id;";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
+
+  public function totalEgresos($caja_id)
+  {
+    $consulta = "SELECT sum(monto) as totalegresos
+FROM
+    `egreso`
+    WHERE egreso.`caja_id` =$caja_id
+  ";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }    
 
 
 }

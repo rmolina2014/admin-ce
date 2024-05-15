@@ -67,7 +67,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
 
                         <input type="hidden" name="recargo" id="recargo" value="0">
                         <input type="hidden" name="descuentoFormaPago" id="descuentoFormaPago">
-                        <input type="hidden" name="descuentoPagoaAntesDiaDiez" id="descuentoPagoaAntesDiaDiez">
+                        <input type="text" name="descuentoPagoaAntesDiaDiez" id="descuentoPagoaAntesDiaDiez" value="0">
                         <input type="hidden" name="apagar" id="apagar">
 
                         <div class="form-group">
@@ -197,6 +197,13 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                     
                     $("#apagar").val(total_apagar);
 
+                }else{
+                    total_apagar = monto;
+
+                    $("#descuento_todos").empty();
+                    $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + total_apagar + "</h5>");
+                    $("#descuentoPagoaAntesDiaDiez").val(0);
+                    $("#apagar").val(total_apagar);
                 }
 
             }

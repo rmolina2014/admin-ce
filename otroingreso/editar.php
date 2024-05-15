@@ -116,16 +116,16 @@
                     <select class="form-control" name="tipo_pago" id="tipo_pago" required>
                          <option value="">Seleccionar...</option>
                          <?php
-                          if ($item['tipo_pago'] == 'CONTADO')
+                          if ($item['tipo_pago'] == 'EFECTIVO')
                             {
                             ?>
-                             <option value="<?php echo $item['tipo_pago']; ?>" selected> Contado </option>
-                             <option value="DEBITO" > Debito </option>
+                             <option value="<?php echo $item['tipo_pago']; ?>" selected> Efectivo </option>
+                             <option value="VIRTUAL" > Virtual </option>
                             <?php
                             }else{
                             ?>
-                             <option value="CONTADO"> Contado </option>
-                             <option value="<?php echo $item['tipo_pago']; ?>" selected> Debito </option>
+                             <option value="EFECTIVO"> Efectivo </option>
+                             <option value="<?php echo $item['tipo_pago']; ?>" selected> Virtual </option>
                            <?php
                            }
                             

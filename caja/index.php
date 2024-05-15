@@ -2,6 +2,9 @@
 include("../cabecera.php");
 include("../menu.php");
 include("caja.php");
+$objeto = new Caja();
+
+
 ?>
 <div id="main">
   <header class="mb-3">
@@ -59,6 +62,16 @@ include("caja.php");
                 $objeto = new Caja();
                 $usuarios = $objeto->lista();
                 foreach ($usuarios as $item) {
+
+                $totalcajaingreso = $objeto->totalesIngresoCaja($item['id']);
+                foreach ($totalcajaingreso as $totalesingresocaja) {}
+
+                $totalcajaegreso = $objeto->totalesEgresoCaja($item['id']);
+                foreach ($totalcajaegreso as $totalesegresocaja) {} 
+
+                $saldo = $totalesingresocaja['totalingresos'] - $totalesegresocaja['totalegresos'];                
+                $saldo = number_format($saldo, 2, ',', '.');
+
                 ?>
                   <tr>
                     <td>
@@ -68,17 +81,17 @@ include("caja.php");
                       <?php echo $item['fecha_apertura']; ?>
                     </td>
                     <td>
-                      <?php echo $item['ingreso_total']; ?>
+                      <?php echo number_format($totalesingresocaja['totalingresos'], 2, ',', '.'); ?>
                     </td>
                     <td>
-                      <?php echo $item['egreso_total']; ?>
+                      <?php echo number_format($totalesegresocaja['totalegresos'], 2, ',', '.'); ?>
                     </td>
                     <td>
                       <?php echo $item['fecha_cierre']; ?>
                     </td>
 
                     <td>
-                      <?php echo $item['saldo']; ?>
+                      <?php echo $saldo; ?>
                     </td>
 
                     <td>
