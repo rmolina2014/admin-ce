@@ -199,7 +199,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
 
                 }else{
                     total_apagar = monto;
-
+                       
                     $("#descuento_todos").empty();
                     $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + total_apagar + "</h5>");
                     $("#descuentoPagoaAntesDiaDiez").val(0);
