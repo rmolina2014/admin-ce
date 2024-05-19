@@ -190,6 +190,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                     $("#descuento_todos").append("<h6 class='font - extrabold mb - 0 '>Descuento Pago Efectivo : - $ " + porcentaje + "</h6>");
                     $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + total_apagar + "</h5>");
                     $("#apagar").val(total_apagar);
+                    $("#tipopago").val("EFECTIVO");
                 } else {
                     //alert("virtual");
                     if ($("#descuento10").is(":checked")) {
@@ -201,6 +202,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                     $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + total_apagar + "</h5>");
                     $("#descuentoPagoaAntesDiaDiez").val(0);
                     $("#apagar").val(total_apagar);
+                    $("#tipopago").val("VIRTUAL");
                 }
             }
 
