@@ -244,21 +244,22 @@ VALUES (
   public function listadoIngresos($caja_id)
   {
     $consulta = "SELECT
-    `id`,
-    `monto`,
-    `fecha_ingreso`,
-    `caja_id`,
-    `usuario_id`,
-    `ingreso_tipo_id`,
-    `alumno_id`,
-    `tipo_pago`,
-    `descuento`,
-    `recargo`,
-    `origen`,
-    `detalle`
-  FROM `ingreso`
-  WHERE `caja_id`=$caja_id
-  order by id desc;";
+    ingreso.id,
+    ingreso.monto,
+    ingreso.fecha_ingreso,
+    ingreso.caja_id,
+    ingreso.usuario_id,
+    ingreso.ingreso_tipo_id,
+    ingreso.alumno_id,
+    ingreso.tipo_pago,
+    ingreso.descuento,
+    ingreso.recargo,
+    ingreso.origen,
+    ingreso.detalle,
+    persona.apellidonombre
+  FROM `ingreso`,`persona`,`alumno`
+  WHERE `caja_id`=$caja_id and ingreso.alumno_id=alumno.id and alumno.persona_id=persona.id 
+  order by ingreso.id desc;";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {

@@ -35,7 +35,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
 
             <section class="section">
                 <div class="row" id="basic-table">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Ingresos</h4>
@@ -49,7 +49,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
 
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th>N°</th>
+                                                    <th>Alumno</th>
                                                     <th>Fecha </th>
                                                     <th>Monto $</th>
                                                     <th>Descuento</th>
@@ -77,8 +77,8 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                     ?>
                                                         <tr>
                                                             <td>
-                                                                <?php echo $item['id']; ?>
-                                                            </td>
+                                                                <?php echo $item['apellidonombre']; ?>
+                                                            </td>                                                            
                                                             <td>
                                                                 <?php echo $item['fecha_ingreso']; ?>
                                                             </td>
@@ -112,7 +112,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Egresos</h4>

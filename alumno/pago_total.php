@@ -180,7 +180,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
             let total_apagar = monto;
 
             function formaPago(sel, id) {
-                alert("descuento por forma de pago" + sel.value);
+                //alert("descuento por forma de pago" + sel.value);
 
                 if ('EFECTIVO' === sel.value) {
                     // alert("efectivo");
@@ -190,7 +190,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                     $("#descuento_todos").append("<h6 class='font - extrabold mb - 0 '>Descuento Pago Efectivo : - $ " + porcentaje + "</h6>");
                     $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + total_apagar + "</h5>");
                     $("#apagar").val(total_apagar);
-                    $("#tipopago").val("EFECTIVO");
+                    $("#tipo_pago").val("EFECTIVO");
                 } else {
                     //alert("virtual");
                     if ($("#descuento10").is(":checked")) {
@@ -202,27 +202,40 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                     $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + total_apagar + "</h5>");
                     $("#descuentoPagoaAntesDiaDiez").val(0);
                     $("#apagar").val(total_apagar);
-                    $("#tipopago").val("VIRTUAL");
+                    $("#tipo_pago").val("VIRTUAL");
                 }
             }
 
             function descuentoPorDiaDiez(sel, id) {
-                alert("descuento por forma de pago" + sel.value);
+                //alert("descuento por forma de pago" + sel.value);
 
-                if ('APLICAR' === sel.value) {
+               // if ('APLICAR' === sel.value) {
                     // alert("aplicar");
-                    let porcentaje2 = calcularPorcentaje(total_apagar, 10);
-                    $("#descuentoPagoaAntesDiaDiez").val(porcentaje2);
-                    $("#descuento_todos").append("<h6 class='font - extrabold mb - 0 '>Descuento Pago antes del 10. : - $ " + porcentaje2 + "</h6>");
-                    total_apagar = total_apagar - porcentaje2;
-                    $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + total_apagar + "</h5>");
-                    $("#apagar").val(total_apagar);
-                } else {
+                    if ($("#descuento10").is(":checked")) {
+                        let porcentaje2 = calcularPorcentaje(total_apagar, 10);
+                        $("#descuentoPagoaAntesDiaDiez").val(porcentaje2);
+                        $("#descuento_todos").append("<h6 class='font - extrabold mb - 0 '>Descuento Pago antes del 10. : - $ " + porcentaje2 + "</h6>");
+                        total_apagar = total_apagar - porcentaje2;
+                        $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + total_apagar + "</h5>");
+                        $("#apagar").val(total_apagar);
+
+                    }else{
+                        
+                        $("#virtual").prop("checked", true);
+                        total_apagar = monto;
+                        $("#descuento_todos").empty();
+                        $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + total_apagar + "</h5>");
+                        $("#descuentoPagoaAntesDiaDiez").val(0);
+                        $("#apagar").val(total_apagar);                        
+                    }                    
+
+
+             /*   } else {
                     total_apagar = monto;
                     $("#descuento_todos").empty();
                     $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + total_apagar + "</h5>");
                     $("#descuentoPagoaAntesDiaDiez").val(0);
                     $("#apagar").val(total_apagar);
-                }
+                }*/
             }
         </script>
