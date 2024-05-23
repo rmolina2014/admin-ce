@@ -1,7 +1,7 @@
 ﻿<?php
-include ("../cabecera.php");
-include ("../menu.php");
-include ("ingreso.php");
+include("../cabecera.php");
+include("../menu.php");
+include("ingreso.php");
 ?>
 <div id="main">
   <header class="mb-3">

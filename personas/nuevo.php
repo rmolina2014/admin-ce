@@ -1,25 +1,38 @@
- <?php
+  <?php
   include("../cabecera.php");
   include("../menu.php");
   include("persona.php");
 
   $objeto = new Persona();
-  if (isset($_POST['dni']) && !empty($_POST['dni'])) {
+  if (isset($_POST['dnipersona']) && !empty($_POST['dnipersona'])) {
     //   nuevo($apellidonombre, $dni, $domicilio, $cel1, $cel2, $mail)
-//$id = $_POST['id'];
-$apellidonombre= $_POST['apellido_nombre'];
-$dni = $_POST['dni'];
-$domicilio=$_POST['domicilio'];
-$cel1= $_POST['cel_prin'];
-$cel2=$_POST['cel_alte'];
-$mail=$_POST['mail'];
+    //$id = $_POST['id'];
+    $apellidonombre= $_POST['apellido_nombre'];
+    $dni = $_POST['dnipersona'];
+    $domicilio=$_POST['domicilio'];
+    $cel1= $_POST['cel_prin'];
+    $cel2=$_POST['cel_alte'];
+    $mail=$_POST['mail'];
+    $alumnosi=$_POST['alumnosi'];
 
     //$fechaingreso = date("Y-m-d");
     //$estado = 'Activo';
 
     $todobien = $objeto->nuevo($apellidonombre, $dni, $domicilio, $cel1, $cel2, $mail);
-    if ($todobien) {
-      echo "<script language=Javascript> location.href=\"index.php\"; </script>";
+    if ($todobien>0) {
+     
+        if (isset($_POST['alumnosi'])) {
+            // El checkbox está marcado
+            //aca tengo que llamar a un nuevoalumnodirecto.php pasandole el id y el numero de documento
+            //para que carguen los demas datos como alumno
+          echo "<script language='Javascript'> location.href=\"../alumno/nuevoalumnodirecto.php?dni=$dni&id=$todobien\"; </script>";
+
+            echo "Checkbox está marcado.";
+        } else {
+            // El checkbox no está marcado
+            echo "<script language=Javascript> location.href=\"index.php\"; </script>";
+            
+        }     
       //header('Location: listado.php');
       exit;
     } else {
@@ -111,7 +124,14 @@ $mail=$_POST['mail'];
     <input name="mail"  class="form-control" type="email" tabindex="4" />
   </div>
 
-               <div class="col-md-8 mb-3">
+  <div  class="form-check">
+      <div class="checkbox">
+      <input type="checkbox" id="alumnosi" name="alumnosi" value="APLICAR" class="form-check-input" >
+      <label for="checkbox1">Es alumno</label>
+      </div>
+ </div>  
+
+               <div style="padding: 45px;" class="col-md-8 mb-3">
 
                  <button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center" data-dismiss="modal" onclick="location.href='index.php';"> Cancelar
 

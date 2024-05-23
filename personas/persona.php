@@ -75,25 +75,25 @@ if (!$stmt) {
 } else {
   // Vincular valores y ejecutar la consulta
   $stmt->execute();
-if ($stmt->errno) {
-  if ($stmt->errno == 1062) {
-    // Registrar el error en un archivo de errores o usar una función personalizada para manejar el error.
-    // Registrar el error en un archivo de errores.
-    error_log("Error al insertar el usuario: DNI duplicado", 0);
-    
-    // Mostrar un mensaje de error personalizado al usuario.
-    trigger_error("El DNI introducido ya está registrado.", E_USER_ERROR);    
-    return false;
-  } else {
-    echo "Error al insertar el usuario: " . $stmt->error . "\n";
-       // Mostrar un mensaje de error personalizado al usuario.
-    trigger_error("El DNI introducido ya está registrado.", E_USER_ERROR); 
-    return false;
-  }
-} else {
-  echo "Usuario insertado correctamente.\n";
-  return true;
-}
+        if ($stmt->errno) {
+            if ($stmt->errno == 1062) {
+                // Registrar el error en un archivo de errores o usar una función personalizada para manejar el error.
+                error_log("Error al insertar el usuario: DNI duplicado", 0);
+                
+                // Mostrar un mensaje de error personalizado al usuario.
+                trigger_error("El DNI introducido ya está registrado.", E_USER_ERROR);    
+                return false;
+            } else {
+                echo "Error al insertar el usuario: " . $stmt->error . "\n";
+                // Mostrar un mensaje de error personalizado al usuario.
+                trigger_error("El DNI introducido ya está registrado.", E_USER_ERROR); 
+                return false;
+            }
+        } else {
+            $inserted_id = mysqli_insert_id(conexion::obtenerInstancia());
+            echo "Usuario insertado correctamente. ID: " . $inserted_id . "\n";
+            return $inserted_id;
+        }
 }
   }
 
