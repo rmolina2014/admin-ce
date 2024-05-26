@@ -260,23 +260,6 @@ class Alumno
 
   public function pagarAlumnoCuota($cuota_id, $estado, $fecha_pago, $descuento_tipo_pago, $descuento_antes_dia_10, $apagar, $usuario)
   {
-    /*
-    
-   UPDATE `bdce`.`alumno_carrera_cuotas`
-SET `id` = 'id',
-  `alumno_id` = 'alumno_id',
-  `carrera_id` = 'carrera_id',
-  `cuota_numero` = 'cuota_numero',
-  `monto` = 'monto',
-  `estado` = 'estado',
-  `fecha_vencimiento` = 'fecha_vencimiento',
-  `fecha_pago` = 'fecha_pago',
-  `detalle` = 'detalle',
-  `descuento_tipo_pago` = 'descuento_tipo_pago',
-  `descuento_antes_dia_10` = 'descuento_antes_dia_10',
-  `apagar` = 'apagar'
-WHERE `id` = 'id';
-    */
     $consulta = "UPDATE `alumno_carrera_cuotas`
     SET 
       `estado` = '$estado',
@@ -307,34 +290,6 @@ WHERE `id` = 'id';
     }
     return $id;
   }
-
-  // INSERTAR INGRESO DE PAGO DE CUOTAS
-
-  /* INSERT INTO `bdce`.`ingreso`
-            (`id`,
-             `monto`,
-             `fecha_ingreso`,
-             `caja_id`,
-             `usuario_id`,
-             `ingreso_tipo_id`,
-             `alumno_id`,
-             `tipo_pago`,
-             `descuento`,
-             `recargo`,
-             `origen`,
-             `detalle`)
-VALUES ('id',
-        aja_id',
-        'usua'monto',
-        'fecha_ingreso',
-        'crio_id',
-        'ingreso_tipo_id',
-        'alumno_id',
-        'tipo_pago',
-        'descuento',
-        'recargo',
-        'origen',
-        'detalle');*/
 
   public function insertarIngresoAlumnoCuota($cuota_id, $tipo_pago, $apagar, $alumno_id, $usuario_id, $detalle, $descuento)
   {

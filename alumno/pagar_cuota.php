@@ -10,10 +10,15 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
     $alumno_id = $_POST['alumno_id'];
     $detalle = $_POST['detalle'];
     $tipo_pago = $_POST['tipo_pago'];
-    $descuento_tipo_pago = $_POST['descuentoFormaPago'];
-    $descuento_antes_dia_10 = $_POST['descuentoPagoaAntesDiaDiez'];
+    // Suponiendo que quieres verificar la variable $_POST['miVariable']
+    //$valorPost = empty($_POST['miVariable']) ? 0 : $_POST['miVariable'];
+    $descuento_tipo_pago =
+        empty($_POST['descuentoFormaPago']) ? 0 : $_POST['descuentoFormaPago'];
+
+    $descuento_antes_dia_10 =
+        empty($_POST['descuentoPagoaAntesDiaDiez']) ? 0 : $_POST['descuentoPagoaAntesDiaDiez']; //$_POST['descuentoPagoaAntesDiaDiez'];
     $apagar = $_POST['apagar'];
-    $usuario = $USUARIO;
+    $usuario = $ID;
 
     $pagar_cuota = $objeto->pagarAlumnoCuota($cuota_id, $estado, $fecha_pago, $descuento_tipo_pago, $descuento_antes_dia_10, $apagar, $usuario);
 
@@ -21,7 +26,19 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
 
         $descuento = $descuento_tipo_pago + $descuento_antes_dia_10;
         //-------- generar el movimiento en la caja-------
-        $insertarIngreso = $objeto->insertarIngresoAlumnoCuota($cuota_id, $tipo_pago, $apagar, $alumno_id, $usuario, $detalle, $descuento);
+        $insertarIngreso = $objeto->insertarIngresoAlumnoCuota($cuota_id, $tipo_pago, $apagar, $alumno_id, $ID, $detalle, $descuento);
+    }
+
+    // recuperar datos
+    $objeto = new Alumno();
+    $datos_cuota = $objeto->obtenerCuotaId($cuota_id);
+    foreach ($datos_cuota as $item) {
+        $detalle = $item['cuota_detalle'];
+        $dni = $item['dni'];
+        $apellidonombre = $item['apellidonombre'];
+        $carrera = $item['carrera'];
+        $cuota_numero = $item['cuota_numero'];
+        $alumno_id = $item['alumno_id'];
     }
 }
 ?>
@@ -40,168 +57,197 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
     }
 }*/
 ?>
+<style>
+    /* Estilos generales */
+    .imprimir {
+        background: white;
+        margin-right: 200px;
+        margin-left: 200px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+        max-width: 1000px;
+    }
 
-<div id="main">
-    <header class="mb-3">
-        <a href="#" class="burger-btn d-block d-xl-none">
-            <i class="bi bi-justify fs-3"></i>
-        </a>
-    </header>
+    .imprimir table {
+        max-width: 960px;
+    }
 
-    <div class="page-heading">
+    /************** */
+    .recibo {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
-    <style>
-                body {
-                    font-family: Arial, sans-serif;
-                }
+    .recibo-encabezado {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-                .container {
-                    max-width: 800px;
-                    margin: 0 auto;
-                    padding: 20px;
-                }
+    .recibo-encabezado h1 {
+        margin: 0;
+    }
 
-                .header {
-                    text-align: center;
-                }
+    .recibo-informacion {
+        display: flex;
+        justify-content: space-between;
+    }
 
-                .logo {
-                    max-width: 150px;
-                    height: auto;
-                }
+    .recibo-informacion-izquierda {
+        width: 50%;
+    }
 
-                .company-info {
-                    margin-bottom: 20px;
-                }
+    .recibo-informacion-derecha {
+        width: 49%;
+        text-align: right;
+    }
 
-                .table {
-                    border-collapse: collapse;
-                    width: 100%;
-                }
+    .recibo-tabla {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-                .table th,
-                .table td {
-                    padding: 8px;
-                    border: 1px solid #ddd;
-                    text-align: left;
-                }
+    .recibo-tabla th,
+    .recibo-tabla td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
 
-                .table th {
-                    background-color: #f0f0f0;
-                }
+    .recibo-tabla th {
+        text-align: left;
+        background-color: #f2f2f2;
+    }
 
-                .total-amount {
-                    font-weight: bold;
-                    text-align: right;
-                }
+    .recibo-firma {
+        text-align: center;
+        margin-top: 20px;
+    }
 
-                .footer {
-                    text-align: center;
-                    margin-top: 20px;
-                }
-
-                #printBtn {
-                    margin-top: 20px;
-                }
-            </style>
-            <style type="text/css" media="print">
-
-@media print {
-
-  body { 
-         font-size:18px;
-         }
-
-         table {
-    font-size: 14px;
-}
-
-#noimprimir {display:none;}
-
-#parte2 {display:none;}
-
-}
-
+    .recibo-fecha-impresion {
+        font-size: 9px;
+        text-align: right;
+    }
 </style>
-     
-            <div class="container">
-                <div class="header">
-                    <img src="logo.png" alt="Logo" class="logo">
-                    <h2>Recibo de pago</h2>
-                </div>
+</head>
 
-                <div class="company-info">
-                    <p>Nombre de la empresa</p>
-                    <p>Dirección</p>
-                    <p>Teléfono</p>
-                    <p>Correo electrónico</p>
-                </div>
+<body>
 
-                <div class="invoice-details">
-                    <p>Número de factura: #12345</p>
-                    <p>Fecha de emisión: 2024-05-18</p>
-                    <p>Cliente: Juan Pérez</p>
-                    <p>Dirección: Calle 123, Ciudad, País</p>
-                </div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Descripción</th>
-                            <th>Cantidad</th>
-                            <th>Precio unitario</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Producto 1</td>
-                            <td>1</td>
-                            <td>$100</td>
-                            <td>$100</td>
-                        </tr>
-                        <tr>
-                            <td>Producto 2</td>
-                            <td>2</td>
-                            <td>$50</td>
-                            <td>$100</td>
-                        </tr>
-                        <tr>
-                            <td>Subtotal</td>
-                            <td></td>
-                            <td></td>
-                            <td>$200</td>
-                        </tr>
-                        <tr>
-                            <td>IVA (10%)</td>
-                            <td></td>
-                            <td></td>
-                            <td>$20</td>
-                        </tr>
-                        <tr>
-                            <td class="total-amount">Total</td>
-                            <td></td>
-                            <td></td>
-                            <td>$220</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="page-heading">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-1 order-last">
+                        <h4 class="font-bold">Alumno : <?php echo $apellidonombre; ?> DNI :
+                            <?php echo $dni; ?></h4>
 
-                <div class="footer">
-                    <p>Gracias por su compra.</p>
-                    <p>¡Esperamos volver a verle pronto!</p>
-                </div>
-                <div id='noimprimir'>
-                <button id="printBtn" class="btn btn-primary">Imprimir recibo</button>
+                        <!--p class="text-subtitle text-muted">The default layout.</p-->
+                    </div>
+                    <div class="col-12 col-md-6 order-md-2 order-first">
+
+                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><?php echo "Usuario : " . $USUARIO; ?></li>
+                            </ol>
+                        </nav>
+
+                    </div>
                 </div>
             </div>
 
-            <script>
-                const printBtn = document.getElementById('printBtn');
+            <section class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Formulario Pago Cuota Total</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="imprimir" id="imprimir">
+                            <div class="recibo">
+                                <div class="recibo-encabezado">
+                                    <h1>COMPLEJO EDUCATIVO</h1>
+                                    <h1>de Villagran Julieta</h1>
+                                </div>
 
-                printBtn.addEventListener('click', function() {
-                    window.print();
-                });
-            </script>
-    </div>
-</div>
+                                <div class="recibo-informacion">
+                                    <div class="recibo-informacion-izquierda">
+                                        <p><strong>Responsable Monotributo:</strong></p>
+                                        <p>CUIT N° 27-43416179-2</p>
+                                        <p><strong>Documento No válido como factura</strong></p>
+                                    </div>
+
+                                    <div class="recibo-informacion-derecha">
+                                        <p><strong>Fecha:</strong> 09/07/2023</p>
+                                        <p><strong>N° Recibo:</strong> 0001-00019752</p>
+                                    </div>
+                                </div>
+
+                                <div class="recibo-informacion">
+                                    <p><strong>Señores:</strong></p>
+                                    <p>D.N.I.:</p>
+                                    <p><strong>Horario:</strong></p>
+                                    <p><strong>Curso:</strong></p>
+                                    <p><strong>Grupo:</strong></p>
+                                </div>
+
+                                <table class="recibo-tabla">
+                                    <thead>
+                                        <tr>
+                                            <th>Concepto</th>
+                                            <th>Importe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Plan de Pago</td>
+                                            <td><span class="math-inline"></td\>
+                                                    </tr\>
+                                                    <tr\>
+                                                        <td\>Inscripción</td\>
+                                                        <td\>
+                                                </span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cuota N°</td>
+                                            <td><span class="math-inline"></td\>
+                                                    </tr\>
+                                                    <tr\>
+                                                        <td\>Otros</td\>
+                                                        <td\>
+                                                </span></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total</th>
+                                            <th>$</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="recibo-firma">
+                                    <p>Firma y Sello</p>
+                                </div>
+
+                                <div class="recibo-fecha-impresion">
+                                    <p>Fecha de imp: 18/11/2023 desde 0001-00018901 hasta 0001-00019900</p>
+                                    <p>ORIGINAL:</p>
+                                </div>
+                            </div>
+                        </div><!-- finimprimir-->
+
+
+
+                        <button onclick="printDiv()">Imprimir</button>
+
+                        <a href="alumno_carrera_cuotas.php?id=<?php echo $alumno_id; ?>" class="btn btn-outline-primary">Cancelar</a>
+
+                        <script src="../script.js"></script>
+                    </div>
+                </div>
+            </section>
