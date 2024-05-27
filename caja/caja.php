@@ -2,67 +2,54 @@
 include_once("../bd/conexion.php");
 class Caja
 {
-  
+
   public static function busarCajaAbierta()
   {
-     $data[]=0;
-   $sql="SELECT * FROM caja where estado='Abierta'";
+    $data[] = 0;
+    $sql = "SELECT * FROM caja where estado='Abierta'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
-    if(mysqli_num_rows($rs) >0)
-    {
-      while($fila = mysqli_fetch_assoc($rs))
-      {
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
         $data[] = $fila;
       }
     }
     return $data;
-    }
+  }
 
 
   public static function totalesIngresoCaja($idcaja)
   {
-     $data[]=0;
-   $sql="SELECT
+    $data[] = 0;
+    $sql = "SELECT
     sum(ingreso.monto) as totalingresos
     FROM
         `ingreso`
             WHERE `ingreso`.`caja_id`='$idcaja'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
-    if(mysqli_num_rows($rs) >0)
-    {
-      while($fila = mysqli_fetch_assoc($rs))
-      {
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
         $data[] = $fila;
       }
     }
     return $data;
-    }  
+  }
 
-      public static function totalesEgresoCaja($idcaja)
+  public static function totalesEgresoCaja($idcaja)
   {
-     $data[]=0;
-   $sql="SELECT
+    $data[] = 0;
+    $sql = "SELECT
     sum(egreso.monto) as totalegresos
     FROM
         `egreso`
             WHERE `egreso`.`caja_id`='$idcaja'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
-    if(mysqli_num_rows($rs) >0)
-    {
-      while($fila = mysqli_fetch_assoc($rs))
-      {
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
         $data[] = $fila;
       }
     }
     return $data;
-    }    
-
-
-
-
-
-
-
+  }
 
   public function obtenerUsuario($usuario)
   {
@@ -117,18 +104,25 @@ VALUES (
     return $rs;
   }
 
-
-  public function cerrarcaja($id, $fecha_apertura, $ingreso_total, $egreso_total, $fecha_cierre, $estado, $saldo)
+  // 26052024 cerrar caja y hacer los depositos  
+  public function cerrarcaja($id, $fecha_apertura, $ingreso_total, $egreso_total, $fecha_cierre, $estado, $saldo,$saldo_efectivo, $saldo_virtual
+  ,$dep_caja_fuerte,$dep_banco,$dep_mp,$dep_proxima_caja)
   {
     $sql = "UPDATE `caja`
-            SET 
-              `fecha_apertura` = '$fecha_apertura',
-              `ingreso_total` = '$ingreso_total',
-              `egreso_total` = '$egreso_total',
-              `fecha_cierre` = '$fecha_cierre',
-              `estado` = '$estado',
-              `saldo` = '$saldo'
-            WHERE `id` = '$id';";
+    SET 
+      `fecha_apertura` = '$fecha_apertura',
+      `ingreso_total` = '$ingreso_total',
+      `egreso_total` = '$egreso_total',
+      `fecha_cierre` = '$fecha_cierre',
+      `estado` = '$estado',
+      `saldo` = '$saldo',
+      `saldo_efectivo` = '$saldo_efectivo',
+      `saldo_virtual` = '$saldo_virtual',
+      `dep_caja_fuerte` = '$dep_caja_fuerte',
+      `dep_banco` = '$dep_banco',
+      `dep_mp` = '$dep_mp',
+      `dep_proxima_caja` = '$dep_proxima_caja'
+    WHERE `id` = '$id';";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
   }
@@ -140,24 +134,22 @@ VALUES (
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
-        
+
         $ingreso_total = $fila['ingreso_total'];
         $saldo_total = $fila['saldo'];
       }
-    
-    $ingreso_final = $ingreso_total + $ingreso;
-    $saldo_final = $saldo_total + $ingreso;
 
-    $sql = "UPDATE `caja`
+      $ingreso_final = $ingreso_total + $ingreso;
+      $saldo_final = $saldo_total + $ingreso;
+
+      $sql = "UPDATE `caja`
             SET 
               `ingreso_total` = '$ingreso_final',
               `saldo` = '$saldo_final'
             WHERE `id` = '$id';";
-    $result = mysqli_query(conexion::obtenerInstancia(), $sql);
-    return $result;
-
+      $result = mysqli_query(conexion::obtenerInstancia(), $sql);
+      return $result;
     }
-
   }
 
   public function actualizaregresocaja($id, $egreso)
@@ -167,25 +159,22 @@ VALUES (
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
-        
+
         $egreso_total = $fila['egreso_total'];
         $saldo_total = $fila['saldo'];
       }
-    
-    $egreso_final = $egreso_total + $egreso;
-    $saldo_final = $saldo_total - $egreso;
 
-    $sql = "UPDATE `caja`
+      $egreso_final = $egreso_total + $egreso;
+      $saldo_final = $saldo_total - $egreso;
+
+      $sql = "UPDATE `caja`
             SET 
               `egreso_total` = '$egreso_final',
               `saldo` = '$saldo_final'
             WHERE `id` = '$id';";
-    $result = mysqli_query(conexion::obtenerInstancia(), $sql);
-    return $result;
-
+      $result = mysqli_query(conexion::obtenerInstancia(), $sql);
+      return $result;
     }
-        
-
   }
 
 
@@ -323,7 +312,5 @@ FROM
       }
     }
     return $data;
-  }    
-
-
+  }
 }

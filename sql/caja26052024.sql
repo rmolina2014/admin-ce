@@ -23,17 +23,23 @@ DROP TABLE IF EXISTS `caja`;
 CREATE TABLE `caja` (
   `id` int NOT NULL AUTO_INCREMENT,
   `fecha_apertura` datetime DEFAULT NULL,
-  `ingreso_total` decimal(8,2) DEFAULT NULL,
-  `egreso_total` decimal(8,2) DEFAULT NULL,
+  `ingreso_total` decimal(16,2) DEFAULT NULL,
+  `egreso_total` decimal(16,2) DEFAULT NULL,
   `fecha_cierre` datetime DEFAULT NULL,
   `estado` varchar(15) DEFAULT NULL COMMENT 'Abierto o Cerrado',
-  `saldo` decimal(8,2) DEFAULT NULL,
+  `saldo` decimal(16,2) DEFAULT NULL,
+  `saldo_efectivo` decimal(16,2) DEFAULT NULL,
+  `saldo_virtual` decimal(16,2) DEFAULT NULL,
+  `dep_caja_fuerte` decimal(16,2) DEFAULT NULL,
+  `dep_banco` decimal(16,2) DEFAULT NULL,
+  `dep_mp` decimal(16,2) DEFAULT NULL,
+  `dep_proxima_caja` decimal(16,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 /*Data for the table `caja` */
 
-insert  into `caja`(`id`,`fecha_apertura`,`ingreso_total`,`egreso_total`,`fecha_cierre`,`estado`,`saldo`) values (1,'2024-04-01 04:57:22',5506.33,1160.00,'2024-01-01 00:00:00','Abierta',4346.33);
+insert  into `caja`(`id`,`fecha_apertura`,`ingreso_total`,`egreso_total`,`fecha_cierre`,`estado`,`saldo`,`saldo_efectivo`,`saldo_virtual`,`dep_caja_fuerte`,`dep_banco`,`dep_mp`,`dep_proxima_caja`) values (1,'2024-04-01 04:57:22',5506.33,1160.00,'2024-01-01 00:00:00','Abierta',4346.33,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

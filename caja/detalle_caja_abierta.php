@@ -132,7 +132,6 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                 <th>Fecha </th>
                                                 <th>Monto $</th>
                                                 <th>Detalle</th>
-
                                             </tr>
                                             <thead>
                                             <tbody>
@@ -174,7 +173,6 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
                                 <div class="row">
-
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                         <h6 class="text-muted font-semibold">
                                             <font style="vertical-align: inherit;">
@@ -308,7 +306,16 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
 
                                     <div class="card-content">
                                         <div class="card-body">
-                                            <form class="form form-vertical">
+                                            <form class="form form-vertical" method="$_POST" action="">
+                                                <input type="hidden" name="ingreso_total" value="<?php echo $ingreso_total; ?>">
+                                                <input type="hidden" name="egreso_total" value="<?php echo $egreso_total; ?>">
+                                                <input type="hidden" name="saldo_efectivo" value="<?php echo $sub_total_efectivo; ?>">
+                                                <input type="hidden" name="saldo_virtual" value="<?php echo $sub_total_virtual; ?>">
+                                                <input type="hidden" name="dep_caja_fuerte" value="<?php echo $dep_caja_fuerte; ?>">
+                                                <input type="hidden" name="dep_banco" value="<?php echo $dep_banco; ?>">
+                                                <input type="hidden" name="dep_mp" value="<?php echo $dep_mp; ?>">
+                                                <input type="hidden" name="dep_proxima_caja" value="<?php echo $dep_proxima_caja; ?>">
+                                                <input type="hidden" name="saldo" value="<?php echo $saldo; ?>">
                                                 <div class="form-body">
                                                     <div class="row">
                                                         <div class="col-12">
@@ -323,25 +330,25 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label for="email-id-vertical">Caja Fuerte</label>
-                                                                <input type="number" id="caja_fuerte" name="caja_fuerte" class="form-control" placeholder="Ejemplo : 156.23">
+                                                                <input type="number" name="dep_caja_fuerte" class="form-control" placeholder="Ejemplo : 156.23">
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label for="contact-info-vertical">Banco</label>
-                                                                <input type="number" id="banco" class="form-control" name="bancoa" placeholder="Ej: 56.20">
+                                                                <input type="number" class="form-control" name="dep_banco" placeholder="Ej: 56.20">
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label for="password-vertical">Mercado Pago</label>
-                                                                <input type="number" id="mercado_pago" class="form-control" name="mercado_pago" placeholder="Ej: 893.29">
+                                                                <input type="number" class="form-control" name="dep_mp" placeholder="Ej: 893.29">
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label for="password-vertical">Saldo Inicial Proxima Caja</label>
-                                                                <input type="number" id="saldo_prox_caja" class="form-control" name="saldo_prox_caja" placeholder="Ej: 125.23">
+                                                                <input type="number" class="form-control" name="dep_proxima_caja" placeholder="Ej: 125.23">
                                                             </div>
                                                         </div>
                                                         <button type="submit" class="btn btn-primary me-1 mb-1">CERRAR CAJA </button>
