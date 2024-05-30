@@ -68,6 +68,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                             <tr>
                                 <th>Detalle</th>
                                 <th>Monto</th>
+                                <th>Saldo</th>
                                 <th>Estado</th>
                                 <th></th>
                             </tr>
@@ -78,10 +79,17 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                             $unosolo = True;
                             $usuarios = $objeto->listaAlumnoCarreraCuota($alumno_id);
                             foreach ($usuarios as $item) {
+                                //calcula el saldo de la cuota
+                                $saldo_cuota = $objeto->saldoCuotaAlumno($item['id']);
+                                foreach ($saldo_cuota as $saldoitem) {
+
+                                }
+
                             ?>
                                 <tr>
                                     <td><?php echo $item['detalle']; ?></td>
                                     <td><?php echo $item['monto']; ?></td>
+                                    <td><?php echo $saldoitem['saldo']; ?></td>
                                     <td><?php echo $item['estado']; ?></td>
                                     <td>
                                         <?php
@@ -92,10 +100,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                                         <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
                                                         <button class="btn btn-outline-primary" type="submit">Pago Total </button>
                                                     </form>
-                                                    <form action="pago_parcial.php" method="POST">
-                                                        <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
-                                                        <button class="btn btn-outline-primary" type="submit">Pago Parcial </button>
-                                                    </form>
+
                                             
 
                                             <!--a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#pago-total<?php echo $item['id']; ?>">

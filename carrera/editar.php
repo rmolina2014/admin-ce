@@ -62,6 +62,21 @@
     <input name="cantidadcuotas"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['cantidad_cuotas']); ?>" />
   </div>
 
+  <div class="col-md-8 mb-3">
+    <label class="form-label">Costo total curso*</label>
+    <input name="costocarrera"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['costo_carrera']); ?>" />
+  </div>  
+
+  <div class="col-md-8 mb-3">
+    <label class="form-label">Costo Inscripcion*</label>
+    <input name="costoinscripcion"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['inscripcion']); ?>" />
+  </div>   
+
+  <div class="col-md-8 mb-3">
+    <label class="form-label">Detalle*</label>
+    <input name="detalles"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['detalles']); ?>" />
+  </div>   
+
     
   <div class="col-md-8 mb-3">
 
@@ -93,8 +108,10 @@ if (isset($_POST['id_carrera']) && !empty($_POST['id_carrera']))
 $id = $_POST['id_carrera'];
 $nombre=$_POST['nombre'];
 $cantidadcuotas=$_POST['cantidadcuotas'];
-
-$todobien = $objeto->editar($id,$nombre,$cantidadcuotas);
+$costocurso=$_POST['costocarrera'];
+$costoinscripcion=$_POST['costoinscripcion'];
+$detalles=$_POST['detalles'];
+$todobien = $objeto->editar($id,$nombre,$cantidadcuotas,$costocurso,$costoinscripcion,$detalles);
 if($todobien){
     echo "<script language=Javascript> location.href=\"index.php\"; </script>"; 
     //header('Location: listado.php');

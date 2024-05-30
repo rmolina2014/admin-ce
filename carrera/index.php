@@ -47,6 +47,9 @@ include("carrera.php");
                 <th>N°</th>
                 <th>Curso</th>
                 <th>Cantidad de Cuotas</th>
+                <th>Costo Total Curso</th>
+                <th>Costo Inscripcion</th>
+                <th>Detalles</th>
                 <th></th>
               </tr>
               <thead>
@@ -66,6 +69,16 @@ include("carrera.php");
                     <td>
                       <?php echo $item['cantidad_cuotas']; ?>
                     </td>
+                    <td>
+                      <?php echo $item['costo_carrera']; ?>
+                    </td>
+                    <td>
+                      <?php echo $item['inscripcion']; ?>
+                    </td>                    
+                    <td>
+                      <?php echo $item['detalles']; ?>
+                    </td>                    
+
                     <td>
                       <form method="POST" role="form" action="editar.php">
                         <input type="hidden" name="id" value="<?php echo $item['id']; ?>">

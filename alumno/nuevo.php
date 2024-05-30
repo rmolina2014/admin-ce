@@ -49,10 +49,10 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
   $objeto = new Alumno();
   $cuota_numero = 0;
   $fecha_vencimiento = "0001-01-01";
-  $fecha_pago = "0001-01-01";
+  //$fecha_pago = "0001-01-01";
   $detalle = "Inscripción";
 
-  $insertar_inscripcion = $objeto->insertar_cuotas_alumno($alumno_id, $carrera_id, $cuota_numero, $costo_inscripcion, $estado, $fecha_vencimiento, $fecha_pago, $detalle);
+  $insertar_inscripcion = $objeto->insertar_cuotas_alumno($alumno_id, $carrera_id, $cuota_numero, $costo_inscripcion, $estado, $fecha_vencimiento, $detalle);
 
   if (!$insertar_inscripcion) {
   ?>

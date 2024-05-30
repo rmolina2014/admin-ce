@@ -205,7 +205,6 @@ class Alumno
     $monto,
     $estado,
     $fecha_vencimiento,
-    $fecha_pago,
     $detalle
   ) {
     $sql = "INSERT INTO `alumno_carrera_cuotas`
@@ -216,8 +215,7 @@ class Alumno
      `monto`,
      `estado`,
      `fecha_vencimiento`,
-     `fecha_pago`,
-      `detalle`)
+     `detalle`)
       VALUES (
       '$alumno_id',
       '$carrera_id',
@@ -225,7 +223,6 @@ class Alumno
       '$monto',
       '$estado',
       '$fecha_vencimiento',
-      '$fecha_pago',
       '$detalle'); ";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
 
@@ -256,11 +253,30 @@ class Alumno
     return $data;
   }
 
+  //consultar saldo de una cuota de alumno
+
+  public function saldoCuotaAlumno($id_cuota)
+  {
+    $data = array();
+    $consulta = "SELECT c.id, c.detalle, c.monto, COALESCE(SUM(p.descuento_a10)+SUM(p.descuento_tp)+SUM(p.pago), 0) AS total_pagado,
+       (c.monto - COALESCE(SUM(p.descuento_a10)+SUM(p.descuento_tp)+SUM(p.pago), 0)) AS saldo
+FROM alumno_carrera_cuotas c
+LEFT JOIN pagos_parciales p ON c.id = p.rela_cuota
+WHERE c.id = $id_cuota GROUP BY c.id;";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
   // pagar cuotas
 
-  public function pagarAlumnoCuota($cuota_id, $estado, $fecha_pago, $descuento_tipo_pago, $descuento_antes_dia_10, $apagar, $usuario)
+  public function pagarAlumnoCuota($cuota_id, $fecha_pago, $descuento_tipo_pago, $descuento_antes_dia_10, $apagar, $usuario)
   {
-    $consulta = "UPDATE `alumno_carrera_cuotas`
+    /*$consulta = "UPDATE `alumno_carrera_cuotas`
     SET 
       `estado` = '$estado',
       `fecha_pago` = '$fecha_pago',
@@ -268,11 +284,31 @@ class Alumno
       `descuento_antes_dia_10` = '$descuento_antes_dia_10',
       `apagar` = '$apagar',
       `usuario` = '$usuario'
-      WHERE `id` = '$cuota_id'";
+      WHERE `id` = '$cuota_id'";*/
+     //genera el registro en pagos_parciales
+      $fecha_pago = date('Y-m-d H:i:s');
+    $consulta = "INSERT INTO `pagos_parciales` (`rela_cuota`, `descuento_tp`, `descuento_a10`, `pago`, `fecha_pago`, `usuario`) VALUES ('$cuota_id','$descuento_tipo_pago','$descuento_antes_dia_10','$apagar','$fecha_pago','$usuario');";  
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
 
     return $rs;
   }
+
+
+  public function estadoCuota($cuota_id, $estado)
+  {
+    $consulta = "UPDATE `alumno_carrera_cuotas`
+    SET 
+      `estado` = '$estado' WHERE `id` = '$cuota_id'";
+     //cambia el estado de la cuota 
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+
+    return $rs;
+  }
+
+
+
+
+
 
   public function buscarCajaAbierta()
   {

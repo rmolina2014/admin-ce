@@ -16,10 +16,10 @@ class Carrera
   }
 
 
-  public function editar($id,$nombre,$cantidadcuotas)
+  public function editar($id,$nombre,$cantidadcuotas,$costocurso,$costoinscripcion,$detalles)
   {
 
-    $sql = "UPDATE `carrera` SET `nombre`='$nombre',`cantidad_cuotas`='$cantidadcuotas' WHERE `id`='$id';";
+    $sql = "UPDATE `carrera` SET `nombre`='$nombre',`cantidad_cuotas`='$cantidadcuotas',`costo_carrera`='$costocurso',`inscripcion`='$costoinscripcion',`detalles`='$detalles' WHERE `id`='$id';";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
   }
@@ -41,10 +41,10 @@ class Carrera
 
 
 
-    public function nuevaCarrera($nombrecarrera,$cantidadcuotas) {
+    public function nuevaCarrera($nombrecarrera,$cantidadcuotas,$costocurso,$costoinscripcion,$detalles) {
     $sql = "INSERT INTO `carrera`
-    (`nombre`,`cantidad_cuotas`)
-      VALUES ('$nombrecarrera','$cantidadcuotas');";
+    (`nombre`,`cantidad_cuotas`,`costo_carrera`,`inscripcion`,`detalles`)
+      VALUES ('$nombrecarrera','$cantidadcuotas','$costocurso','$costoinscripcion','$detalles');";
     //echo $sql;
     //exit;
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);

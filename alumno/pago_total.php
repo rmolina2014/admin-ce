@@ -7,7 +7,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
     $cuota_id = (int)$_POST['cuota_id'];
     $datos_cuota = $objeto->obtenerCuotaId($cuota_id);
     foreach ($datos_cuota as $item) {
-        $monto = $item['cuota_monto'];
+        //$monto = $item['cuota_monto'];
         $detalle = $item['cuota_detalle'];
         $dni = $item['dni'];
         $apellidonombre = $item['apellidonombre'];
@@ -15,6 +15,13 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
         $cuota_numero = $item['cuota_numero'];
         $alumno_id = $item['alumno_id'];
     }
+    //para obtener el saldo a pagar, si no ha pagado ninguna cuota la funcion devuelve el total 
+    $saldo_cuota = $objeto->saldoCuotaAlumno($cuota_id);
+    foreach ($saldo_cuota as $itemsaldo) {
+        $monto = $itemsaldo['saldo'];
+
+    }
+
 }
 
 
@@ -24,6 +31,15 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
         <a href="#" class="burger-btn d-block d-xl-none">
             <i class="bi bi-justify fs-3"></i>
         </a>
+    <style>
+        #chkdescuento10 {
+            display: none; /* El div está oculto inicialmente */
+        }
+        #chkformadepago{
+            display: none; /* El div está oculto inicialmente */
+        }
+    </style>
+
     </header>
 
     <div class="page-heading">
@@ -50,7 +66,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Formulario Pago Cuota Total</h4>
+                    <h4 class="card-title">Formulario Pago Cuota </h4>
                 </div>
                 <div class="card-body">
                     <!--- contenido ---------------------------------------------------------->
@@ -63,13 +79,13 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                         <input type="hidden" name="cuota_id" value="<?php echo $cuota_id; ?>">
                         <input type="hidden" name="alumno_id" value="<?php echo $alumno_id; ?>">
                         <input type="hidden" name="detalle" value="<?php echo $detalle; ?>">
-                        <input type="hidden" name="monto" id="monto" value="<?php echo $monto; ?>">
+                        
                         <input type="hidden" name="tipo_pago" id="tipo_pago">
-
+                        <input type="hidden" name="monto_original" id="monto_original" value="<?php echo $monto; ?>">
                         <input type="hidden" name="recargo" id="recargo" value="0">
                         <input type="hidden" name="descuentoFormaPago" id="descuentoFormaPago">
                         <input type="hidden" name="descuentoPagoaAntesDiaDiez" id="descuentoPagoaAntesDiaDiez" value="0">
-                        <input type="hidden" name="apagar" id="apagar">
+                        <input type="hidden" name="apagar" id="apagar" value="<?php echo $monto; ?>">
 
                         <div class="form-group">
                             <label>Detalle :</label>
@@ -79,13 +95,18 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
 
                         <div class="form-group">
 
-                            <label><?php echo $monto; ?></label-->
-                                <h6 class="font-extrabold mb-0">Importe : $ <?php echo $monto; ?></h6>
+                            
+                            <input  onblur="validarNumero(<?php echo $monto; ?>)" class="form-control" type="text" name="monto" id="monto" value="<?php echo $monto; ?>"  require>
+                            <div id="mensajeError"></div>
 
                         </div>
 
+                        
+                        <a onclick="habilitaformadepago()" id="formasdepago" class="btn btn-outline-primary">Forma de pago</a>
+
                         <hr>
-                        <div class="form-check">
+                        <div id="chkformadepago">
+                        <div class="form-check" >
                             <input class="form-check-input" type="radio" name="tipopago" id="efectivo" value="EFECTIVO" onchange="formaPago(this,<?php echo $cuota_id; ?>);" require>
                             <label class="form-check-label" for="flexRadioDefault1">
                                 Pago Efectivo
@@ -97,8 +118,9 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                                 Pago Virtual
                             </label>
                         </div>
+                        </div>
                         <hr>
-                        <div class="form-check">
+                        <div class="form-check" id="chkdescuento10">
                             <div class="checkbox">
                                 <input type="checkbox" id="descuento10" name="descuento10" value="APLICAR" class="form-check-input" onchange="descuentoPorDiaDiez(this,<?php echo $cuota_id; ?>);">
                                 <label for="checkbox1">Descuento Pago antes del dia 10</label>
@@ -115,7 +137,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
 
                         <a href="alumno_carrera_cuotas.php?id=<?php echo $alumno_id; ?>" class="btn btn-outline-primary">Cancelar</a>
 
-                        <button type="submit" class="btn btn-outline-primary">
+                        <button type="submit" id="botonpago" disabled class="btn btn-outline-primary">
                             <i class="bx bx-check d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Pagar</span>
                         </button>
@@ -136,18 +158,61 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
 
             }); // fin ready
 
-            let monto = $("#monto").val();
+            //var monto = $("#monto").val();
 
-            $("#apagar").html("<h5 class='font - extrabold mb - 0 '>A pagar : $ " + monto + "</h5>");
+            //$("#apagar").html("<h5 class='font - extrabold mb - 0 '>A pagar : $ " + monto + "</h5>");
 
-            let total_apagar = monto;
+            //var total_apagar = monto;
 
+            function validarNumero(maximoPermitido) {
+                // Obtener el valor del input
+                var numero = document.getElementById("monto").value;
+
+                // Obtener el valor máximo permitido del input
+                //var maximoPermitido = document.getElementById("monto").value;
+
+                // Convertir el valor a número
+                numero = parseFloat(numero);
+                var enlace = document.getElementById("formasdepago");
+                // Validar si el número es mayor que el máximo permitido
+                if (numero > maximoPermitido) {
+                    // Mostrar un mensaje de error
+                    document.getElementById("mensajeError").innerText = "El número no debe superar " + maximoPermitido;
+                    // Puedes también deshabilitar el botón o realizar otras acciones según tu necesidad
+                    
+
+                    
+                        // Deshabilitar el enlace
+                        enlace.removeAttribute("onclick");                    
+                              
+                }else{
+                    enlace.setAttribute("onclick", "habilitaformadepago()");
+                    document.getElementById("mensajeError").innerText = "";
+                }
+            }
+
+
+
+            function habilitaformadepago() {
+                 document.getElementById('monto').disabled = true;
+                 document.getElementById('chkformadepago').style.display = 'block';
+            }            
+             
             function formaPago(sel, id) {
                 //alert("descuento por forma de pago" + sel.value);
+                document.getElementById('botonpago').disabled = false;
+               var monto_original= $("#monto_original").val();
+               var monto = $("#monto").val();
+               $("#monto").val(monto);
+
+                //$("#apagar").html("<h5 class='font - extrabold mb - 0 '>A pagar : $ " + monto + "</h5>");
+
+                //var total_apagar = monto;
+
 
                 if ('EFECTIVO' === sel.value) {
                     // alert("efectivo");
-                    let porcentaje = calcularPorcentaje(monto, 10);
+                    let porcentaje = Math.round(calcularPorcentaje(monto, 10));
                     total_apagar = monto - porcentaje;
                     $("#descuentoFormaPago").val(porcentaje);
                     $("#descuento_todos").append("<h6 class='font - extrabold mb - 0 '>Descuento Pago Efectivo : - $ " + porcentaje + "</h6>");
@@ -167,15 +232,23 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                     $("#apagar").val(total_apagar);
                     $("#tipo_pago").val("VIRTUAL");
                 }
+                $("#apagar").html("<h5 class='font - extrabold mb - 0 '>A pagar : $ " + total_apagar + "</h5>");
+                 document.getElementById('chkdescuento10').style.display = 'block';
             }
 
             function descuentoPorDiaDiez(sel, id) {
                 //alert("descuento por forma de pago" + sel.value);
+               var monto = $("#apagar").val();
+               //$("#monto").val(monto);
+
+                //$("#apagar").html("<h5 class='font - extrabold mb - 0 '>A pagar : $ " + monto + "</h5>");
+
+                var total_apagar = monto;                
 
                 // if ('APLICAR' === sel.value) {
                 // alert("aplicar");
                 if ($("#descuento10").is(":checked")) {
-                    let porcentaje2 = calcularPorcentaje(total_apagar, 10);
+                    let porcentaje2 = Math.round(calcularPorcentaje(total_apagar, 10));
                     $("#descuentoPagoaAntesDiaDiez").val(porcentaje2);
                     $("#descuento_todos").append("<h6 class='font - extrabold mb - 0 '>Descuento Pago antes del 10. : - $ " + porcentaje2 + "</h6>");
                     total_apagar = total_apagar - porcentaje2;
@@ -185,11 +258,13 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                 } else {
 
                     $("#virtual").prop("checked", true);
-                    total_apagar = monto;
+                    total_apagar = $("#monto").val();
                     $("#descuento_todos").empty();
                     $("#total_apagar").html("<h5 class='font - extrabold mb - 0'>A pagar : $ " + total_apagar + "</h5>");
                     $("#descuentoPagoaAntesDiaDiez").val(0);
                     $("#apagar").val(total_apagar);
+                    $("#monto").val(total_apagar);
+                    document.getElementById('chkdescuento10').style.display = 'none';
                 }
 
 

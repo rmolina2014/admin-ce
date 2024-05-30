@@ -7,7 +7,12 @@ if (isset($_POST['nombrecarrera']) && !empty($_POST['nombrecarrera'])) {
 
   $nombre = $_POST['nombrecarrera'];
   $cantidadcuotas = $_POST['cantidadcuotas'];
-  $todobien = $objeto->nuevaCarrera($nombre, $cantidadcuotas );
+  $costocurso = $_POST['costocurso'];
+  $costoinscripcion = $_POST['costoinscripcion'];
+  $detalles = $_POST['detalles'];
+
+
+  $todobien = $objeto->nuevaCarrera($nombre, $cantidadcuotas,$costocurso,$costoinscripcion,$detalles );
 
   if ($todobien) {
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
@@ -67,6 +72,21 @@ if (isset($_POST['nombrecarrera']) && !empty($_POST['nombrecarrera'])) {
               <div class="col-md-8 mb-3">
                 <label class="form-label">Cantidad de cuotas*</label>
                 <input name="cantidadcuotas" class="form-control" id="cantidadcuotas" required  />
+              </div>              
+
+              <div class="col-md-8 mb-3">
+                <label class="form-label">Costo Total Curso*</label>
+                <input name="costocurso" class="form-control" id="costocurso" required  />
+              </div>
+
+              <div class="col-md-8 mb-3">
+                <label class="form-label">Costo Inscripcion*</label>
+                <input name="costoinscripcion" class="form-control" id="costoinscripcion" required  />
+              </div>
+
+              <div class="col-md-8 mb-3">
+                <label class="form-label">Detalles*</label>
+                <input name="detalles" class="form-control" id="detalles" required  />
               </div>              
 
               <div class="col-md-8 mb-3">
