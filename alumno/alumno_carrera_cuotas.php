@@ -82,7 +82,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                 //calcula el saldo de la cuota
                                 $saldo_cuota = $objeto->saldoCuotaAlumno($item['id']);
                                 foreach ($saldo_cuota as $saldoitem) {
-
                                 }
 
                             ?>
@@ -96,12 +95,12 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                         if ($item['estado'] == "IMPAGA" and $unosolo) {
                                             $unosolo = False;
                                         ?>
-                                                   <form action="pago_total.php" method="POST">
-                                                        <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
-                                                        <button class="btn btn-outline-primary" type="submit">Pago Total </button>
-                                                    </form>
+                                            <form action="pago_total.php" method="POST">
+                                                <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
+                                                <button class="btn btn-outline-primary" type="submit">Pago Total </button>
+                                            </form>
 
-                                            
+
 
                                             <!--a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#pago-total<?php echo $item['id']; ?>">
                                                 Pago Total
