@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2024 a las 18:23:02
+-- Tiempo de generación: 04-06-2024 a las 00:51:59
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -29,23 +29,26 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `alumno` (
   `id` int(11) NOT NULL,
-  `edad` int(11) NOT NULL,
+  `fecha_nacimiento` date NOT NULL,
   `gruposanguineo` varchar(10) NOT NULL,
   `persona_id` int(11) NOT NULL,
   `carrera_id` int(11) DEFAULT NULL,
   `estado` varchar(80) DEFAULT NULL COMMENT 'Activo, Inactivo',
   `observacion` varchar(100) DEFAULT NULL,
-  `fecha_ingreso` date DEFAULT NULL
+  `fecha_ingreso` date DEFAULT NULL,
+  `redes_sociales` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `alumno`
 --
 
-INSERT INTO `alumno` (`id`, `edad`, `gruposanguineo`, `persona_id`, `carrera_id`, `estado`, `observacion`, `fecha_ingreso`) VALUES
-(20, 18, 'rh+', 2, 1, 'Activo', 'curso de asistente', '2024-05-29'),
-(21, 18, 'rh+', 21, 3, 'Activo', '', '2024-05-30'),
-(22, 18, 'rh+', 21, 2, 'Activo', '', '2024-05-30');
+INSERT INTO `alumno` (`id`, `fecha_nacimiento`, `gruposanguineo`, `persona_id`, `carrera_id`, `estado`, `observacion`, `fecha_ingreso`, `redes_sociales`) VALUES
+(20, '0000-00-00', 'rh+', 2, 1, 'Activo', 'curso de asistente', '2024-05-29', ''),
+(21, '0000-00-00', 'rh+', 21, 3, 'Activo', '', '2024-05-30', ''),
+(22, '0000-00-00', 'rh+', 21, 2, 'Activo', '', '2024-05-30', ''),
+(25, '2007-06-03', 'rh+', 37, 1, 'Activo', '', '2024-06-04', 'asdasdasd@facebook'),
+(29, '2024-06-03', 'rh+', 38, 4, 'Activo', '', '2024-06-04', 'asdasdasd@facebook');
 
 -- --------------------------------------------------------
 
@@ -105,7 +108,29 @@ INSERT INTO `alumno_carrera_cuotas` (`id`, `alumno_id`, `carrera_id`, `cuota_num
 (32, 22, 2, 9, 25000.00, 'IMPAGA', '0001-01-01', '0001-01-01 00:00:00', 'Cuota Nº 9', NULL),
 (33, 22, 2, 10, 25000.00, 'IMPAGA', '0001-01-01', '0001-01-01 00:00:00', 'Cuota Nº 10', NULL),
 (34, 22, 2, 11, 25000.00, 'IMPAGA', '0001-01-01', '0001-01-01 00:00:00', 'Cuota Nº 11', NULL),
-(35, 22, 2, 12, 25000.00, 'IMPAGA', '0001-01-01', '0001-01-01 00:00:00', 'Cuota Nº 12', NULL);
+(35, 22, 2, 12, 25000.00, 'IMPAGA', '0001-01-01', '0001-01-01 00:00:00', 'Cuota Nº 12', NULL),
+(58, 25, 1, 0, 250.00, 'IMPAGA', '0001-01-01', NULL, 'Inscripción', NULL),
+(59, 25, 1, 1, 20000.00, 'IMPAGA', '0001-01-01', NULL, 'Cuota Nro 1', NULL),
+(60, 25, 1, 2, 20000.00, 'IMPAGA', '0001-01-01', NULL, 'Cuota Nro 2', NULL),
+(61, 25, 1, 3, 20000.00, 'IMPAGA', '0001-01-01', NULL, 'Cuota Nro 3', NULL),
+(62, 25, 1, 4, 20000.00, 'IMPAGA', '0001-01-01', NULL, 'Cuota Nro 4', NULL),
+(63, 25, 1, 5, 20000.00, 'IMPAGA', '0001-01-01', NULL, 'Cuota Nro 5', NULL),
+(64, 25, 1, 6, 20000.00, 'IMPAGA', '0001-01-01', NULL, 'Cuota Nro 6', NULL),
+(65, 25, 1, 7, 20000.00, 'IMPAGA', '0001-01-01', NULL, 'Cuota Nro 7', NULL),
+(66, 25, 1, 8, 20000.00, 'IMPAGA', '0001-01-01', NULL, 'Cuota Nro 8', NULL),
+(67, 25, 1, 9, 20000.00, 'IMPAGA', '0001-01-01', NULL, 'Cuota Nro 9', NULL),
+(68, 25, 1, 10, 20000.00, 'IMPAGA', '0001-01-01', NULL, 'Cuota Nro 10', NULL),
+(70, 29, 4, 0, 1500.00, 'PAGADO', '2024-06-04', NULL, 'Inscripción', NULL),
+(71, 29, 4, 1, 20000.00, 'IMPAGA', '2024-07-04', NULL, 'Cuota Nro 1', NULL),
+(72, 29, 4, 2, 20000.00, 'IMPAGA', '2024-08-04', NULL, 'Cuota Nro 2', NULL),
+(73, 29, 4, 3, 20000.00, 'IMPAGA', '2024-09-04', NULL, 'Cuota Nro 3', NULL),
+(74, 29, 4, 4, 20000.00, 'IMPAGA', '2024-10-04', NULL, 'Cuota Nro 4', NULL),
+(75, 29, 4, 5, 20000.00, 'IMPAGA', '2024-11-04', NULL, 'Cuota Nro 5', NULL),
+(76, 29, 4, 6, 20000.00, 'IMPAGA', '2024-12-04', NULL, 'Cuota Nro 6', NULL),
+(77, 29, 4, 7, 20000.00, 'IMPAGA', '2025-01-04', NULL, 'Cuota Nro 7', NULL),
+(78, 29, 4, 8, 20000.00, 'IMPAGA', '2025-02-04', NULL, 'Cuota Nro 8', NULL),
+(79, 29, 4, 9, 20000.00, 'IMPAGA', '2025-03-04', NULL, 'Cuota Nro 9', NULL),
+(80, 29, 4, 10, 20000.00, 'IMPAGA', '2025-04-04', NULL, 'Cuota Nro 10', NULL);
 
 -- --------------------------------------------------------
 
@@ -352,7 +377,8 @@ INSERT INTO `ingreso` (`id`, `monto`, `fecha_ingreso`, `caja_id`, `usuario_id`, 
 (80, 180.00, '2024-05-30 00:00:00', 1, 1, 6, 21, 'VIRTUAL', 20.00, 0.00, 'Alumno', 'Inscripción'),
 (81, 198.00, '2024-05-30 00:00:00', 1, 1, 6, 21, 'EFECTIVO', 46.00, 0.00, 'Alumno', 'Inscripción'),
 (82, 1000.00, '2024-05-30 16:54:14', 1, 1, 2, 20, 'EFECTIVO', 0.00, 0.00, 'Alumno', 'Pago a cuenta Certificado'),
-(83, 50.00, '2024-05-30 00:00:00', 1, 1, 6, 20, 'VIRTUAL', 0.00, 0.00, 'Alumno', 'Cuota Nº 8');
+(83, 50.00, '2024-05-30 00:00:00', 1, 1, 6, 20, 'VIRTUAL', 0.00, 0.00, 'Alumno', 'Cuota Nº 8'),
+(84, 1350.00, '2024-06-04 00:00:00', 1, 1, 6, 29, 'EFECTIVO', 150.00, 0.00, 'Alumno', 'Inscripción');
 
 -- --------------------------------------------------------
 
@@ -417,7 +443,8 @@ INSERT INTO `pagos_parciales` (`id`, `rela_cuota`, `descuento_tp`, `descuento_a1
 (19, 9, 5.00, 5.00, 40.00, '2024-05-30 13:57:55', '1'),
 (20, 12, 0.00, 20.00, 180.00, '2024-05-30 14:05:07', '1'),
 (21, 12, 24.00, 22.00, 198.00, '2024-05-30 14:05:24', '1'),
-(22, 9, 0.00, 0.00, 50.00, '2024-05-30 17:03:44', '1');
+(22, 9, 0.00, 0.00, 50.00, '2024-05-30 17:03:44', '1'),
+(23, 70, 150.00, 0.00, 1350.00, '2024-06-04 00:32:07', '1');
 
 -- --------------------------------------------------------
 
@@ -610,13 +637,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `alumno`
 --
 ALTER TABLE `alumno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `alumno_carrera_cuotas`
 --
 ALTER TABLE `alumno_carrera_cuotas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT de la tabla `caja`
@@ -670,7 +697,7 @@ ALTER TABLE `egreso_tipo`
 -- AUTO_INCREMENT de la tabla `ingreso`
 --
 ALTER TABLE `ingreso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT de la tabla `ingreso_tipo`
@@ -682,7 +709,7 @@ ALTER TABLE `ingreso_tipo`
 -- AUTO_INCREMENT de la tabla `pagos_parciales`
 --
 ALTER TABLE `pagos_parciales`
-  MODIFY `id` int(13) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(13) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`

@@ -5,21 +5,23 @@ include("alumno.php");
 $objeto = new Alumno();
 if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
   $persona_id = $_POST['id_persona'];
-  $edad = $_POST['edad'];
+  $fecha_nacimiento = $_POST['fecha_nacimiento'];
   $gruposanguineo = $_POST['gruposanguineo'];
   $carrera_id = $_POST['carrera_id'];
   $estado = "Activo";
   $fecha_ingreso = date("Y-m-d");
   $observacion = $_POST['observacion'];
+  $redes_sociales = $_POST['redes_sociales'];
 
   $insertar_alunmo = $objeto->nuevo(
-    $edad,
+    $fecha_nacimiento,
     $gruposanguineo,
     $persona_id,
     $carrera_id,
     $estado,
     $observacion,
-    $fecha_ingreso
+    $fecha_ingreso,
+    $redes_sociales
   );
 
   // 1 -insertra alumno 
@@ -48,7 +50,9 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
 
   $objeto = new Alumno();
   $cuota_numero = 0;
-  $fecha_vencimiento = "0001-01-01";
+  $fechaActual = new DateTime();
+  $fechaActual->modify('+1 day');
+  $fecha_vencimiento = $fechaActual->format('Y-m-d');
   //$fecha_pago = "0001-01-01";
   $detalle = "Inscripción";
 
@@ -71,13 +75,14 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
 
   $i = 0;
   while ($cantidad_cuotas > $i) {
-
+    $fechaActual->modify('+1 month');
+    $fecha_vencimiento = $fechaActual->format('Y-m-d');
     $cuota_numero = $i + 1;
 
-    $detalle = "Cuota Nº ".$cuota_numero;
+    $detalle = "Cuota Nro ".$cuota_numero;
 
     $insertar_cuota_mensual =
-    $objeto->insertar_cuotas_alumno($alumno_id, $carrera_id, $cuota_numero, $monto_cuota, $estado, $fecha_vencimiento, $fecha_pago, $detalle);
+    $objeto->insertar_cuotas_alumno($alumno_id, $carrera_id, $cuota_numero, $monto_cuota, $estado, $fecha_vencimiento, $detalle);
     //$vencimiento=$nuevafecha;
 
     if ($insertar_cuota_mensual) {
@@ -156,14 +161,19 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
                         <input type="hidden" id="id_persona" name="id_persona">
 
                         <div class="col-md-8 mb-3">
-                            <label class="form-label">Edad</label>
-                            <input name="edad" class="form-control" type="text" tabindex="2" required />
+                            <label class="form-label">fecha Nacimiento</label>
+                            <input name="fecha_nacimiento" class="form-control" type="date" tabindex="2" required />
                         </div>
 
                         <div class="col-md-8 mb-3">
                             <label class="form-label">Grupo Sanguineo</label>
                             <input name="gruposanguineo" class="form-control" type="text" tabindex="2" required />
                         </div>
+
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label">Redes Sociales</label>
+                            <input name="redes_sociales" maxlength="150" class="form-control" type="text" tabindex="2" required />
+                        </div>                        
 
                         <div class="col-md-8 mb-3">
                             <label class="form-label">Carrera o Curso</label>

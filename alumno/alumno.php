@@ -22,7 +22,7 @@ class Alumno
     $consulta = "SELECT
     persona.`apellidonombre` AS apellidonombre,
     persona.`dni` AS dni,
-    alumno.`edad` AS edad,
+    alumno.`fecha_nacimiento` AS fecha_nacimiento,
     alumno.`estado` AS estado,
     carrera.`nombre` AS carrera,
     alumno.`id` AS id
@@ -42,31 +42,34 @@ class Alumno
   }
 
   public function nuevo(
-    $edad,
+    $fecha_nacimiento,
     $gruposanguineo,
     $persona_id,
     $carrera_id,
     $estado,
     $observacion,
-    $fecha_ingreso
+    $fecha_ingreso,
+    $redes_sociales
   ) {
     $sql = "INSERT INTO `alumno`
     (
-     `edad`,
+     `fecha_nacimiento`,
      `gruposanguineo`,
      `persona_id`,
      `carrera_id`,
      `estado`,
      `observacion`,
-     `fecha_ingreso`)
+     `fecha_ingreso`,
+     `redes_sociales`
+     )
       VALUES (
-      '$edad',
+      '$fecha_nacimiento',
       '$gruposanguineo',
       '$persona_id',
       '$carrera_id',
       '$estado',
       '$observacion',
-      '$fecha_ingreso');";
+      '$fecha_ingreso','$redes_sociales');";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
 
     $alumno_id = mysqli_insert_id(conexion::obtenerInstancia());
@@ -89,11 +92,11 @@ class Alumno
     return $data;
   }
 
-  public function editar($id, $edad, $gruposanguineo, $carrera_id, $estado)
+  public function editar($id, $fecha_nacimiento, $gruposanguineo, $carrera_id, $estado)
   {
     $sql = "UPDATE `alumno`
     SET 
-      `edad` = '$edad',
+      `fecha_nacimiento` = '$fecha_nacimiento',
       `gruposanguineo` = '$gruposanguineo',
       `carrera_id` = '$carrera_id',
       `estado` = '$estado'
@@ -110,7 +113,7 @@ class Alumno
     $sql = "SELECT
     persona.`apellidonombre` AS apellidonombre,
     persona.`dni` AS dni,
-    alumno.`edad` AS edad,
+    alumno.`fecha_nacimiento` AS fecha_nacimiento,
     alumno.`gruposanguineo` AS gruposanguineo,
     alumno.`estado` AS estado,
     carrera.`nombre` AS carrera,

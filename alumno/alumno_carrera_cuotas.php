@@ -67,6 +67,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                         <thead class="thead-light">
                             <tr>
                                 <th>Detalle</th>
+                                <th>Vencimiento</th>
                                 <th>Monto</th>
                                 <th>Saldo</th>
                                 <th>Estado</th>
@@ -87,6 +88,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                             ?>
                                 <tr>
                                     <td><?php echo $item['detalle']; ?></td>
+                                    <td><?php $fecha_venc = new DateTime($item['fecha_vencimiento']); $fechaFormateada = $fecha_venc->format('d/m/Y'); echo $fechaFormateada; ?></td>
                                     <td><?php echo $item['monto']; ?></td>
                                     <td><?php echo $saldoitem['saldo']; ?></td>
                                     <td><?php echo $item['estado']; ?></td>
