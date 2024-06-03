@@ -105,17 +105,13 @@ VALUES (
   }
 
   // 26052024 cerrar caja y hacer los depositos  
-  public function cerrarcaja($id, $fecha_apertura, $ingreso_total, $egreso_total, $fecha_cierre, $estado, $saldo,$saldo_efectivo, $saldo_virtual
+  public function cerrarcaja($id, $fecha_cierre, $estado, $saldo_efectivo, $saldo_virtual
   ,$dep_caja_fuerte,$dep_banco,$dep_mp,$dep_proxima_caja)
   {
     $sql = "UPDATE `caja`
     SET 
-      `fecha_apertura` = '$fecha_apertura',
-      `ingreso_total` = '$ingreso_total',
-      `egreso_total` = '$egreso_total',
       `fecha_cierre` = '$fecha_cierre',
       `estado` = '$estado',
-      `saldo` = '$saldo',
       `saldo_efectivo` = '$saldo_efectivo',
       `saldo_virtual` = '$saldo_virtual',
       `dep_caja_fuerte` = '$dep_caja_fuerte',
