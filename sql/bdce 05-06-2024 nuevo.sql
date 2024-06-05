@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-06-2024 a las 14:23:45
+-- Tiempo de generación: 05-06-2024 a las 16:30:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -250,9 +250,10 @@ INSERT INTO `detalle_permiso` (`id`, `rela_permiso`, `rela_usuario`) VALUES
 (30, 6, 1),
 (31, 7, 1),
 (32, 1, 1),
-(50, 6, 2),
-(51, 7, 2),
-(52, 5, 2);
+(81, 3, 2),
+(82, 6, 2),
+(83, 7, 2),
+(84, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -688,7 +689,7 @@ ALTER TABLE `carrera_precios`
 -- AUTO_INCREMENT de la tabla `detalle_permiso`
 --
 ALTER TABLE `detalle_permiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT de la tabla `docente`

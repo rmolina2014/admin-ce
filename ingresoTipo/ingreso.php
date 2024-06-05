@@ -2,6 +2,22 @@
 include_once("../bd/conexion.php");
 class Ingreso
 {
+  
+public function permiso(
+    $id,
+    $permiso  
+  ) {
+    $sql = "SELECT p.*, d.* FROM permiso p INNER JOIN detalle_permiso d ON p.id = d.rela_permiso WHERE d.rela_usuario = $id AND p.nombre = '$permiso'";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+
+    $existe = mysqli_num_rows($rs);
+
+    // retornar 0 o un registro
+
+    return $existe;
+  }
+
+
   public function obtenerUsuario($usuario)
   {
     $consulta = "SELECT * FROM usuario where usuario='$usuario'";

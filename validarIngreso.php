@@ -20,10 +20,9 @@ if ($_POST['usuario']) {
         // incia sessiones
         session_start();
         $_SESSION['sesion_usuario'] = $item['usuario'];
-        $usuario_id = $_SESSION['sesion_id'] = $item['id'];
-        //$_SESSION['sesion_nombre'] = $item['apellido_nombre'];
-        //$_SESSION['sesion_permisos'] = $item['id_perfil'];
-        //$_SESSION['sesion_empresa'] = $item['empresa_id'];
+        //$usuario_id = $_SESSION['sesion_id'] = $item['id'];
+        $_SESSION['sesion_id'] = $item['id'];
+
         // var_dump($_SESSION);
         // exit;
 

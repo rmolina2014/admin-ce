@@ -12,9 +12,7 @@ if ($permisos == 0 && $ID != 1) {
 }
 //FIN VALIDACION PERMISOS
 
-
-
-$objeto = new Caja();
+//$objeto = new Caja();
 
 ?>
 <div id="main">

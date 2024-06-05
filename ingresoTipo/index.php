@@ -2,6 +2,17 @@
 include ("../cabecera.php");
 include ("../menu.php");
 include ("ingreso.php");
+//PERMISOS
+$permiso = new Ingreso();
+$permisos = $permiso->permiso($ID,'TIPO INGRESO');
+if ($permisos == 0 && $ID != 1) {
+   $mensaje = "¡No tiene permisos para entrar a este modulo!";
+    echo "<script type='text/javascript'>alert('$mensaje'); window.location.href = '../panelcontrol/index.php';</script>";
+    exit();
+}
+//FIN VALIDACION PERMISOS
+
+
 ?>
 <div id="main">
   <header class="mb-3">
@@ -20,6 +31,7 @@ include ("ingreso.php");
         <div class="col-12 col-md-6 order-md-2 order-first">
           <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
             <ol class="breadcrumb">
+              <li class="breadcrumb-item"><?php echo "Usuario : " . $USUARIO; ?></li>
               <li class="breadcrumb-item"><a href="../panelcontrol/index.php">Panel de Control</a></li>
               <li class="breadcrumb-item active" aria-current="page">Tipos de Ingresos</li>
             </ol>

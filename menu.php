@@ -150,6 +150,13 @@
           </a>
         </li>
 
+        <li class="sidebar-item ">
+          <a href="../salir.php" class="sidebar-link">
+            <i class="bi bi-grid-fill"></i>
+            <span>Salir</span>
+          </a>
+        </li>        
+
         <!--fin menu-->
 
       </ul>
