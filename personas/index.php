@@ -1,8 +1,30 @@
 <?php
+session_start();
+
+// Verificar si el usuario está autenticado
+if (!isset($_SESSION['sesion_usuario']) || !isset($_SESSION['sesion_id'])) {
+    // Si no hay datos de sesión, redirigir al formulario de inicio de sesión
+    header('Location: ../index.php');
+    exit;
+}
+
+// Obtener los datos de la sesión
+$USUARIO = $_SESSION['sesion_usuario'];
+$ID = $_SESSION['sesion_id'];
+
 //session_start();
 include("../cabecera.php");
 include("../menu.php");
 include("persona.php");
+//PERMISOS
+$permiso = new Persona();
+$permisos = $permiso->permiso($ID,'PERSONAS');
+if ($permisos == 0 && $ID != 1) {
+   $mensaje = "¡No tiene permisos para entrar al modulo de Personas!";
+    echo "<script type='text/javascript'>alert('$mensaje'); window.location.href = '../panelcontrol/index.php';</script>";
+    exit();
+}
+//FIN VALIDACION PERMISOS
 ?>
 <div id="main">
     <header class="mb-3">

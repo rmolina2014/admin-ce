@@ -1,5 +1,5 @@
 <?php
-// session_start();
+session_start();
 include("../cabecera.php");
 include("../menu.php");
 ?>
@@ -22,7 +22,7 @@ include("../menu.php");
 
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><?php echo "Usuario : " . $USUARIO; ?></li>
+                            <li class="breadcrumb-item"><?php echo "Usuario : " . $_SESSION['sesion_usuario']; ?></li>
                         </ol>
                     </nav>
 
