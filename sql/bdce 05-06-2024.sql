@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-06-2024 a las 00:51:59
+-- Tiempo de generación: 05-06-2024 a las 14:23:45
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -246,7 +246,13 @@ CREATE TABLE `detalle_permiso` (
 --
 
 INSERT INTO `detalle_permiso` (`id`, `rela_permiso`, `rela_usuario`) VALUES
-(23, 1, 1);
+(29, 4, 1),
+(30, 6, 1),
+(31, 7, 1),
+(32, 1, 1),
+(50, 6, 2),
+(51, 7, 2),
+(52, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -462,7 +468,13 @@ CREATE TABLE `permiso` (
 --
 
 INSERT INTO `permiso` (`id`, `nombre`) VALUES
+(3, 'ALUMNOS'),
+(4, 'CAJA'),
+(6, 'CURSOS'),
+(7, 'EGRESOS'),
+(5, 'OTROS INGRESOS'),
 (2, 'PERSONAS'),
+(8, 'TIPOS EGRESOS'),
 (1, 'USUARIOS');
 
 -- --------------------------------------------------------
@@ -498,7 +510,8 @@ INSERT INTO `persona` (`id`, `apellidonombre`, `dni`, `domicilio`, `cel1`, `cel2
 (40, 'si anda', 22705506, 'no lo se', '', '', ''),
 (41, 'perez toadeo', 123456, 'sdfsdfsdfsdf', '', '', ''),
 (42, 'perz danilo', 22705508, 'sdfsdfsdfsd', '', '', ''),
-(43, 'josefa fff', 21705501, 'dfgfdgdfgfdg', '', '', '');
+(43, 'josefa fff', 21705501, 'dfgfdgdfgfdg', '', '', ''),
+(44, 'Antonia', 47903403, 'rivadavia', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -511,15 +524,17 @@ CREATE TABLE `usuario` (
   `rela_persona` int(11) NOT NULL,
   `usuario` varchar(15) NOT NULL,
   `pass` varchar(255) NOT NULL,
-  `estado` tinyint(1) NOT NULL COMMENT '0 inactivo y 1 activo'
+  `estado` tinyint(1) NOT NULL COMMENT '0 inactivo y 1 activo',
+  `fechaingreso` datetime NOT NULL DEFAULT '2024-01-01 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `rela_persona`, `usuario`, `pass`, `estado`) VALUES
-(1, 21, 'admin', '202cb962ac59075b964b07152d234b70', 1);
+INSERT INTO `usuario` (`id`, `rela_persona`, `usuario`, `pass`, `estado`, `fechaingreso`) VALUES
+(1, 21, 'admin', '202cb962ac59075b964b07152d234b70', 1, '2024-01-01 00:00:00'),
+(2, 44, 'venta', '81d0d58d3b7e35bc6a6f3ad7fc5563af', 1, '2024-06-05 00:00:00');
 
 --
 -- Índices para tablas volcadas
@@ -673,7 +688,7 @@ ALTER TABLE `carrera_precios`
 -- AUTO_INCREMENT de la tabla `detalle_permiso`
 --
 ALTER TABLE `detalle_permiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT de la tabla `docente`
@@ -715,19 +730,19 @@ ALTER TABLE `pagos_parciales`
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
