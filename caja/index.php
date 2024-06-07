@@ -1,34 +1,16 @@
 ﻿<?php
-session_start();
-
-// Verificar si el usuario está autenticado
-if (!isset($_SESSION['sesion_usuario']) || !isset($_SESSION['sesion_id'])) {
-    // Si no hay datos de sesión, redirigir al formulario de inicio de sesión
-   $mensaje = "¡NO estas logeado!";
-    echo "<script type='text/javascript'>alert('$mensaje'); window.location.href = '../panelcontrol/index.php';</script>";
-    exit;
-}else
-{
-     $mensaje = "¡no toma las variables!";
-    echo "<script type='text/javascript'>alert('$mensaje'); window.location.href = '../panelcontrol/index.php';</script>";
-    exit;
-}
-
-// Obtener los datos de la sesión
-$USUARIO = $_SESSION['sesion_usuario'];
-$ID = $_SESSION['sesion_id'];
-
+include("../sesion.php");
 include("../cabecera.php");
 include("../menu.php");
 include("caja.php");
 //PERMISOS
-$permiso = new Caja();
-$permisos = $permiso->permiso($ID,'CAJA');
-if ($permisos == 0 && $ID != 1) {
-   $mensaje = "¡No tiene permisos para entrar a este modulo!";
-    echo "<script type='text/javascript'>alert('$mensaje'); window.location.href = '../panelcontrol/index.php';</script>";
-    exit();
-}
+//$permiso = new Caja();
+//$permisos = $permiso->permiso($ID,'CAJA');
+//if ($permisos == 0 && $ID != 1) {
+//   $mensaje = "¡No tiene permisos para entrar a este modulo!";
+//    echo "<script type='text/javascript'>alert('$mensaje'); window.location.href = '../panelcontrol/index.php';</script>";
+//    exit();
+//}
 //FIN VALIDACION PERMISOS
 
 //$objeto = new Caja();

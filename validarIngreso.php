@@ -1,18 +1,17 @@
 <?php
 error_reporting(E_ALL);
-
 include("bd/conexion.php");
 include("usuarios/usuario.php");
-
-if ($_POST['usuario']) {
+if ($_POST['usuario'])
+ {
   $usuario = conexion::secure_data($_POST['usuario']);
   $password = MD5($_POST['password']);
   //echo $usuario.' '.$password;
   //exit;
   $objecto = new Usuario();
   $usuarios = $objecto->obtenerUsuario($usuario);
-  if ($usuarios) {
-
+  if ($usuarios)
+  {
     foreach ($usuarios as $item) {
       if ($item['pass'] == $password) {
         // crear sesion y guardar datos
@@ -20,11 +19,14 @@ if ($_POST['usuario']) {
         // incia sessiones
         session_start();
         $_SESSION['sesion_usuario'] = $item['usuario'];
-        //$usuario_id = $_SESSION['sesion_id'] = $item['id'];
         $_SESSION['sesion_id'] = $item['id'];
-
-        // var_dump($_SESSION);
-        // exit;
+        
+         //$_SESSION['sesion_nombre'] = $item['apellido_nombre'];
+        //$_SESSION['sesion_permisos'] = $item['id_perfil'];
+        //$_SESSION['sesion_empresa'] = $item['empresa_id'];
+        
+         //var_dump($_SESSION);
+         //exit;
 
         // registro el usuario 
         /*$fecha = date("Y-m-d");
@@ -48,21 +50,19 @@ if ($_POST['usuario']) {
         //preguntar por grupo permiso 1 ver todos los documentos, 2 solos el area
 
 
-        //echo "<script language=Javascript> location.href=\"panelcontrol/index.php\"; </script>";
+        echo "<script language=Javascript> location.href=\"panelcontrol/index.php\"; </script>";
         //exit();
-        header("location: panelcontrol/index.php");
+        //header("location: panelcontrol/index.php");
       } //fin if paswword
       else {
         //echo '<script> alert("Clave Incorrecta."); window.location="index.php"; </script>'; //Password incorrecto';
         echo '<script> window.location="index.php?mensaje=1";</script>'; //Password incorrecto';
-        //header("location:index.php");
         exit();
       }
     } //fin del forech
   }
   //echo '<script> alert("Usuario Incorrecto."); window.location="index.php";</script>'; //Password incorrecto';
   echo '<script> window.location="index.php?mensaje=1";</script>'; //Password incorrecto';
-  //header("location:index.php");
   exit();
 }
 echo '<script> alert("Datos Incorrecto final."); window.location="index.php";</script>'; //Password incorrecto'

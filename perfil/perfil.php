@@ -21,7 +21,7 @@ class Perfil
     $consulta = "SELECT
     persona.`apellidonombre` AS apellidonombre,
     persona.`dni` AS dni,
-    alumno.`edad` AS edad,
+    alumno.`fecha_nacimiento` AS fecha_nacimiento,
     alumno.`estado` AS estado,
     carrera.`nombre` AS carrera,
     alumno.`id` AS id,

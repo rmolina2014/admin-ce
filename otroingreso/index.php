@@ -1,7 +1,18 @@
 ﻿<?php
+include("../sesion.php");
 include("../cabecera.php");
 include("../menu.php");
 include("ingreso.php");
+//PERMISOS
+$permiso = new Ingreso();
+$permisos = $permiso->permiso($ID,'OTROS INGRESOS');
+if ($permisos == 0 && $ID != 1) {
+   $mensaje = "¡No tiene permisos para entrar a este modulo!";
+    echo "<script type='text/javascript'>alert('$mensaje'); window.location.href = '../panelcontrol/index.php';</script>";
+    exit();
+}
+//FIN VALIDACION PERMISOS
+
 ?>
 <div id="main">
   <header class="mb-3">
