@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-06-2024 a las 16:30:53
+-- Tiempo de generación: 07-06-2024 a las 16:29:58
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,10 +44,10 @@ CREATE TABLE `alumno` (
 --
 
 INSERT INTO `alumno` (`id`, `fecha_nacimiento`, `gruposanguineo`, `persona_id`, `carrera_id`, `estado`, `observacion`, `fecha_ingreso`, `redes_sociales`) VALUES
-(20, '0000-00-00', 'rh+', 2, 1, 'Activo', 'curso de asistente', '2024-05-29', ''),
+(20, '2024-06-07', 'rh+', 2, 0, 'Activo', 'curso de asistente', '2024-05-29', ''),
 (21, '0000-00-00', 'rh+', 21, 3, 'Activo', '', '2024-05-30', ''),
 (22, '0000-00-00', 'rh+', 21, 2, 'Activo', '', '2024-05-30', ''),
-(25, '2007-06-03', 'rh+', 37, 1, 'Activo', '', '2024-06-04', 'asdasdasd@facebook'),
+(25, '2007-06-03', 'rh++++', 37, 1, 'Activo', '', '2024-06-04', 'asdasdasd@facebook e instagram'),
 (29, '2024-06-03', 'rh+', 38, 4, 'Activo', '', '2024-06-04', 'asdasdasd@facebook');
 
 -- --------------------------------------------------------
@@ -250,10 +250,10 @@ INSERT INTO `detalle_permiso` (`id`, `rela_permiso`, `rela_usuario`) VALUES
 (30, 6, 1),
 (31, 7, 1),
 (32, 1, 1),
-(81, 3, 2),
-(82, 6, 2),
-(83, 7, 2),
-(84, 5, 2);
+(149, 3, 2),
+(150, 7, 2),
+(151, 5, 2),
+(152, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -689,7 +689,7 @@ ALTER TABLE `carrera_precios`
 -- AUTO_INCREMENT de la tabla `detalle_permiso`
 --
 ALTER TABLE `detalle_permiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
 
 --
 -- AUTO_INCREMENT de la tabla `docente`
