@@ -1,17 +1,5 @@
-﻿<?php
-session_start();
-
-// Verificar si el usuario está autenticado
-if (!isset($_SESSION['sesion_usuario']) || !isset($_SESSION['sesion_id'])) {
-    // Si no hay datos de sesión, redirigir al formulario de inicio de sesión
-    header('Location: ../index.php');
-    exit;
-}
-
-// Obtener los datos de la sesión
-$USUARIO = $_SESSION['sesion_usuario'];
-$ID = $_SESSION['sesion_id'];
-
+<?php
+include("../sesion.php");
 include("../cabecera.php");
 include("../menu.php");
 include("egreso.php");

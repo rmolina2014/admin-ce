@@ -1,9 +1,10 @@
 <?php
+session_start();
 error_reporting(E_ALL);
 include("bd/conexion.php");
 include("usuarios/usuario.php");
 if ($_POST['usuario'])
- {
+{
   $usuario = conexion::secure_data($_POST['usuario']);
   $password = MD5($_POST['password']);
   //echo $usuario.' '.$password;
@@ -17,7 +18,7 @@ if ($_POST['usuario'])
         // crear sesion y guardar datos
         //session_name("sesion_sj2023");
         // incia sessiones
-        session_start();
+        
         $_SESSION['sesion_usuario'] = $item['usuario'];
         $_SESSION['sesion_id'] = $item['id'];
         
@@ -49,10 +50,9 @@ if ($_POST['usuario'])
 */
         //preguntar por grupo permiso 1 ver todos los documentos, 2 solos el area
 
-
         echo "<script language=Javascript> location.href=\"panelcontrol/index.php\"; </script>";
         //exit();
-        //header("location: panelcontrol/index.php");
+        
       } //fin if paswword
       else {
         //echo '<script> alert("Clave Incorrecta."); window.location="index.php"; </script>'; //Password incorrecto';

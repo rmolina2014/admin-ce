@@ -1,20 +1,8 @@
-﻿<?php
+<?php
 include("../sesion.php");
 include("../cabecera.php");
 include("../menu.php");
 include("caja.php");
-//PERMISOS
-//$permiso = new Caja();
-//$permisos = $permiso->permiso($ID,'CAJA');
-//if ($permisos == 0 && $ID != 1) {
-//   $mensaje = "¡No tiene permisos para entrar a este modulo!";
-//    echo "<script type='text/javascript'>alert('$mensaje'); window.location.href = '../panelcontrol/index.php';</script>";
-//    exit();
-//}
-//FIN VALIDACION PERMISOS
-
-//$objeto = new Caja();
-
 ?>
 <div id="main">
   <header class="mb-3">

@@ -1,4 +1,6 @@
-﻿<?php
+<?php
+
+include("../sesion.php");
 include("../cabecera.php");
 include("../menu.php");
 include("carrera.php");
