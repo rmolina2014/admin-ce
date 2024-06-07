@@ -61,14 +61,18 @@
                </div>
 
                <div class="col-md-8 mb-3">
-                 <label class="form-label">Edad</label>
-                 <input name="edad" class="form-control" type="text" tabindex="2" required value="<?php echo $item['edad']; ?>" />
+                 <label class="form-label">Fecha nacimiento</label>
+                 <input name="fecha_nacimiento" class="form-control" type="date" tabindex="2" required value="<?php echo $item['fecha_nacimiento']; ?>" />
                </div>
 
                <div class="col-md-8 mb-3">
                  <label class="form-label">Grupo Sanguineo</label>
                  <input name="gruposanguineo" class="form-control" type="text" tabindex="2" required value="<?php echo $item['gruposanguineo']; ?>"/>
                </div>
+               <div class="col-md-8 mb-3">
+                 <label class="form-label">Redes Sociales</label>
+                 <input name="redes_sociales" class="form-control" type="text" tabindex="2" required value="<?php echo $item['redes_sociales']; ?>"/>
+               </div>               
 
                <div class="col-md-8 mb-3">
                  <label class="form-label">Curso</label>
@@ -118,19 +122,20 @@
       }
        include("../pie.php");
       } else {
-        if (isset($_POST['edad']) && !empty($_POST['edad']))
+        if (isset($_POST['alumno_id']) && !empty($_POST['alumno_id']))
         {
           //   $nInscripcion,$nombre,$dni,$curso,$horario,$sucursal,$email,$observacion,$otros,$idCurso
-          $edad = $_POST['edad'];
+          $fecha_nacimiento = $_POST['fecha_nacimiento'];
           $carrera_id = $_POST['carrera_id'];
           $gruposanguineo = $_POST['gruposanguineo'];
           $alumno_id = $_POST['alumno_id'];
           $estado = $_POST['estado'];
+          $redes_sociales = $_POST['redes_sociales'];
 
           //$fechaingreso = date("Y-m-d");
           //$estado = 'Activo';
 
-          $todobien = $objeto->editar($alumno_id, $edad, $gruposanguineo, $carrera_id, $estado);
+          $todobien = $objeto->editar($alumno_id, $fecha_nacimiento, $gruposanguineo,$redes_sociales, $estado);
           if ($todobien) {
             echo "<script language=Javascript> location.href=\"index.php\"; </script>";
             //header('Location: listado.php');
@@ -139,7 +144,7 @@
           ?>
            <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
              <button data-dismiss="alert" class="close" type="button">×</button>
-             Lo sentimos, no se pudo guardar ...
+             Lo sentimos, no se pudo guardar los datos del alumno ...
            </div>
           <?php
           }

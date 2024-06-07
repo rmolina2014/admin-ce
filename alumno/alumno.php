@@ -109,13 +109,13 @@ public function permiso(
     return $data;
   }
 
-  public function editar($id, $fecha_nacimiento, $gruposanguineo, $carrera_id, $estado)
+  public function editar($id, $fecha_nacimiento, $gruposanguineo,$redes_sociales,  $estado)
   {
     $sql = "UPDATE `alumno`
     SET 
       `fecha_nacimiento` = '$fecha_nacimiento',
       `gruposanguineo` = '$gruposanguineo',
-      `carrera_id` = '$carrera_id',
+      `redes_sociales` = '$redes_sociales',
       `estado` = '$estado'
        WHERE `id` = '$id'";
 
@@ -132,6 +132,7 @@ public function permiso(
     persona.`dni` AS dni,
     alumno.`fecha_nacimiento` AS fecha_nacimiento,
     alumno.`gruposanguineo` AS gruposanguineo,
+    alumno.`redes_sociales` AS redes_sociales,
     alumno.`estado` AS estado,
     carrera.`nombre` AS carrera,
     carrera.`id` AS carrera_id,
