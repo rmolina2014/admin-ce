@@ -1,8 +1,9 @@
- <?php
-  include("../cabecera.php");
-  include("../menu.php");
-  include("ingreso.php");
-  include("../caja/caja.php");
+<?php
+include("../sesion.php"); 
+include("../cabecera.php");
+include("../menu.php");
+include("ingreso.php");
+include("../caja/caja.php");
   $objeto = new Ingreso();
   $caja = new Caja();
 

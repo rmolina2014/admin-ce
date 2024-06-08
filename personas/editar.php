@@ -1,7 +1,8 @@
- <?php
- include("../cabecera.php");
- include("../menu.php");
- include("persona.php");
+<?php
+include("../sesion.php");
+include("../cabecera.php");
+include("../menu.php");
+include("persona.php");
 
  $objeto = new Persona();
  if( isset($_POST['id']) && !empty($_POST['id']) )

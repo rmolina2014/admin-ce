@@ -1,7 +1,8 @@
- <?php
- include("../cabecera.php");
- include("../menu.php");
- include("egreso.php");
+<?php
+include("../sesion.php");
+include("../cabecera.php");
+include("../menu.php");
+include("egreso.php");
 
  $objeto = new Egreso();
  if( isset($_POST['id']) && !empty($_POST['id']) )
