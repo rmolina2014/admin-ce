@@ -22,7 +22,7 @@
 
         <div id="auth-left">
           <div style="text-align: center;">
-          <img src="../admin-ce/assets/logo/logocegrande.jpeg" alt="Logo" height="150px" width="150px" />
+          <img src="../sanjuan/assets/logo/logocegrande.jpeg" alt="Logo" height="150px" width="150px" />
           </div>
 
           <div class="auth-logo">
