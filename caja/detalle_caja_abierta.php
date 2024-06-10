@@ -62,19 +62,15 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                 <thead>
                                                 <tbody>
                                                     <?php
-
                                                     $sub_total_virtual = 0;
                                                     $sub_total_efectivo = 0;
-
                                                     $ingresos = $objeto->listadoIngresos($caja_id);
                                                     foreach ($ingresos as $item) {
-
                                                         if ($item['tipo_pago'] == "VIRTUAL") {
                                                             $sub_total_virtual = $sub_total_virtual + $item['monto'];
                                                         } else {
                                                             $sub_total_efectivo = $sub_total_efectivo + $item['monto'];
                                                         }
-
                                                     ?>
                                                         <tr>
                                                             <td>
@@ -122,11 +118,9 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                 <div class="card-body">
 
                                 </div>
-
                                 <!-- Table with outer spacing -->
                                 <div class="table-responsive">
                                     <table class="table table-lg">
-
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>N°</th>
@@ -305,10 +299,11 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
 
                                     <div class="card-content">
                                         <div class="card-body">
-                                            <form class="form form-vertical" method="$_POST" action="cerrarcaja.php">
-                                            <input type="hidden" name="caja_id" value="<?php echo $caja_id; ?>">
-                                                <input type="hidden" name="ingreso_total" value="<?php echo $ingreso_total; ?>">
-                                                <input type="hidden" name="egreso_total" value="<?php echo $egreso_total; ?>">
+                                            <form class="form form-vertical" method="POST" action="cerrarcaja.php">
+                                                <input type="hidden" name="caja_id" value="<?php echo $caja_id; ?>">
+                                                <input type="hidden" name="saldo" value="<?php echo $saldo; ?>">
+                                                <input type="hidden" name="ingreso_total" value="<?php echo $total_ingreso; ?>">
+                                                <input type="hidden" name="egreso_total" value="<?php echo $total_egreso; ?>">
                                                 <input type="hidden" name="saldo_efectivo" value="<?php echo $sub_total_efectivo; ?>">
                                                 <input type="hidden" name="saldo_virtual" value="<?php echo $sub_total_virtual; ?>">
                                                 <!--input type="hidden" name="dep_caja_fuerte" value="<?php echo $dep_caja_fuerte; ?>">

@@ -3,9 +3,9 @@ include_once("../bd/conexion.php");
 class Caja
 {
 
-public function permiso(
+  public function permiso(
     $id,
-    $permiso  
+    $permiso
   ) {
     $sql = "SELECT p.*, d.* FROM permiso p INNER JOIN detalle_permiso d ON p.id = d.rela_permiso WHERE d.rela_usuario = $id AND p.nombre = '$permiso'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
@@ -93,7 +93,7 @@ public function permiso(
   }
 
 
-  public function nuevo($fecha_apertura, $ingreso_total, $egreso_total, $fecha_cierre, $estado, $saldo)
+  public function abrircaja($fecha_apertura, $ingreso_total, $egreso_total, $fecha_cierre, $estado, $saldo)
   {
     $sql = "INSERT INTO `caja`
             (
@@ -119,9 +119,17 @@ VALUES (
   }
 
   // 26052024 cerrar caja y hacer los depositos  
-  public function cerrarcaja($id, $fecha_cierre, $estado, $saldo_efectivo, $saldo_virtual
-  ,$dep_caja_fuerte,$dep_banco,$dep_mp,$dep_proxima_caja)
-  {
+  public function cerrarcaja(
+    $id,
+    $fecha_cierre,
+    $estado,
+    $saldo_efectivo,
+    $saldo_virtual,
+    $dep_caja_fuerte,
+    $dep_banco,
+    $dep_mp,
+    $dep_proxima_caja
+  ) {
     $sql = "UPDATE `caja`
     SET 
       `fecha_cierre` = '$fecha_cierre',
@@ -322,5 +330,35 @@ FROM
       }
     }
     return $data;
+  }
+
+  // 09062024 insertar ingreso inocial de caja
+  public function insertar_ingreso(
+    $monto,
+    $fecha_ingreso,
+    $caja_id,
+    $usuario_id,
+    $ingreso_tipo_id
+  ) {
+    $sql = "INSERT INTO `ingreso`
+    (`monto`,
+     `fecha_ingreso`,
+     `caja_id`,
+     `usuario_id`,
+     `ingreso_tipo_id`)
+      VALUES ('$monto',
+      '$fecha_ingreso',
+      '$caja_id',
+      '$usuario_id',
+      '$ingreso_tipo_id'
+      );";
+    //echo $sql;
+    //exit;
+    $rs = mysqli_query(
+      conexion::obtenerInstancia(),
+      $sql
+    );
+    //$rs = mysqli_insert_id(conexion::obtenerInstancia());
+    return $rs;
   }
 }

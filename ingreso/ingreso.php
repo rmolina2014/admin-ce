@@ -1,5 +1,5 @@
 <?php
-include_once ("../bd/conexion.php");
+include_once("../bd/conexion.php");
 class Ingreso
 {
   public function obtenerUsuario($usuario)
@@ -17,7 +17,7 @@ class Ingreso
 
   public function lista()
   {
-    $data=array();
+    $data = array();
     $consulta = "SELECT
     ingreso.`caja_id` AS caja_id,
     ingreso.`fecha_ingreso` AS fecha_ingreso,
@@ -99,7 +99,6 @@ class Ingreso
       }
     }
     return $data;
-
   }
 
   //lista las materias

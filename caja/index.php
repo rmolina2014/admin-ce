@@ -1,18 +1,8 @@
-<?php
+﻿<?php
 include("../sesion.php");
 include("../cabecera.php");
 include("../menu.php");
 include("caja.php");
-//PERMISOS
-$permiso = new Caja();
-$permisos = $permiso->permiso($ID,'CAJA');
-if ($permisos == 0 && $ID != 1) {
-   $mensaje = "¡No tiene permisos para entrar a este modulo!";
-    echo "<script type='text/javascript'>alert('$mensaje'); window.location.href = '../panelcontrol/index.php';</script>";
-    exit();
-}
-//FIN VALIDACION PERMISOS
-
 ?>
 <div id="main">
   <header class="mb-3">
@@ -71,14 +61,28 @@ if ($permisos == 0 && $ID != 1) {
                 $usuarios = $objeto->lista();
                 foreach ($usuarios as $item) {
 
-                $totalcajaingreso = $objeto->totalesIngresoCaja($item['id']);
-                foreach ($totalcajaingreso as $totalesingresocaja) {}
+                  $totalcajaingreso = $objeto->totalesIngresoCaja($item['id']);
+                  foreach ($totalcajaingreso as $totalesingresocaja) {
+                  }
 
-                $totalcajaegreso = $objeto->totalesEgresoCaja($item['id']);
-                foreach ($totalcajaegreso as $totalesegresocaja) {} 
+                  $totalcajaegreso = $objeto->totalesEgresoCaja($item['id']);
 
-                $saldo = $totalesingresocaja['totalingresos'] - $totalesegresocaja['totalegresos'];                
-                $saldo = number_format($saldo, 2, ',', '.');
+                  if (is_int($totalcajaegreso)) {
+                    $totalcajaegreso=0;
+                  }
+                  
+
+
+
+
+
+
+
+                  foreach ($totalcajaegreso as $totalesegresocaja) {
+                  }
+
+                  $saldo = $totalesingresocaja['totalingresos'] - $totalesegresocaja['totalegresos'];
+                  $saldo = number_format($saldo, 2, ',', '.');
 
                 ?>
                   <tr>
