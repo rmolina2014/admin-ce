@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 include("bd/conexion.php");
 include("usuarios/usuario.php");
 if ($_POST['usuario'])

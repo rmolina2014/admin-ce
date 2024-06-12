@@ -20,7 +20,20 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id']))
 
   // cerrar caja
   $objecto = new Caja();
-  $todobien = $objecto->cerrarcaja($caja_id,$ingreso_total,$egreso_total,$fecha_cierre,'Cerrado',$saldo,$saldo_efectivo,$saldo_virtual,$dep_caja_fuerte,$dep_banco,$dep_mp,$dep_proxima_caja);
+
+  /*
+     $id,
+    $fecha_cierre,
+    $estado,
+    $saldo_efectivo,
+    $saldo_virtual,
+    $dep_caja_fuerte,
+    $dep_banco,
+    $dep_mp,
+    $dep_proxima_caja
+   */
+
+  $todobien = $objecto->cerrarcaja($caja_id,$fecha_cierre,'Cerrado', $saldo_efectivo, $saldo_virtual,$dep_caja_fuerte,$dep_banco,$dep_mp,$dep_proxima_caja);
   if ($todobien) {
     
     // abrir proxima caja

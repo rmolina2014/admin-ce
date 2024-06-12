@@ -314,7 +314,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                 <div class="form-body">
                                                     <div class="row">
                                                         <div class="col-12">
-                                                            <div class="form-group">
+                                                            <div class="form-group " style="font-size: 18px;">
                                                                 <label for="first-name-vertical">Efectivo $ <?php echo number_format($sub_total_efectivo, 2, ',', '.'); ?></label>
                                                                 <br>
                                                                 <label for="">Virtual $ <?php echo number_format($sub_total_virtual, 2, ',', '.'); ?> </label>
@@ -325,19 +325,19 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label for="email-id-vertical">Caja Fuerte</label>
-                                                                <input type="number" id="dep_caja_fuerte" name="dep_caja_fuerte" class="form-control sumando" placeholder="Ejemplo : 156.23">
+                                                                <input type="number" id="dep_caja_fuerte" name="dep_caja_fuerte" class="form-control sumando moneda" placeholder="Ejemplo : 156.23">
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label for="contact-info-vertical">Banco</label>
-                                                                <input type="number" class="form-control sumando" id="dep_banco" name="dep_banco" placeholder="Ej: 56.20">
+                                                                <input type="number" class="form-control sumando moneda" id="dep_banco" name="dep_banco" placeholder="Ej: 56.20">
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label for="password-vertical">Mercado Pago</label>
-                                                                <input type="number" class="form-control sumando" id="dep_mp" name="dep_mp" placeholder="Ej: 893.29">
+                                                                <input type="number" class="form-control sumando moneda" id="dep_mp" name="dep_mp" placeholder="Ej: 893.29">
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
@@ -368,8 +368,12 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
     include("../pie.php");
         ?>
         <script src="../assets/js/jquery-3.6.3.min.js"></script>
+
         <script type="text/javascript">
             $(document).ready(function() {
+
+
+
 
                 let dep_caja_fuerte = 0;
                 let dep_banco = 0;

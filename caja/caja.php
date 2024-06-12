@@ -33,36 +33,41 @@ class Caja
 
   public static function totalesIngresoCaja($idcaja)
   {
-    $data[] = 0;
+    $totalIngresos = 0;
+
     $sql = "SELECT
     sum(ingreso.monto) as totalingresos
     FROM
         `ingreso`
             WHERE `ingreso`.`caja_id`='$idcaja'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
-        $data[] = $fila;
-      }
+        $totalIngresos += $fila['totalingresos']; // Add the income amount to the total
+        }
     }
-    return $data;
+
+    return $totalIngresos;
   }
 
   public static function totalesEgresoCaja($idcaja)
   {
-    $data[] = 0;
+    $totalEgreso = 0;
     $sql = "SELECT
-    sum(egreso.monto) as totalegresos
+    sum(egreso.monto) as totalegreso
     FROM
         `egreso`
             WHERE `egreso`.`caja_id`='$idcaja'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
-        $data[] = $fila;
-      }
+        $totalEgreso += $fila['totalegreso']; // Add the income amount to the total
+        }
     }
-    return $data;
+
+    return $totalEgreso;
   }
 
   public function obtenerUsuario($usuario)

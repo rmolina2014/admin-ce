@@ -60,28 +60,19 @@ include("caja.php");
                 $objeto = new Caja();
                 $usuarios = $objeto->lista();
                 foreach ($usuarios as $item) {
-
                   $totalcajaingreso = $objeto->totalesIngresoCaja($item['id']);
-                  foreach ($totalcajaingreso as $totalesingresocaja) {
-                  }
-
                   $totalcajaegreso = $objeto->totalesEgresoCaja($item['id']);
 
-                  if (is_int($totalcajaegreso)) {
-                    $totalcajaegreso=0;
-                  }
-                  
-
-
-
-
-
-
-
-                  foreach ($totalcajaegreso as $totalesegresocaja) {
+                  /*if (!is_int($totalcajaegreso)) {
+                    $totalcajaegreso = 0;
                   }
 
-                  $saldo = $totalesingresocaja['totalingresos'] - $totalesegresocaja['totalegresos'];
+                  if (!is_float($totalcajaingreso)) {
+                    $totalcajaingreso = 0;
+                  }*/
+
+                  // $saldo = $totalesingresocaja['totalingresos'] - $totalesegresocaja['totalegresos'];
+                  $saldo = $totalcajaingreso - $totalcajaegreso;
                   $saldo = number_format($saldo, 2, ',', '.');
 
                 ?>
@@ -93,10 +84,10 @@ include("caja.php");
                       <?php echo $item['fecha_apertura']; ?>
                     </td>
                     <td>
-                      <?php echo number_format($totalesingresocaja['totalingresos'], 2, ',', '.'); ?>
+                      <?php echo number_format($totalcajaingreso, 2, ',', '.'); ?>
                     </td>
                     <td>
-                      <?php echo number_format($totalesegresocaja['totalegresos'], 2, ',', '.'); ?>
+                      <?php echo number_format($totalcajaegreso, 2, ',', '.'); ?>
                     </td>
                     <td>
                       <?php echo $item['fecha_cierre']; ?>
