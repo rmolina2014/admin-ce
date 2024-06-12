@@ -45,7 +45,7 @@ class Caja
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
         $totalIngresos += $fila['totalingresos']; // Add the income amount to the total
-        }
+      }
     }
 
     return $totalIngresos;
@@ -64,7 +64,7 @@ class Caja
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
         $totalEgreso += $fila['totalegreso']; // Add the income amount to the total
-        }
+      }
     }
 
     return $totalEgreso;
@@ -255,7 +255,8 @@ VALUES (
   // listado de ingresos
   public function listadoIngresos($caja_id)
   {
-    $consulta = "SELECT
+  $data=[];
+     $consulta = "SELECT
     ingreso.id,
     ingreso.monto,
     ingreso.fecha_ingreso,
@@ -272,6 +273,7 @@ VALUES (
   FROM `ingreso`,`persona`,`alumno`
   WHERE `caja_id`=$caja_id and ingreso.alumno_id=alumno.id and alumno.persona_id=persona.id 
   order by ingreso.id desc;";
+  
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
@@ -281,9 +283,10 @@ VALUES (
     return $data;
   }
 
-  // listado de ingresos
+  // listado de egresos
   public function listadoEgresos($caja_id)
   {
+    $data = [];
     $consulta = "SELECT
     egreso.`id` AS id,
 egreso.`caja_id` AS caja_id,
