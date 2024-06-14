@@ -146,7 +146,7 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
 
               <div class="col-md-8 mb-3">
                 <label class="form-label">Monto</label>
-                <input name="monto" id="monto" class="form-control" type="monto" onkeypress="return soloNumeros(event);" required  />
+                <input name="monto" id="monto" class="form-control" type="text" oninput="return soloNumeros(event);" required  />
               </div>
 
 

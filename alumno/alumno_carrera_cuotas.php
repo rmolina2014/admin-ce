@@ -100,7 +100,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                         ?>
                                             <form action="pago_total.php" method="POST">
                                                 <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
-                                                <button class="btn btn-outline-primary" type="submit">Pago Total </button>
+                                                <button class="btn btn-outline-primary" type="submit">Pago Total/Parcial </button>
                                             </form>
 
 

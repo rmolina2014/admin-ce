@@ -174,6 +174,7 @@
 
 <script src="../assets/js/jquery-3.6.3.min.js"></script>
 <script src="../assets/js/jquery.validate.min.js"></script>
+<script src="../assets/js/validar.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
 
@@ -192,6 +193,8 @@
          return false;
        }
      }*/
+
+
 
     // buscar por dni 17/03/2024
     $("#buscar_dni_perfil").click(function() {

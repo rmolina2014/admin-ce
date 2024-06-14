@@ -269,9 +269,10 @@ VALUES (
     ingreso.recargo,
     ingreso.origen,
     ingreso.detalle,
-    persona.apellidonombre
-  FROM `ingreso`,`persona`,`alumno`
-  WHERE `caja_id`=$caja_id and ingreso.alumno_id=alumno.id and alumno.persona_id=persona.id 
+    persona.apellidonombre,
+    ingreso_tipo.nombre as tipo_de_ingreso
+  FROM `ingreso`,`persona`,`alumno`,`ingreso_tipo`
+  WHERE `caja_id`=$caja_id and ingreso.alumno_id=alumno.id and alumno.persona_id=persona.id and ingreso.ingreso_tipo_id=ingreso_tipo.id 
   order by ingreso.id desc;";
   
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
@@ -340,25 +341,38 @@ FROM
     return $data;
   }
 
-  // 09062024 insertar ingreso inocial de caja
+  // 09062024 insertar ingreso inicial de caja
   public function insertar_ingreso(
     $monto,
     $fecha_ingreso,
     $caja_id,
     $usuario_id,
-    $ingreso_tipo_id
+    $ingreso_tipo_id,
+    $alumno_id,
+    $detalle,
+    $tipo_pago,
+    $origen
   ) {
     $sql = "INSERT INTO `ingreso`
     (`monto`,
      `fecha_ingreso`,
      `caja_id`,
      `usuario_id`,
-     `ingreso_tipo_id`)
+     `ingreso_tipo_id`,
+     `alumno_id`,
+     `detalle`,
+     `tipo_pago`,
+     `origen`
+     )
       VALUES ('$monto',
       '$fecha_ingreso',
       '$caja_id',
       '$usuario_id',
-      '$ingreso_tipo_id'
+      '$ingreso_tipo_id',
+      '$alumno_id',
+      '$detalle',
+      '$tipo_pago',
+      '$origen'
       );";
     //echo $sql;
     //exit;

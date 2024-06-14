@@ -3,6 +3,7 @@ include("../sesion.php");
 include("../cabecera.php");
 include("../menu.php");
 include("alumno.php");
+$cajaregistro = new Alumno();
 $objeto = new Alumno();
 if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
     $cuota_id = $_POST['cuota_id'];
@@ -41,8 +42,11 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
     }
 
         $descuento = $descuento_tipo_pago + $descuento_antes_dia_10;
-        //-------- generar el movimiento en la caja-------
+        //-------- generar el movimiento en la tabla ingresos-------
         $insertarIngreso = $objeto->insertarIngresoAlumnoCuota($cuota_id, $tipo_pago, $apagar, $alumno_id, $ID, $detalle, $descuento);
+        //--actualiza la tabla caja
+        $updatecaja = $cajaregistro->actualizarCaja($apagar);
+
     }
 
     // recuperar datos

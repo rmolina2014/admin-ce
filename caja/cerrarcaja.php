@@ -38,16 +38,17 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id']))
     
     // abrir proxima caja
     $fecha_apertura = date("Y-m-d H:i:s");
-    $ingreso_total = 0;
+    $ingreso_total = $dep_proxima_caja;
     $egreso_total = 0;
     $fecha_cierre = date("Y-m-d H:i:s");
     $estado = 'Abierta';
-    $saldo = 0;
+    $saldo = $dep_proxima_caja;
     $id_caja_nueva = $objecto->abrircaja($fecha_apertura, $ingreso_total, $egreso_total, $fecha_cierre, $estado, $saldo);
 
-    // agregar el ingreso del saldo inisial
-
-    $ingreso_inicial_caja = $objecto->insertar_ingreso($dep_proxima_caja, date("Y-m-d H:i:s"), $id_caja_nueva, $ID, 8);
+    // agregar el ingreso del saldo inicial
+    //el tipo de ingreso 1 es ingreso de socios
+    //el alumno_id=1 esta jarcodeado es el dni del instituto
+    $ingreso_inicial_caja = $objecto->insertar_ingreso($dep_proxima_caja, date("Y-m-d H:i:s"), $id_caja_nueva, $ID, 1,1,"INGRESO INICIAL CAJA ANTERIOR","EFECTIVO","Socios");
 
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
     //header('Location: listado.php');

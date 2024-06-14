@@ -348,6 +348,38 @@ WHERE c.id = $id_cuota GROUP BY c.id;";
     return $id;
   }
 
+
+    public function actualizarCaja($ingreso)
+  {
+    
+    // traer la caja abierta
+
+    $cajadatos = new Alumno();
+    $caja_id = $cajadatos->buscarCajaAbierta();
+
+    // datos de ingreso
+    $consulta = "SELECT * FROM `caja` where id=$caja_id";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+
+        $ingreso_total = $fila['ingreso_total'];
+        $saldo_total = $fila['saldo'];
+      }
+
+      $ingreso_final = $ingreso_total + $ingreso;
+      $saldo_final = $saldo_total + $ingreso;
+
+      $sql = "UPDATE `caja`
+            SET 
+              `ingreso_total` = '$ingreso_final',
+              `saldo` = '$saldo_final'
+            WHERE `id` = '$caja_id';";
+      $result = mysqli_query(conexion::obtenerInstancia(), $sql);
+      return $result;
+    }
+  }
+
   public function insertarIngresoAlumnoCuota($cuota_id, $tipo_pago, $apagar, $alumno_id, $usuario_id, $detalle, $descuento)
   {
     $monto = $apagar;

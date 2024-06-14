@@ -55,6 +55,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                     <th>Monto $</th>
                                                     <th>Descuento</th>
                                                     <th>Recargo</th>
+                                                    <th>Tipo</th>
                                                     <th>Detalle</th>
                                                     <th>Forma</th>
                                                     <th></th>
@@ -88,7 +89,9 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                             <td>
                                                                 <?php echo $item['recargo']; ?>
                                                             </td>
-
+                                                            <td>
+                                                                <?php echo $item['tipo_de_ingreso']; ?>
+                                                            </td>
                                                             <td>
                                                                 <?php echo $item['detalle']; ?>
                                                             </td>
@@ -306,10 +309,6 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                 <input type="hidden" name="egreso_total" value="<?php echo $total_egreso; ?>">
                                                 <input type="hidden" name="saldo_efectivo" value="<?php echo $sub_total_efectivo; ?>">
                                                 <input type="hidden" name="saldo_virtual" value="<?php echo $sub_total_virtual; ?>">
-                                                <!--input type="hidden" name="dep_caja_fuerte" value="<?php echo $dep_caja_fuerte; ?>">
-                                                <input type="hidden" name="dep_banco" value="<?php echo $dep_banco; ?>">
-                                                <input type="hidden" name="dep_mp" value="<?php echo $dep_mp; ?>">
-                                                <input type="hidden" name="dep_proxima_caja" value="<?php echo $dep_proxima_caja; ?>"-->
                                                 <input type="hidden" id="monto_total_deposito" name="monto_total_deposito" value="<?php echo $saldo; ?>">
                                                 <div class="form-body">
                                                     <div class="row">
@@ -319,34 +318,40 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                                 <br>
                                                                 <label for="">Virtual $ <?php echo number_format($sub_total_virtual, 2, ',', '.'); ?> </label>
                                                                 <br>
-                                                                <label for="">Total Ingresos $ <?php echo number_format($total_ingreso, 2, ',', '.'); ?> </label>
+                                                                <label  for="">Total Ingresos $ <?php echo number_format($total_ingreso, 2, ',', '.'); ?> </label>
+                                                                <br>
+                                                                <label  for="">Total Egresos $ <?php echo number_format($total_egreso, 2, ',', '.'); ?> </label>
+                                                                <br>                                               
+                                                                <label style="font-size: 25px;"  for="">SALDO $ <?php echo number_format($saldo, 2, ',', '.'); ?> </label>                                                                      
+                                                                <label style="display: none;"  id="ingreso_arendir"><?php echo $saldo; ?> </label>
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label for="email-id-vertical">Caja Fuerte</label>
-                                                                <input type="number" id="dep_caja_fuerte" name="dep_caja_fuerte" class="form-control sumando moneda" placeholder="Ejemplo : 156.23">
+                                                                <input type="text" id="dep_caja_fuerte" name="dep_caja_fuerte" class="form-control sumando moneda" placeholder="Nota: Usar el . como decimal" oninput="validarSumaCierreCaja()">
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label for="contact-info-vertical">Banco</label>
-                                                                <input type="number" class="form-control sumando moneda" id="dep_banco" name="dep_banco" placeholder="Ej: 56.20">
+                                                                <input type="text" class="form-control sumando moneda" id="dep_banco" name="dep_banco" placeholder="Nota: Usar el . como decimal" oninput="validarSumaCierreCaja()">
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label for="password-vertical">Mercado Pago</label>
-                                                                <input type="number" class="form-control sumando moneda" id="dep_mp" name="dep_mp" placeholder="Ej: 893.29">
+                                                                <input type="text" class="form-control sumando moneda" id="dep_mp" name="dep_mp" placeholder="Nota: Usar el . como decimal" oninput="validarSumaCierreCaja()">
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label for="password-vertical">Saldo Inicial Proxima Caja</label>
-                                                                <input type="number" class="form-control sumando" id="dep_proxima_caja" name="dep_proxima_caja" placeholder="Ej: 125.23">
+                                                                <input type="text" class="form-control sumando" id="dep_proxima_caja" name="dep_proxima_caja" placeholder="Nota: Usar el . como decimal" oninput="validarSumaCierreCaja()">
                                                             </div>
                                                         </div>
-                                                        <button type="submit" id="botonEnviar" class="btn btn-primary me-1 mb-1">CERRAR CAJA </button>
+                                                        <div id="mensaje"></div>
+                                                        <button type="submit" id="botonEnviar" class="btn btn-primary me-1 mb-1" disabled>CERRAR CAJA </button>
                                                     </div>
                                                 </div>
 
@@ -358,7 +363,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
 
                             <!-- Modal footer -->
                             <div class="modal-footer">
-                                <button type="button" disabled class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button"  class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
                     </div>
@@ -369,101 +374,3 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
         ?>
         <script src="../assets/js/jquery-3.6.3.min.js"></script>
 
-        <script type="text/javascript">
-            $(document).ready(function() {
-
-
-
-
-                let dep_caja_fuerte = 0;
-                let dep_banco = 0;
-                let dep_mp = 0;
-                let dep_proxima_caja = 0;
-                let monto_total_deposito = 0;
-
-                /*     alert(5);
-                     dep_caja_fuerte = ($("#dep_caja_fuerte").val() * 1);
-                     dep_banco = ($("#dep_banco").val() * 1);
-                     dep_mp = ($("#dep_mp").val() * 1);
-                     dep_proxima_caja = ($("#dep_proxima_caja").val() * 1);*/
-                monto_total_deposito = ($("#monto_total_deposito").val() * 1)
-
-                // Función para calcular la suma y habilitar/deshabilitar el botón
-                function verificarSuma() {
-                    var suma = 0;
-                    $(".sumando").each(function() {
-                        suma += parseInt($(this).val());
-                    });
-                    if (suma > monto_total_deposito) {
-                        $("#botonEnviar").prop("disabled", false);
-                    } else {
-                        $("#botonEnviar").prop("disabled", true);
-                    }
-                }
-
-                // Agregar evento keyup a cada input
-                $(".sumando").keyup(function() {
-                    verificarSuma();
-                });
-
-                // Verificar inicialmente al cargar la página
-                verificarSuma();
-
-                $("#444cerrar_caja").click(function(evento) {
-                    evento.preventDefault();
-
-
-
-                    let total_sumatoria = dep_caja_fuerte + dep_banco + dep_mp + dep_proxima_caja;
-
-                    alert(total_sumatoria);
-
-                    if (sumarConLimite(total_sumatoria, monto_total_deposito)) {
-                        console.log("Puedes agregar más al total.");
-                    } else {
-                        console.log("Has alcanzado o superado el límite máximo.");
-                    }
-                    /* evento.preventDefault();
-                     vid = this.id.substr(6, 4);
-                     var opcion = confirm("Confirmar Borrar Registro : Aceptar o Cancelar");
-                     if (opcion == true) {
-                         $.ajax({
-                             type: "POST",
-                             cache: false,
-                             async: false,
-                             url: 'eliminar.php',
-                             data: {
-                                 id: vid
-                             },
-                             success: function(data) {
-                                 if (data) {
-                                     alert(data);
-                                     location.reload(true);
-                                 }
-                             }
-                         }) //fin ajax
-                         //alert("Has clickado OK");
-                     } else {
-                         alert("Se Cancelo la Operación");
-                     }*/
-                }); //fin
-
-
-
-            }); // fin ready
-
-            function sumarConLimite(sumaActual, limiteMaximo) {
-                // Verifica si la suma actual más cualquier adición futura superaría el límite máximo
-                if (sumaActual + limiteMaximo < limiteMaximo) {
-                    return true; // Puedes continuar agregando
-                } else {
-                    return false; // Has alcanzado o superado el límite
-                }
-            }
-
-            function getval(sel, id) {
-                alert(sel.value);
-                $("#descuento_efectivo" + id).html("<span class='red'> -10</span>");
-
-            }
-        </script>
