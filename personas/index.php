@@ -3,15 +3,7 @@ include("../sesion.php");
 include("../cabecera.php");
 include("../menu.php");
 include("persona.php");
-//PERMISOS
-$permiso = new Persona();
-$permisos = $permiso->permiso($ID,'PERSONAS');
-if ($permisos == 0 && $ID != 1) {
-   $mensaje = "¡No tiene permisos para entrar al modulo de Personas!";
-    echo "<script type='text/javascript'>alert('$mensaje'); window.location.href = '../panelcontrol/index.php';</script>";
-    exit();
-}
-//FIN VALIDACION PERMISOS
+
 ?>
 <div id="main">
     <header class="mb-3">

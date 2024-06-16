@@ -89,8 +89,7 @@
 
         <li class="sidebar-item ">
           <a href="../caja/index.php" class="sidebar-link">
-            <i class="bi bi-grid-fill"></i>
-            <span>Caja</span>
+            <i class="bi bi-grid-fill"></i><span>Caja</span>
           </a>
         </li>
 
@@ -155,7 +154,7 @@
             <i class="bi bi-grid-fill"></i>
             <span>Salir</span>
           </a>
-        </li>        
+        </li>
 
         <!--fin menu-->
 

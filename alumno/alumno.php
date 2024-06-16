@@ -1,6 +1,5 @@
 <?php
 include_once("../bd/conexion.php");
-// da error include("../sesion.php");
 class Alumno
 {
 

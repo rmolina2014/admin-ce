@@ -38,4 +38,3 @@ function validarSumaCierreCaja() {
         boton.disabled = true;
     }
 }
-Resumen

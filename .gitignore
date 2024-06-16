@@ -1,3 +1,11 @@
+# Ignorar la carpeta bd y todo su contenido
 bd/
+# Ignorar archivos específicos dentro de la carpeta bd
+bd/*.sql
+bd/*.sqlite
+bd/*.db
+bd/*.bak
+# Ignorar archivos temporales de bases de datos
+bd/tmp/*
 
 

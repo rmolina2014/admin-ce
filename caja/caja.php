@@ -255,8 +255,8 @@ VALUES (
   // listado de ingresos
   public function listadoIngresos($caja_id)
   {
-  $data=[];
-     $consulta = "SELECT
+    $data = [];
+    $consulta = "SELECT
     ingreso.id,
     ingreso.monto,
     ingreso.fecha_ingreso,
@@ -274,7 +274,7 @@ VALUES (
   FROM `ingreso`,`persona`,`alumno`,`ingreso_tipo`
   WHERE `caja_id`=$caja_id and ingreso.alumno_id=alumno.id and alumno.persona_id=persona.id and ingreso.ingreso_tipo_id=ingreso_tipo.id 
   order by ingreso.id desc;";
-  
+
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {

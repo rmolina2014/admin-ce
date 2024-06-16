@@ -1,8 +1,7 @@
 <?php
 class Conexion
 {
-
-	private static $objCon = null;
+private static $objCon = null;
 	private static $instancia = null;
 
 	public static function obtenerInstancia()
@@ -29,3 +28,4 @@ class Conexion
 	}
 }
 $rs = conexion::obtenerInstancia();
+?>
