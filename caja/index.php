@@ -111,6 +111,7 @@ if ($permisos == 0 && $ID != 1) {
                     <td>
                       <form method="POST" role="form" action="detalle_caja_abierta.php">
                         <input type="hidden" name="caja_id" value="<?php echo $item['id']; ?>">
+                        <input type="hidden" name="estado_caja" value="<?php echo $item['estado']; ?>">
                         <button class="btn btn-sm btn-secondary d-inline-flex align-items-center">Detalle
                           de la Caja</button>
                       </form>

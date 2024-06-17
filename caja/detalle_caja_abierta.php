@@ -7,9 +7,28 @@ include("caja.php");
 if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
     $objeto = new Caja();
     $caja_id = $_POST['caja_id'];
+    $estado_caja = $_POST['estado_caja'];
+
+    // Definir si los atributos de Bootstrap deben estar presentes
+    $toggleAttribute = ($estado_caja === "Abierta") ?  ' class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#myModal"' : 'class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#"';
+    
+    //$linkClass = ($estado_caja === "Cerrado") ? 'btn btn-outline-primary' : 'btn btn-outline-primary disabled-link';
+
+
 ?>
     <div id="main">
         <header class="mb-3">
+
+            <style>
+                .disabled-link {
+                    pointer-events: none; /* Desactiva los eventos de mouse */
+                    color: grey; /* Cambia el color para que parezca deshabilitado */
+                    text-decoration: none; /* Opcional: Quita el subrayado */
+                    cursor: default; /* Cambia el cursor para que parezca deshabilitado */
+                }
+            </style>
+
+
             <a href="#" class="burger-btn d-block d-xl-none">
                 <i class="bi bi-justify fs-3"></i>
             </a>
@@ -19,7 +38,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Detalle Cajas Abierta</h3>
+                        <h3>Detalle Caja</h3>
                         <!--p class="text-subtitle text-muted">The default layout.</p-->
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
@@ -280,9 +299,12 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                             </div>
                         </div>
                     </div>
-                    <a id="pagar23" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#myModal" data-bs-target="#border-less23" data-monto="20000.00" data-detalle="Cuota Nº 7">
+                    <!--a id="pagar23" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#myModal" data-bs-target="#border-less23" data-monto="20000.00" data-detalle="Cuota Nº 7">
                         Cerrar Caja
-                    </a>
+                    </a-->
+                    <a id="pagar23"  <?php echo $toggleAttribute; ?> >
+                      Cerrar Caja
+                    </a>                    
                 </div>
 
                 <!-- The Modal -->
