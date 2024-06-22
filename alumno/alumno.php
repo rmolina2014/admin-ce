@@ -3,9 +3,9 @@ include_once("../bd/conexion.php");
 class Alumno
 {
 
-public function permiso(
+  public function permiso(
     $id,
-    $permiso  
+    $permiso
   ) {
     $sql = "SELECT p.*, d.* FROM permiso p INNER JOIN detalle_permiso d ON p.id = d.rela_permiso WHERE d.rela_usuario = $id AND p.nombre = '$permiso'";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
@@ -108,7 +108,7 @@ public function permiso(
     return $data;
   }
 
-  public function editar($id, $fecha_nacimiento, $gruposanguineo,$redes_sociales,  $estado)
+  public function editar($id, $fecha_nacimiento, $gruposanguineo, $redes_sociales,  $estado)
   {
     $sql = "UPDATE `alumno`
     SET 
@@ -305,9 +305,9 @@ WHERE c.id = $id_cuota GROUP BY c.id;";
       `apagar` = '$apagar',
       `usuario` = '$usuario'
       WHERE `id` = '$cuota_id'";*/
-     //genera el registro en pagos_parciales
-      $fecha_pago = date('Y-m-d H:i:s');
-    $consulta = "INSERT INTO `pagos_parciales` (`rela_cuota`, `descuento_tp`, `descuento_a10`, `pago`, `fecha_pago`, `usuario`) VALUES ('$cuota_id','$descuento_tipo_pago','$descuento_antes_dia_10','$apagar','$fecha_pago','$usuario');";  
+    //genera el registro en pagos_parciales
+    $fecha_pago = date('Y-m-d H:i:s');
+    $consulta = "INSERT INTO `pagos_parciales` (`rela_cuota`, `descuento_tp`, `descuento_a10`, `pago`, `fecha_pago`, `usuario`) VALUES ('$cuota_id','$descuento_tipo_pago','$descuento_antes_dia_10','$apagar','$fecha_pago','$usuario');";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
 
     return $rs;
@@ -319,7 +319,7 @@ WHERE c.id = $id_cuota GROUP BY c.id;";
     $consulta = "UPDATE `alumno_carrera_cuotas`
     SET 
       `estado` = '$estado' WHERE `id` = '$cuota_id'";
-     //cambia el estado de la cuota 
+    //cambia el estado de la cuota 
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
 
     return $rs;
@@ -348,9 +348,9 @@ WHERE c.id = $id_cuota GROUP BY c.id;";
   }
 
 
-    public function actualizarCaja($ingreso)
+  public function actualizarCaja($ingreso)
   {
-    
+
     // traer la caja abierta
 
     $cajadatos = new Alumno();
@@ -379,6 +379,8 @@ WHERE c.id = $id_cuota GROUP BY c.id;";
     }
   }
 
+
+  // inserta un ingreso y devuel el id que sera usado en el comprobante o recibo 
   public function insertarIngresoAlumnoCuota($cuota_id, $tipo_pago, $apagar, $alumno_id, $usuario_id, $detalle, $descuento)
   {
     $monto = $apagar;
@@ -427,8 +429,10 @@ VALUES (
 '$origen',
 '$detalle');";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
-    return $rs;
+
+    return mysqli_insert_id(conexion::obtenerInstancia());
   }
+
 
   public function obtenerCuotaId($id)
   {
@@ -459,4 +463,49 @@ VALUES (
     }
     return $data;
   }
+
+  // datos para el recibo de pago
+  public function datosRecivoPago($cuota_id,$ingreso_id)
+  {
+    $data = array();
+    $consulta = "SELECT
+    persona.`apellidonombre` AS apellidonombre,
+    persona.`dni` AS dni,
+    carrera.`nombre` AS carrera,
+    alumno_carrera_cuotas.`cuota_numero` AS cuota_numero,
+    alumno_carrera_cuotas.`detalle` AS cuota_detalle,
+    alumno_carrera_cuotas.`monto` AS cuota_monto,
+    alumno_carrera_cuotas.`id` AS cuota_id,
+    alumno.`id` AS alumno_id,
+    ingreso.`monto` AS monto_pagado,
+    ingreso.`id` AS ingreso_id
+    FROM
+        `alumno_carrera_cuotas`
+        INNER JOIN `alumno` 
+            ON (`alumno_carrera_cuotas`.`alumno_id` = `alumno`.`id`)
+        INNER JOIN `carrera` 
+            ON (`alumno_carrera_cuotas`.`carrera_id` = `carrera`.`id`)
+        INNER JOIN `persona` 
+            ON (`alumno`.`persona_id` = `persona`.`id`)
+            INNER JOIN `bdce`.`ingreso` 
+        ON (`alumno_carrera_cuotas`.`alumno_id` = `ingreso`.`alumno_id`)
+      WHERE ingreso.`id`=$ingreso_id AND alumno_carrera_cuotas.`id`=$cuota_id";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
+
+
+
+
+
+
+
+
+
 }

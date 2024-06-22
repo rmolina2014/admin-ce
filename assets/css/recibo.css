@@ -1,0 +1,72 @@
+    /* Estilos generales */
+    .imprimir {
+        background: white;
+        margin-right: 200px;
+        margin-left: 200px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+        max-width: 1000px;
+    }
+
+    .imprimir table {
+        max-width: 960px;
+    }
+
+    /************** */
+    .recibo {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .recibo-encabezado {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .recibo-encabezado h1 {
+        margin: 0;
+    }
+
+    .recibo-informacion {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .recibo-informacion-izquierda {
+        width: 50%;
+    }
+
+    .recibo-informacion-derecha {
+        width: 49%;
+        text-align: right;
+    }
+
+    .recibo-tabla {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .recibo-tabla th,
+    .recibo-tabla td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
+
+    .recibo-tabla th {
+        text-align: left;
+        background-color: #f2f2f2;
+    }
+
+    .recibo-firma {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .recibo-fecha-impresion {
+        font-size: 9px;
+        text-align: right;
+    }
