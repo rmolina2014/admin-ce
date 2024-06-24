@@ -487,7 +487,7 @@ VALUES (
             ON (`alumno_carrera_cuotas`.`carrera_id` = `carrera`.`id`)
         INNER JOIN `persona` 
             ON (`alumno`.`persona_id` = `persona`.`id`)
-            INNER JOIN `bdce`.`ingreso` 
+            INNER JOIN `ingreso` 
         ON (`alumno_carrera_cuotas`.`alumno_id` = `ingreso`.`alumno_id`)
       WHERE ingreso.`id`=$ingreso_id AND alumno_carrera_cuotas.`id`=$cuota_id";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
