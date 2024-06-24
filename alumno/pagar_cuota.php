@@ -190,9 +190,9 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                                 </div>
                                 <div class="recibo-informacion">
                                     <div class="recibo-informacion-izquierda">
-                                        <p><strong>Responsable Monotributo:</strong></p>
+                                        <!--p><strong>Responsable Monotributo:</strong></p>
                                         <p>CUIT N° xx-xxxxxxx-x</p>
-                                        <p><strong>Documento No válido como factura</strong></p>
+                                        <p><strong>Documento No válido como factura</strong></p-->
                                     </div>
                                     <div class="recibo-informacion-derecha">
                                         <p><strong>Fecha:</strong>
