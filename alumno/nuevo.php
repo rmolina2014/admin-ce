@@ -7,16 +7,25 @@ $objeto = new Alumno();
 if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
   $persona_id = $_POST['id_persona'];
   $fecha_nacimiento = $_POST['fecha_nacimiento'];
-  $gruposanguineo = $_POST['gruposanguineo'];
   $carrera_id = $_POST['carrera_id'];
   $estado = "Activo";
   $fecha_ingreso = date("Y-m-d");
   $observacion = $_POST['observacion'];
   $redes_sociales = $_POST['redes_sociales'];
 
+  $carrera_alumno = $objeto->buscarAlumnoCarrera($persona_id,$carrera_id); 
+
+if ($carrera_alumno) {
+  
+  echo "<script type='text/javascript'>alert('El alumno ya esta inscripto en ese curso');</script>";
+  echo "<script language=Javascript> location.href=\"index.php\"; </script>";
+  exit;
+  
+  }
+
+
   $insertar_alunmo = $objeto->nuevo(
     $fecha_nacimiento,
-    $gruposanguineo,
     $persona_id,
     $carrera_id,
     $estado,
@@ -27,14 +36,7 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
 
   // 1 -insertra alumno 
 
-  if (!is_int($insertar_alunmo)) {
-?>
-<div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
-    <button data-dismiss="alert" class="close" type="button">×</button>
-    Error al insertar Alumno ...
-</div>
-<?php
-  }
+
 
   //2 -insertra cuota inscripcion
 
@@ -167,17 +169,12 @@ if (isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
                         </div>
 
                         <div class="col-md-8 mb-3">
-                            <label class="form-label">Grupo Sanguineo</label>
-                            <input name="gruposanguineo" class="form-control" type="text" tabindex="2" required />
-                        </div>
-
-                        <div class="col-md-8 mb-3">
                             <label class="form-label">Redes Sociales</label>
                             <input name="redes_sociales" maxlength="150" class="form-control" type="text" tabindex="2" required />
                         </div>                        
 
                         <div class="col-md-8 mb-3">
-                            <label class="form-label">Carrera o Curso</label>
+                            <label class="form-label">Curso o Diplomatura</label>
                             <select class="form-control" name="carrera_id" required autofocus tabindex="1">
                                 <option value="0">Seleccione....</option>
                                 <?php

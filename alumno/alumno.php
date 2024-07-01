@@ -59,7 +59,6 @@ class Alumno
 
   public function nuevo(
     $fecha_nacimiento,
-    $gruposanguineo,
     $persona_id,
     $carrera_id,
     $estado,
@@ -67,10 +66,11 @@ class Alumno
     $fecha_ingreso,
     $redes_sociales
   ) {
+    $db = conexion::obtenerInstancia(); // Obtener la instancia de conexión
+
     $sql = "INSERT INTO `alumno`
     (
      `fecha_nacimiento`,
-     `gruposanguineo`,
      `persona_id`,
      `carrera_id`,
      `estado`,
@@ -80,19 +80,29 @@ class Alumno
      )
       VALUES (
       '$fecha_nacimiento',
-      '$gruposanguineo',
       '$persona_id',
       '$carrera_id',
       '$estado',
       '$observacion',
       '$fecha_ingreso','$redes_sociales');";
-    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+       // Ejecutar la consulta
+        $rs = mysqli_query($db, $sql);
 
-    $alumno_id = mysqli_insert_id(conexion::obtenerInstancia());
-
-    // retornar el id del alumno
-
-    return $alumno_id;
+        // Verificar si la consulta fue exitosa
+        if ($rs) {
+            $alumno_id = mysqli_insert_id($db);
+            return $alumno_id;
+        } else {
+            // Verificar si el error es debido a una clave única duplicada
+            if (mysqli_errno($db) == 1062) {
+                // Lanzar una excepción con un mensaje específico para clave duplicada
+                throw new Exception("Error: El alumno ya está inscrito en este curso.");
+            } else {
+                // Lanzar una excepción con el mensaje de error de MySQL
+                throw new Exception("Error: " . mysqli_error($db));
+            }
+        }
+    
   }
 
   //lista los ingresos por tipo
@@ -108,12 +118,11 @@ class Alumno
     return $data;
   }
 
-  public function editar($id, $fecha_nacimiento, $gruposanguineo, $redes_sociales,  $estado)
+  public function editar($id, $fecha_nacimiento, $redes_sociales,  $estado)
   {
     $sql = "UPDATE `alumno`
     SET 
       `fecha_nacimiento` = '$fecha_nacimiento',
-      `gruposanguineo` = '$gruposanguineo',
       `redes_sociales` = '$redes_sociales',
       `estado` = '$estado'
        WHERE `id` = '$id'";
@@ -187,6 +196,20 @@ class Alumno
     }
     return $data;
   }
+
+  //verifica si existe el alumno en un curso determinado
+public function buscarAlumnoCarrera($id_persona,$id_carrera)
+  {
+    //$data = array();
+    $sql = "SELECT a.id FROM alumno a WHERE a.persona_id='$id_persona' and a.carrera_id='$id_carrera'  ";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if (mysqli_num_rows($rs) > 0) {
+      return true;
+    }else{
+    return false;
+         }
+  }  
+
 
   //verifica si el dni de la persona esta creado como usuario
   public function buscarDNIenusuario($dni)

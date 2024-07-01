@@ -67,10 +67,6 @@ include("alumno.php");
                </div>
 
                <div class="col-md-8 mb-3">
-                 <label class="form-label">Grupo Sanguineo</label>
-                 <input name="gruposanguineo" class="form-control" type="text" tabindex="2" required value="<?php echo $item['gruposanguineo']; ?>"/>
-               </div>
-               <div class="col-md-8 mb-3">
                  <label class="form-label">Redes Sociales</label>
                  <input name="redes_sociales" class="form-control" type="text" tabindex="2" required value="<?php echo $item['redes_sociales']; ?>"/>
                </div>               
@@ -128,7 +124,6 @@ include("alumno.php");
           //   $nInscripcion,$nombre,$dni,$curso,$horario,$sucursal,$email,$observacion,$otros,$idCurso
           $fecha_nacimiento = $_POST['fecha_nacimiento'];
           $carrera_id = $_POST['carrera_id'];
-          $gruposanguineo = $_POST['gruposanguineo'];
           $alumno_id = $_POST['alumno_id'];
           $estado = $_POST['estado'];
           $redes_sociales = $_POST['redes_sociales'];
@@ -136,7 +131,7 @@ include("alumno.php");
           //$fechaingreso = date("Y-m-d");
           //$estado = 'Activo';
 
-          $todobien = $objeto->editar($alumno_id, $fecha_nacimiento, $gruposanguineo,$redes_sociales, $estado);
+          $todobien = $objeto->editar($alumno_id, $fecha_nacimiento, $redes_sociales, $estado);
           if ($todobien) {
             echo "<script language=Javascript> location.href=\"index.php\"; </script>";
             //header('Location: listado.php');
