@@ -143,6 +143,28 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
                         </div>
 
 
+                        <button type="button" id="loadResultsButton" onclick="loadResultsByDNI()">Buscar Cursos</button>
+                        <select id="searchResults"></select>
+
+
+
+                        <!--div class="col-md-8 mb-3">
+                            <label class="form-label">Curso o Diplomatura</label>
+                            <select class="form-control" name="carrera_id" required autofocus tabindex="1">
+                                <option value="0">Seleccione....</option>
+                                <?php
+                  $items = $objeto->listaCarrerapordni($dni);
+                  foreach ($items as $itemlistacarreradni) {
+                  ?>
+                                <option value="<?php echo $itemlistacarreradni['id']; ?>"> <?php echo $itemlistacarreradni['nombre']; ?> </option>
+                                <?php
+                  }
+                  ?>
+                            </select>
+                        </div-->
+
+
+
 
               <div class="col-md-8 mb-3">
                 <label class="form-label">Monto</label>
@@ -246,5 +268,36 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
                     }
                 });
             });
-        }) //fin jquery      
+        }) //fin jquery  
+
+         //para llenar el select
+          function loadResultsByDNI() {
+            var dni = $("#dnialumno").val();
+
+            if (dni.trim() !== "") {
+              $.ajax({
+                url: "buscarcarreraspordni.php", // busca las carreras para el dni dado
+                type: "POST",
+                data: {
+                  dni: dni
+                },
+                success: function(response) {
+                        var select = $('#searchResults');
+                        select.empty(); // Limpiar cualquier opción previa
+                        select.append('<option value="">Seleccione una opción</option>');
+                        $.each(response, function(index,item) {
+                            select.append('<option value="'+item.id+'">'+item.nombre+'</option>');
+                        });
+                },
+                error: function(data) {
+                  console.error("Error loading search results:", data);
+                }
+              });
+            }
+          }
+
+        //fin----
+
+
+
         </script>          

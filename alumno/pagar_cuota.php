@@ -12,6 +12,8 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
     $alumno_id = $_POST['alumno_id'];
     $detalle = $_POST['detalle'];
     $tipo_pago = $_POST['tipo_pago'];
+    $carrera_id = $_POST['carrera_id'];
+
     // Suponiendo que quieres verificar la variable $_POST['miVariable']
     //$valorPost = empty($_POST['miVariable']) ? 0 : $_POST['miVariable'];
     $descuento_tipo_pago = empty($_POST['descuentoFormaPago']) ? 0 : $_POST['descuentoFormaPago'];
@@ -40,7 +42,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
 
         $descuento = $descuento_tipo_pago + $descuento_antes_dia_10;
         //-------- generar el movimiento en la tabla ingresos-------
-        $insertarIngreso = $objeto->insertarIngresoAlumnoCuota($cuota_id, $tipo_pago, $apagar, $alumno_id, $ID, $detalle, $descuento);
+        $insertarIngreso = $objeto->insertarIngresoAlumnoCuota($cuota_id, $tipo_pago, $apagar, $alumno_id, $ID, $detalle, $descuento,$carrera_id);
         //--actualiza la tabla caja
         $updatecaja = $cajaregistro->actualizarCaja($apagar);
     }

@@ -119,6 +119,72 @@ if (empty($registros)){
 
 <!--fin seccion cursos-->
 
+<!--seccion pago alumno-->
+
+        <section class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Pagos alumno</h4>
+                    <h5 class="card-title"><?php echo $item['apellidonombre']; ?></h5>
+                    <h5 class="card-title"><?php echo $item['dni']; ?></h5>
+                </div>
+                <div class="card-body">
+                    <!--- inico contenido -------------------------------------------------------------------------->
+                    <!--div class="buttons">
+                        <a href="nuevo.php" class="btn btn-outline-primary">Agregar</a>
+                    </div-->
+                    <table class="table table-flush" id="datatable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>#</th>
+                                <!--th>DNI</th>
+                                <th>Apellido Nombre</th-->
+                                <th>Curso</th>
+                                <th>Fecha Pago</th>
+                                <th>Importe</th>
+                                <th>Forma Pago</th>
+                                <th>Descuento</th>
+                                <th>Observacion</th>
+                                <th>Tipo de Ingreso</th>
+                                <th>Num. Caja</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Item -->
+                            <?php
+                            $objeto = new Perfil();
+                            $cursos= $objeto->ingresosalumnosporcarrera($dni);
+                            foreach ($cursos as $itemingresos) {
+                            ?>
+                                <tr>
+                                    <td><?php echo $itemingresos['id']; ?></td>
+                                    <td><?php echo $itemingresos['carrera_nombre']; ?></td>
+                                    <td><?php echo $itemingresos['fecha_ingreso']; ?></td>
+                                    <td><?php echo $itemingresos['monto']; ?></td>
+                                    <td><?php echo $itemingresos['tipo_pago']; ?></td>
+                                    <td><?php echo $itemingresos['descuento']; ?></td>
+                                    <td><?php echo $itemingresos['detalle']; ?></td>
+                                    <td><?php echo $itemingresos['ingresotipo']; ?></td>
+                                    <td><?php echo $itemingresos['caja_id']; ?></td>
+
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                    <!--- fin contenido------------------------------------------------------- -->
+                </div>
+            </div>
+        </section>
+
+
+<!--fin seccion pagos alumno-->
+
+
+
+
 
 
        <section class="section">

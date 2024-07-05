@@ -2,6 +2,21 @@
 include_once("../bd/conexion.php");
 class Perfil
 {
+
+  public function ingresosalumnosporcarrera($dni)
+  {
+    $consulta = "SELECT i.*,carr.nombre as carrera_nombre,it.nombre as ingresotipo,p.apellidonombre as alumno,p.dni FROM ingreso i,ingreso_tipo it,alumno a,persona p,carrera carr where i.ingreso_tipo_id=it.id and i.alumno_id=a.id and a.persona_id=p.id and p.dni='$dni' and carr.id=i.carrera_id order by i.id desc";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+      return $data;
+    } else
+      return $rs;
+  }
+
+
     public function obtenerPersona($dni)
     {
         $consulta = "SELECT * FROM persona where dni='$dni'";

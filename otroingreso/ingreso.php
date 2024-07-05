@@ -165,6 +165,24 @@ public function permiso(
 
   }
 
+
+
+  public function listaCarrerapordni($dni)
+  {
+    $data = array();
+    $sql = "SELECT carr.id,carr.nombre FROM carrera as carr,alumno as a,persona as p where p.dni='$dni' and p.id=a.persona_id 
+     and a.carrera_id=carr.id";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }
+
+
+
 //insertar ingresos de otros ingresos
 
   public function insertarIngresoOtrosIngresos($monto,

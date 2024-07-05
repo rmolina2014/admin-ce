@@ -404,7 +404,7 @@ WHERE c.id = $id_cuota GROUP BY c.id;";
 
 
   // inserta un ingreso y devuel el id que sera usado en el comprobante o recibo 
-  public function insertarIngresoAlumnoCuota($cuota_id, $tipo_pago, $apagar, $alumno_id, $usuario_id, $detalle, $descuento)
+  public function insertarIngresoAlumnoCuota($cuota_id, $tipo_pago, $apagar, $alumno_id, $usuario_id, $detalle, $descuento,$carrera_id)
   {
     $monto = $apagar;
     $alumno_id = $alumno_id;
@@ -438,7 +438,8 @@ WHERE c.id = $id_cuota GROUP BY c.id;";
      `descuento`,
      `recargo`,
      `origen`,
-     `detalle`)
+     `detalle`,
+     `carrera_id`)
 VALUES (
 '$monto',
 '$fecha_ingreso',
@@ -450,7 +451,8 @@ VALUES (
 '$descuento',
 '$recargo',
 '$origen',
-'$detalle');";
+'$detalle',
+'$carrera_id');";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
 
     return mysqli_insert_id(conexion::obtenerInstancia());
@@ -464,6 +466,7 @@ VALUES (
     persona.`apellidonombre` AS apellidonombre,
     persona.`dni` AS dni,
     carrera.`nombre` AS carrera,
+    carrera.`id` AS carrera_id,
     alumno_carrera_cuotas.`cuota_numero` AS cuota_numero,
     alumno_carrera_cuotas.`detalle` AS cuota_detalle,
     alumno_carrera_cuotas.`monto` AS cuota_monto,

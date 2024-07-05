@@ -13,6 +13,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
         $dni = $item['dni'];
         $apellidonombre = $item['apellidonombre'];
         $carrera = $item['carrera'];
+        $carrera_id = $item['carrera_id'];
         $cuota_numero = $item['cuota_numero'];
         $alumno_id = $item['alumno_id'];
     }
@@ -80,6 +81,7 @@ if (isset($_POST['cuota_id']) && !empty($_POST['cuota_id'])) {
                         <input type="hidden" name="cuota_id" value="<?php echo $cuota_id; ?>">
                         <input type="hidden" name="alumno_id" value="<?php echo $alumno_id; ?>">
                         <input type="hidden" name="detalle" value="<?php echo $detalle; ?>">
+                        <input type="hidden" name="carrera_id" value="<?php echo $carrera_id; ?>">
                         
                         <input type="hidden" name="tipo_pago" id="tipo_pago">
                         <input type="hidden" name="monto_original" id="monto_original" value="<?php echo $monto; ?>">
