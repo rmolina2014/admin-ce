@@ -15,8 +15,9 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
   $usuario_id = $_POST['usuario_id'];
   $ingreso_tipo = $_POST['ingreso_tipo_id'];
   $observacion = $_POST['observacion'];
-  $alumno_id=$_POST['id_alumno'];
-  $tipopago=$_POST['tipo_pago'];
+  $alumno_id = $_POST['id_alumno'];
+  $tipopago = $_POST['tipo_pago'];
+  $carrera_id = $_POST['carrera_id'];
 
   $todobien = $objeto->insertarIngresoOtrosIngresos(
     $monto,
@@ -25,7 +26,7 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
     $usuario_id,
     $ingreso_tipo,
     $alumno_id,
-    $tipopago,$observacion
+    $tipopago,$observacion,$carrera_id
 
   );
   if ($todobien) {
@@ -114,7 +115,7 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
               <div class="col-md-8 mb-3">
                 <label class="form-label">Tipo Ingreso</label>
                 <select class="form-control" name="ingreso_tipo_id" id="ingreso_tipo_id" required autofocus tabindex="1">
-                  <option value="0">Seleccione....</option>
+                  <option value="">Seleccione....</option>
                   <?php
 
                   $items = $objeto->listaIngresoTipo();
@@ -134,37 +135,18 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
                             <label id="labeldni">D.N.I </label>
                             <input name="dnialumno" id="dnialumno" class="form-control" type="text"                     maxlength="10" required />
                             <br>
-                            <!--button type="button" id="buscar_dni"
-                  class="btn btn-sm btn-secondary d-inline-flex align-items-center">Buscar D.N.I.</button-->
+                            
                         </div>
 
                         <div class="col-md-8 mb-3">
                             <div id="resultadoBusqueda"></div>
                         </div>
 
-
-                        <button type="button" id="loadResultsButton" onclick="loadResultsByDNI()">Buscar Cursos</button>
-                        <select id="searchResults"></select>
-
-
-
-                        <!--div class="col-md-8 mb-3">
-                            <label class="form-label">Curso o Diplomatura</label>
-                            <select class="form-control" name="carrera_id" required autofocus tabindex="1">
-                                <option value="0">Seleccione....</option>
-                                <?php
-                  $items = $objeto->listaCarrerapordni($dni);
-                  foreach ($items as $itemlistacarreradni) {
-                  ?>
-                                <option value="<?php echo $itemlistacarreradni['id']; ?>"> <?php echo $itemlistacarreradni['nombre']; ?> </option>
-                                <?php
-                  }
-                  ?>
-                            </select>
-                        </div-->
-
-
-
+                        <div class="col-md-4 mb-3">
+                          <button  class="btn btn-sm btn-secondary d-inline-flex align-items-center" type="button" id="loadResultsButton" onclick="loadResultsByDNI()">Buscar Cursos</button>
+                          
+                          <select  class="form-control" id="searchResults" name="carrera_id" required></select>
+                        </div>
 
               <div class="col-md-8 mb-3">
                 <label class="form-label">Monto</label>
@@ -211,21 +193,21 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
                    $("#ingreso_tipo_id").on("click", function() {
                    const opcionSeleccionada = $(this).find("option:selected");
                    
-                   if (opcionSeleccionada.val()==1){
+                  if (opcionSeleccionada.val() == "1") { // Asumiendo que 1 es el valor para "Aporte externo de socios"
                         $("#dnialumno").val(999);
-                        document.getElementById("dnialumno").style.display = "none";
-                        document.getElementById("labeldni").style.display = "none";
-                        $("#resultadoBusqueda").html(
-                                "<h6 class='text-muted mb-0'> "   + " </h6>");
-                        document.getElementById("guardar").disabled = false;
+                        $("#dnialumno").hide();
+                        $("#labeldni").hide();
+                        $("#loadResultsButton").hide();
+                        $("#searchResults").hide().prop('required', false);
+                        $("#resultadoBusqueda").html("<h6 class='text-muted mb-0'></h6>");
+                        $("#guardar").prop('disabled', false);
                         $("#id_alumno").val(1);
-
-
-                        
-                   }else{
-                       document.getElementById("dnialumno").style.display = "block";
-                       document.getElementById("labeldni").style.display = "block";
-                       document.getElementById("guardar").disabled = true;
+                   } else {
+                       $("#dnialumno").show().val('');
+                       $("#labeldni").show();
+                       $("#loadResultsButton").show();
+                       $("#searchResults").show().prop('required', true);
+                       $("#guardar").prop('disabled', true);
                        $("#id_alumno").val(0);
                    }
 
@@ -271,31 +253,49 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
         }) //fin jquery  
 
          //para llenar el select
-          function loadResultsByDNI() {
-            var dni = $("#dnialumno").val();
+function loadResultsByDNI() {
+  var dni = $("#dnialumno").val();
+  var tipoIngreso = $("#ingreso_tipo_id").val();
 
-            if (dni.trim() !== "") {
-              $.ajax({
-                url: "buscarcarreraspordni.php", // busca las carreras para el dni dado
-                type: "POST",
-                data: {
-                  dni: dni
-                },
-                success: function(response) {
-                        var select = $('#searchResults');
-                        select.empty(); // Limpiar cualquier opción previa
-                        select.append('<option value="">Seleccione una opción</option>');
-                        $.each(response, function(index,item) {
-                            select.append('<option value="'+item.id+'">'+item.nombre+'</option>');
-                        });
-                },
-                error: function(data) {
-                  console.error("Error loading search results:", data);
-                }
-              });
-            }
+  if (dni.trim() !== "") {
+    $.ajax({
+      url: "buscarcarreraspordni.php",
+      type: "POST",
+      data: {
+        dni: dni
+      },
+      dataType: "json",
+      success: function(response) {
+        var select = $('#searchResults');
+        select.empty();
+        select.append('<option value="">Seleccione una opción</option>');
+        
+        if (Array.isArray(response) && response.length > 0) {
+          $.each(response, function(index, item) {
+            select.append('<option value="' + item.id + '">' + item.nombre + '</option>');
+          });
+          if (tipoIngreso != "1") { // No deshabilitar si es Aporte externo de socios
+            $("#guardar").prop('disabled', false);
           }
-
+        } else {
+          select.append('<option value="">No se encontraron cursos para el dni dado</option>');
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error("Error loading search results:", error);
+        if (tipoIngreso != "1") { // No deshabilitar si es Aporte externo de socios
+          $("#guardar").prop('disabled', true);
+        }
+        $('#searchResults').html('<option value="">Error al cargar las carreras</option>');
+      }
+    });
+  } else {
+    $('#searchResults').html('<option value="">Ingrese un DNI válido</option>');
+    if (tipoIngreso != "1") { // No deshabilitar si es Aporte externo de socios
+      $("#guardar").prop('disabled', true);
+    }
+  }
+}
         //fin----
 
 

@@ -71,6 +71,7 @@ if ($permisos == 0 && $ID != 1) {
                 <th>Detalle</th>
                 <th>Observacion</th>
                 <th>Caja</th>
+                <th>Curso</th>                
                 <th></th>
               </tr>
               <thead>
@@ -116,6 +117,9 @@ if ($permisos == 0 && $ID != 1) {
                     <td>
                       <?php echo $item['caja_id']; ?>
                     </td>
+                    <td>
+                      <?php echo $item['curso']; ?>
+                    </td>                    
                     <td>
                         <form method="POST" role="form" action="editar.php">
                            <input type="hidden" name="id" value="<?php echo $item['id']; ?>">

@@ -10,8 +10,8 @@ if (isset($_SESSION['sesion_usuario'])) {
   //   $NOMBRE=$_SESSION['sesion_nombre'];
   // $PERMISO=$_SESSION['sesion_permisos'];
 } else {
-  echo 1;
-  exit();
+ // echo 1;
+  //exit();
   echo "<script language=Javascript> location.href=\"../index.php\"; </script>";
 }
 ?>

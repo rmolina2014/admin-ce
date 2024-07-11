@@ -102,7 +102,7 @@ public function permiso(
   }
 
    
-    public function editar($ingreso_id, $tipoingreso, $monto,$id_alumno,$tipo_pago,$origen)
+    public function editar($ingreso_id, $tipoingreso, $monto,$id_alumno,$tipo_pago,$origen,$carrera_id = 0)
   {
     $sql = "UPDATE `ingreso`
     SET 
@@ -110,7 +110,8 @@ public function permiso(
       `monto` = '$monto',
       `alumno_id` = '$id_alumno',
       `tipo_pago` = '$tipo_pago',
-      `origen` = '$origen'
+      `origen` = '$origen',
+      `carrera_id` = '$carrera_id'
        WHERE `id` = '$ingreso_id'";
 
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
@@ -119,7 +120,22 @@ public function permiso(
 
   public function listaporcaja($caja)
   {
-    $consulta = "SELECT i.*,it.nombre as ingresotipo,p.apellidonombre as alumno,p.dni FROM ingreso i,ingreso_tipo it,alumno a,persona p where i.ingreso_tipo_id=it.id and i.alumno_id=a.id and a.persona_id=p.id and caja_id='$caja' order by i.id desc";
+    $consulta = "SELECT 
+    i.*, 
+    it.nombre AS ingresotipo, 
+    p.apellidonombre AS alumno, 
+    p.dni, 
+    carr.nombre AS curso 
+FROM 
+    ingreso i
+    INNER JOIN ingreso_tipo it ON i.ingreso_tipo_id = it.id
+    INNER JOIN alumno a ON i.alumno_id = a.id
+    INNER JOIN persona p ON a.persona_id = p.id
+    LEFT JOIN carrera carr ON i.carrera_id = carr.id
+WHERE 
+    i.caja_id = '$caja'
+ORDER BY 
+    i.id DESC;";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
       while ($fila = mysqli_fetch_assoc($rs)) {
@@ -191,7 +207,7 @@ public function permiso(
     $usuario_id,
     $ingreso_tipo,
     $alumno_id,
-    $tipopago,$observacion)
+    $tipopago,$observacion,$carrera_id = 0)
   {
 
     
@@ -216,7 +232,7 @@ public function permiso(
      `tipo_pago`,
      `descuento`,
      `recargo`,
-     `origen`,`detalle`)
+     `origen`,`detalle`,`carrera_id`)
 VALUES (
 '$monto',
 '$fecha_ingreso',
@@ -227,7 +243,7 @@ VALUES (
 '$tipopago',
 '$descuento',
 '$recargo',
-'$origen','$observacion');";
+'$origen','$observacion','$carrera_id');";
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     return $rs;
   }        
