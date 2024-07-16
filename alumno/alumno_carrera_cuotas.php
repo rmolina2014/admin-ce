@@ -3,285 +3,165 @@ include("../sesion.php");
 include("../cabecera.php");
 include("../menu.php");
 include("alumno.php");
+
 if (isset($_POST['id']) && !empty($_POST['id'])) {
     $objeto = new Alumno();
     $alumno_id = (int)$_POST['id'];
-    //buscar los datos del alumno
     $datos_alumno = $objeto->obtenerId($alumno_id);
     foreach ($datos_alumno as $item) {
         $apellidonombre = $item['apellidonombre'];
         $carrera = $item['carrera'];
         $dni = $item['dni'];
     }
-}
-
-if (isset($_GET['id']) && !empty($_GET['id'])) {
+} elseif (isset($_GET['id']) && !empty($_GET['id'])) {
     $objeto = new Alumno();
     $alumno_id = (int)$_GET['id'];
-    //buscar los datos del alumno
     $datos_alumno = $objeto->obtenerId($alumno_id);
     foreach ($datos_alumno as $item) {
         $apellidonombre = $item['apellidonombre'];
         $carrera = $item['carrera'];
         $dni = $item['dni'];
     }
+} else {
+    // Redirigir si no hay ID de alumno
+    header("Location: lista_alumnos.php");
+    exit();
 }
-
 ?>
-<div id="main">
-    <header class="mb-3">
-        <a href="#" class="burger-btn d-block d-xl-none">
-            <i class="bi bi-justify fs-3"></i>
-        </a>
-    </header>
 
-    <div class="page-heading">
-        <div class="page-title">
-            <div class="row">
-                <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h4 class="font-bold">Alumno : <?php echo $apellidonombre; ?> DNI :
-                        <?php echo $dni; ?></h4>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuotas del Alumno</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="main" class="container mt-4">
+        <header class="mb-3">
+            <h1>Sistema de Gestión de Cuotas</h1>
+        </header>
 
-                    <!--p class="text-subtitle text-muted">The default layout.</p-->
-                </div>
-                <div class="col-12 col-md-6 order-md-2 order-first">
-
-                    <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><?php echo "Usuario : " . $USUARIO; ?></li>
-                        </ol>
-                    </nav>
-
+        <div class="page-heading">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-1 order-last">
+                        <h2>Alumno: <?php echo htmlspecialchars($apellidonombre); ?></h2>
+                        <p>DNI: <?php echo htmlspecialchars($dni); ?></p>
+                    </div>
+                    <div class="col-12 col-md-6 order-md-2 order-first">
+                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><?php echo "Usuario: " . htmlspecialchars($USUARIO); ?></li>
+                            </ol>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <?php
+        // Mostrar mensajes de éxito o error
+        if (isset($_SESSION['success'])) {
+            echo '<div class="alert alert-success">' . $_SESSION['success'] . '</div>';
+            unset($_SESSION['success']);
+        }
+        if (isset($_SESSION['error'])) {
+            echo '<div class="alert alert-danger">' . $_SESSION['error'] . '</div>';
+            unset($_SESSION['error']);
+        }
+        ?>
+
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <div class="ms-3 name">
-                        <h5 class="text-muted mb-0">Curso : <?php echo $carrera; ?></h5>
-                    </div>
+                    <h3 class="card-title">Curso: <?php echo htmlspecialchars($carrera); ?></h3>
                 </div>
                 <div class="card-body">
-                    <table class="table table-flush" id="datatable">
-                        <thead class="thead-light">
+                    <table class="table table-striped" id="datatable">
+                        <thead>
                             <tr>
                                 <th>Detalle</th>
                                 <th>Vencimiento</th>
                                 <th>Monto</th>
                                 <th>Saldo</th>
                                 <th>Estado</th>
-                                <th></th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Item -->
                             <?php
-                            $unosolo = True;
                             $usuarios = $objeto->listaAlumnoCarreraCuota($alumno_id);
+                            $primera_cuota_impaga = true;
                             foreach ($usuarios as $item) {
-                                //calcula el saldo de la cuota
                                 $saldo_cuota = $objeto->saldoCuotaAlumno($item['id']);
-                                foreach ($saldo_cuota as $saldoitem) {
-                                }
-
+                                $saldo = $saldo_cuota[0]['saldo'] ?? $item['monto'];
                             ?>
                                 <tr>
-                                    <td><?php echo $item['detalle']; ?></td>
-                                    <td><?php $fecha_venc = new DateTime($item['fecha_vencimiento']); $fechaFormateada = $fecha_venc->format('d/m/Y'); echo $fechaFormateada; ?></td>
-                                    <td><?php echo $item['monto']; ?></td>
-                                    <td><?php echo $saldoitem['saldo']; ?></td>
-                                    <td><?php echo $item['estado']; ?></td>
+                                    <td><?php echo htmlspecialchars($item['detalle']); ?></td>
+                                    <td><?php 
+                                        $fecha_venc = new DateTime($item['fecha_vencimiento']);
+                                        echo $fecha_venc->format('d/m/Y');
+                                    ?></td>
+                                    <td>$<?php echo number_format($item['monto'], 2); ?></td>
+                                    <td>$<?php echo number_format($saldo, 2); ?></td>
+                                    <td><?php echo htmlspecialchars($item['estado']); ?></td>
                                     <td>
-                                        <?php
-                                        if ($item['estado'] == "IMPAGA" and $unosolo) {
-                                            $unosolo = False;
-                                        ?>
-                                            <form action="pago_total.php" method="POST">
+                                        <?php if ($item['estado'] == "IMPAGA" && $primera_cuota_impaga): ?>
+                                            <form action="pago_total.php" method="POST" class="d-inline">
                                                 <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
-                                                <button class="btn btn-outline-primary" type="submit">Pago Total/Parcial </button>
+                                                <button class="btn btn-primary btn-sm" type="submit">Pago Total/Parcial</button>
                                             </form>
+                                            <?php $primera_cuota_impaga = false; ?>
+                                        <?php endif; ?>
 
+                                        <?php if ($item['estado'] == "IMPAGA" && $saldo == $item['monto']): ?>
+                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editar-cuota<?php echo $item['id']; ?>">
+                                                Editar Cuota
+                                            </button>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
 
-
-                                            <!--a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#pago-total<?php echo $item['id']; ?>">
-                                                Pago Total
-                                            </a-->
-                                            <!--a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#pago-parcial<?php echo $item['id']; ?>">
-                                                Pago Parcial
-                                            </a-->
-                                        <?php
-                                        }
-                                        ?>
-
-                                        <!--Modal - PAGO TOTAL Modal -->
-                                        <div class="modal fade text-left modal-borderless" id="pago-total<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true" style="display: none;">
-                                            <div class="modal-dialog modal-dialog-scrollable" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Pagar Cuota Total</h5>
-                                                        <button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-                                                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-
-                                                        <!-- formulario post--->
-                                                        <form id="form" method="post" action="pagar_cuota.php">
-                                                            <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
-                                                            <input type="hidden" name="alumno_id" value="<?php echo $item['alumno_id']; ?>">
-                                                            <div class="form-group">
-                                                                <label>Detalle :</label>
-                                                                <input class="form-control" type="text" value="<?php echo $item['detalle']; ?>" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Importe : $</label>
-                                                                <input class="form-control" id="monto" type="number" value="<?php echo $item['monto']; ?>" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Forma de Pago :</label>
-                                                                <select class="form-control" onchange="getval(this,<?php echo $item['id']; ?>);" id="tipo_pago<?php echo $item['id']; ?>" name="tipo_pago" required>
-                                                                    <option value="">Seleccionar...</option>
-                                                                    <option value="EFECTIVO">Efectivo</option>
-                                                                    <option value="VIRTUAL">Virtual</option>
-                                                                </select>
-
-                                                            </div>
-
-                                                            <div id="descuento_efectivo<?php echo $item['id']; ?>">
-
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label>Descuento Pago antes del dia 10 : $</label>
-                                                                <input class="form-control" id="descuento" name="descuento" type="number" />
-
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Recargo : $</label>
-                                                                <input class="form-control" name="recargo" type="number" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>A pagar : $</label>
-                                                                <input class="form-control" name="a_pagar" id="apagar" type="number" />
-                                                            </div>
-
-                                                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
-                                                                <i class="bx bx-x d-block d-sm-none"></i>
-                                                                <span class="d-none d-sm-block">Cancelar</span>
-                                                            </button>
-                                                            <button type="submit" class="btn btn-outline-primary">
-                                                                <i class="bx bx-check d-block d-sm-none"></i>
-                                                                <span class="d-none d-sm-block">Pagar</span>
-                                                            </button>
-                                                        </form>
-                                                        <!-- fin formulario--->
+                                <!-- Modal para editar cuota -->
+                                <div class="modal fade" id="editar-cuota<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="editarCuotaLabel<?php echo $item['id']; ?>" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editarCuotaLabel<?php echo $item['id']; ?>">Editar Cuota</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form action="editar_cuota.php" method="POST">
+                                                <div class="modal-body">
+                                                    <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
+                                                    <input type="hidden" name="alumno_id" value="<?php echo $alumno_id; ?>">
+                                                    <div class="mb-3">
+                                                        <label for="nuevo_monto<?php echo $item['id']; ?>" class="form-label">Nuevo Monto ($)</label>
+                                                        <input type="number" step="0.01" class="form-control" id="nuevo_monto<?php echo $item['id']; ?>" name="nuevo_monto" value="<?php echo $item['monto']; ?>" required>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
-                </div>
-            </div>
-            <!-- fin modal-->
-            <!--Modal - PAGO PARCIAL Modal -->
-            <div class="modal fade text-left modal-borderless" id="pago-parcial<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true" style="display: none;">
-                <div class="modal-dialog modal-dialog-scrollable" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Pagar Cuota Parcial</h5>
-                            <button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-
-                            <!-- formulario post--->
-                            <form id="form" method="post" action="pagar_cuota.php">
-                                <div class="form-group">
-                                    <label>Detalle :</label>
-                                    <input class="form-control" type="text" value="<?php echo $item['detalle']; ?>" />
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Importe : $</label>
-                                    <input class="form-control" type="number" name="monto_pago_parcial" />
-                                    <input type="hidden" name="cuota_id" value="<?php echo $item['id']; ?>">
-                                    <input type="hidden" name="alumno_id" value="<?php echo $item['alumno_id']; ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Forma de Pago :</label>
-                                    <select class="form-control" name="tipo_pago2" required>
-                                        <option value="">Seleccionar...</option>
-                                        <option value="EFECTIVO">Efectivo</option>
-                                        <option value="VIRTUAL">Virtual</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Descuento : $</label>
-                                    <input class="form-control" name="descuento" type="number" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Recargo : $</label>
-                                    <input class="form-control" name="recargo" type="number" />
-                                </div>
-
-                                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
-                                    <i class="bx bx-x d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Cancelar</span>
-                                </button>
-
-                                <button type="submit" class="btn btn-outline-primary">
-                                    <i class="bx bx-check d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Pagar</span>
-                                </button>
-                            </form>
-                            <!-- fin formulario--->
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
-            </div>
-    </div>
-</div>
-<!-- fin modal-->
-
-</td>
-</tr>
-<?php
+                            <?php
                             }
-?>
-</tbody>
-</table>
-<!--- fin contenido------------------------------------------------------- -->
-</div>
-</div>
-</section>
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
 
-<?php
-include("../pie.php");
-?>
-<script src="../assets/js/jquery-3.6.3.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-
-
-
-    }); // fin ready
-
-    function getval(sel, id) {
-        alert(sel.value);
-        $("#descuento_efectivo" + id).html("<span class='red'> -10</span>");
-
-    }
-</script>
+    <!-- Incluir Bootstrap JS y Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

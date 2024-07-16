@@ -133,6 +133,20 @@ class Alumno
     return $rs;
   }
 
+
+  public function actualizarMontoCuota($cuota_id, $nuevo_monto)
+  {
+    $sql = "UPDATE `alumno_carrera_cuotas`
+    SET 
+      `monto` = '$nuevo_monto'
+       WHERE `id` = '$cuota_id'";
+
+    //echo $sql;
+    //exit;   
+    $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
+    return $rs;
+  }  
+
   public function obtenerId($id)
   {
     $sql = "SELECT
