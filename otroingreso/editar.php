@@ -90,7 +90,8 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <select class="form-control" name="tipo_pago" id="tipo_pago" required>
                                 <option value="">Seleccionar...</option>
                                 <option value="EFECTIVO" <?php echo ($item['tipo_pago'] == 'EFECTIVO') ? 'selected' : ''; ?>>Efectivo</option>
-                                <option value="VIRTUAL" <?php echo ($item['tipo_pago'] == 'VIRTUAL') ? 'selected' : ''; ?>>Virtual</option>
+                                <option value="VIRTUAL MP" <?php echo ($item['tipo_pago'] == 'VIRTUAL MP') ? 'selected' : ''; ?>>Virtual MP</option>
+                                <option value="VIRTUAL BBVA" <?php echo ($item['tipo_pago'] == 'VIRTUAL BBVA') ? 'selected' : ''; ?>>Virtual BBVA</option>                                
                             </select>
                         </div>               
 

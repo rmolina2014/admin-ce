@@ -82,13 +82,19 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                 <thead>
                                                 <tbody>
                                                     <?php
-                                                    $sub_total_virtual = 0;
+                                                    $sub_total_virtual_mp = 0;
+                                                    $sub_total_virtual_bbva = 0;
                                                     $sub_total_efectivo = 0;
                                                     $ingresos = $objeto->listadoIngresos($caja_id);
                                                     foreach ($ingresos as $item) {
-                                                        if ($item['tipo_pago'] == "VIRTUAL") {
-                                                            $sub_total_virtual = $sub_total_virtual + $item['monto'];
-                                                        } else {
+                                                        if ($item['tipo_pago'] == "VIRTUAL MP") {
+                                                            $sub_total_virtual_mp = $sub_total_virtual_mp + $item['monto'];
+                                                        }
+                                                        if ($item['tipo_pago'] == "VIRTUAL BBVA") {
+                                                            $sub_total_virtual_bbva = $sub_total_virtual_bbva + $item['monto'];
+                                                        }                                                         
+
+                                                        if ($item['tipo_pago'] == "EFECTIVO")  {
                                                             $sub_total_efectivo = $sub_total_efectivo + $item['monto'];
                                                         }
                                                     ?>
@@ -193,12 +199,12 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                         <h6 class="text-muted font-semibold">
                                             <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;">Virtual</font>
+                                                <font style="vertical-align: inherit;">Virtual M.Pago</font>
                                             </font>
                                         </h6>
                                         <h6 class="font-extrabold mb-0">
                                             <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;"><?php echo number_format($sub_total_virtual, 2, ',', '.'); ?></font>
+                                                <font style="vertical-align: inherit;"><?php echo number_format($sub_total_virtual_mp, 2, ',', '.'); ?></font>
                                             </font>
                                         </h6>
                                     </div>
@@ -206,6 +212,28 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Virtual BBVA</font>
+                                            </font>
+                                        </h6>
+                                        <h6 class="font-extrabold mb-0">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;"><?php echo number_format($sub_total_virtual_bbva, 2, ',', '.'); ?></font>
+                                            </font>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-6 col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
@@ -242,7 +270,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                             <font style="vertical-align: inherit;">
                                                 <font style="vertical-align: inherit;">
                                                     <?php
-                                                    $total_ingreso = $sub_total_efectivo + $sub_total_virtual;
+                                                    $total_ingreso = $sub_total_efectivo + $sub_total_virtual_mp + $sub_total_virtual_bbva;
                                                     echo number_format($total_ingreso, 2, ',', '.');
                                                     ?></font>
                                             </font>
@@ -330,7 +358,8 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                 <input type="hidden" name="ingreso_total" value="<?php echo $total_ingreso; ?>">
                                                 <input type="hidden" name="egreso_total" value="<?php echo $total_egreso; ?>">
                                                 <input type="hidden" name="saldo_efectivo" value="<?php echo $sub_total_efectivo; ?>">
-                                                <input type="hidden" name="saldo_virtual" value="<?php echo $sub_total_virtual; ?>">
+                                                <input type="hidden" name="saldo_virtual_mp" value="<?php echo $sub_total_virtual_mp; ?>">
+                                                <input type="hidden" name="saldo_virtual_bbva" value="<?php echo $sub_total_virtual_bbva; ?>">                                                
                                                 <input type="hidden" id="monto_total_deposito" name="monto_total_deposito" value="<?php echo $saldo; ?>">
                                                 <div class="form-body">
                                                     <div class="row">
@@ -338,7 +367,9 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                             <div class="form-group " style="font-size: 18px;">
                                                                 <label for="first-name-vertical">Efectivo $ <?php echo number_format($sub_total_efectivo, 2, ',', '.'); ?></label>
                                                                 <br>
-                                                                <label for="">Virtual $ <?php echo number_format($sub_total_virtual, 2, ',', '.'); ?> </label>
+                                                                <label for="">Virtual MP $ <?php echo number_format($sub_total_virtual_mp, 2, ',', '.'); ?> </label>
+                                                                <br>
+                                                                <label for="">Virtual BBVA $ <?php echo number_format($sub_total_virtual_bbva, 2, ',', '.'); ?> </label>
                                                                 <br>
                                                                 <label  for="">Total Ingresos $ <?php echo number_format($total_ingreso, 2, ',', '.'); ?> </label>
                                                                 <br>
