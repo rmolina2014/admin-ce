@@ -95,9 +95,14 @@ if ($permisos == 0 && $ID != 1) {
                         <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
                         <button class="btn btn-sm btn-secondary d-inline-flex align-items-center">Editar</button>
                       </form>
+
+                      <form method="POST" role="form" action="actualizarprecios.php">
+                        <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
+                        <button class="btn btn-sm btn-warning d-inline-flex align-items-center">Actualizar</button>
+                      </form>
+
                     </td>
-
-
+                    
 
                   </tr>
                 <?php

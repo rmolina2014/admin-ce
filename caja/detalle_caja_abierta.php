@@ -12,6 +12,10 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
     // Definir si los atributos de Bootstrap deben estar presentes
     $toggleAttribute = ($estado_caja === "Abierta") ?  ' class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#myModal"' : 'class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#"';
     
+    $toggleAttributeReporte = ($estado_caja === "Abierta") ?  'class="btn btn-outline-secondary" disabled' : 'class="btn btn-outline-primary"';
+
+
+
     //$linkClass = ($estado_caja === "Cerrado") ? 'btn btn-outline-primary' : 'btn btn-outline-primary disabled-link';
 
 
@@ -69,14 +73,19 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
 
                                             <thead class="thead-light">
                                                 <tr>
+                                                    
                                                     <th>Alumno</th>
-                                                    <th>Fecha </th>
-                                                    <th>Monto $</th>
+                                                    <th>Fecha</th>
+                                                    <th>M.Pago</th>
+                                                    <th>BBVA</th>
+                                                    <th>EFECTIVO</th>
                                                     <th>Descuento</th>
                                                     <th>Recargo</th>
                                                     <th>Tipo</th>
                                                     <th>Detalle</th>
-                                                    <th>Forma</th>
+                                                    <th>Curso</th>
+                                                    <th>Comp.</th>
+                                                   
                                                     <th></th>
                                                 </tr>
                                                 <thead>
@@ -99,6 +108,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                         }
                                                     ?>
                                                         <tr>
+                               
                                                             <td>
                                                                 <?php echo $item['apellidonombre']; ?>
                                                             </td>
@@ -106,7 +116,25 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                                 <?php echo $item['fecha_ingreso']; ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo $item['monto']; ?>
+                                                                <?php 
+                                                                    if ($item['tipo_pago'] == "VIRTUAL MP") {
+                                                                        echo $item['monto'];
+                                                                    }else{ echo 0; }
+                                                                 ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php 
+                                                                    if ($item['tipo_pago'] == "VIRTUAL BBVA") {
+                                                                        echo $item['monto'];
+                                                                    }else{ echo 0; }
+                                                                 ?>
+                                                            </td>
+                                                                                                                                                                                    <td>
+                                                                <?php 
+                                                                    if ($item['tipo_pago'] == "EFECTIVO") {
+                                                                        echo $item['monto'];
+                                                                    }else{ echo 0; }
+                                                                 ?>
                                                             </td>
                                                             <td>
                                                                 <?php echo $item['descuento']; ?>
@@ -120,10 +148,14 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                             <td>
                                                                 <?php echo $item['detalle']; ?>
                                                             </td>
-
                                                             <td>
-                                                                <?php echo $item['tipo_pago']; ?>
-                                                            </td>
+                                                                <?php echo $item['nombre_carrera']; ?>
+                                                            </td>   
+                                                            <td>
+                                                                <?php echo $item['id']; ?>
+                                                            </td>                                                                                                                                                  
+
+                                                            
 
                                                         </tr>
                                                     <?php
@@ -148,7 +180,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                 </div>
                                 <!-- Table with outer spacing -->
                                 <div class="table-responsive">
-                                    <table class="table table-lg">
+                                    <table id="egresos" class="table table-lg">
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>N°</th>
@@ -188,6 +220,62 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                             </div>
                         </div>
                     </div>
+                                    <!----------DEPOSITO -->
+                    <div class="col-12 col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Depositos</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+
+                                </div>
+                                <!-- Table with outer spacing -->
+                                <div class="table-responsive">
+                                    <table id="deposito" class="table table-lg">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Caja Fuerte</th>
+                                                <th>Banco </th>
+                                                <th>Mercado pago</th>
+                                                <th>Saldo inicial proxima caja</th>
+                                            </tr>
+                                            <thead>
+                                            <tbody>
+                                                <?php
+                                                
+                                                $depositos = $objeto->listadoDepositos($caja_id);
+                                                foreach ($depositos as $item) {
+                                                 ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $item['dep_caja_fuerte']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $item['dep_banco']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $item['dep_mp']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $item['dep_proxima_caja']; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                    </table>
+                                    <!--- fin contenido------------------------------------------------------- -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
                 </div>
 
                 <!--- saldos------------------------------------------------------- -->
@@ -332,7 +420,9 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                     </a-->
                     <a id="pagar23"  <?php echo $toggleAttribute; ?> >
                       Cerrar Caja
-                    </a>                    
+                    </a>
+                    <button id="generarReporte"  <?php echo $toggleAttributeReporte; ?>>Generar Reporte</button>
+                                                            
                 </div>
 
                 <!-- The Modal -->
@@ -425,5 +515,268 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
     }
     include("../pie.php");
         ?>
-        <script src="../assets/js/jquery-3.6.3.min.js"></script>
+<script src="../assets/js/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+document.getElementById('generarReporte').addEventListener('click', function() {
+    var ingresos = recopilarIngresos();
+    var egresos = recopilarEgresos();
+    var totales = calcularTotales(ingresos, egresos);
+    var depositos = recopilarDepositos();
+    
+    var ventanaReporte = window.open('', '_blank');
+    ventanaReporte.document.write(`
+        <html>
+        <head>
+            <title>Reporte de Caja</title>
+            <style>
+                body { font-family: Arial, sans-serif; }
+                table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                th, td { border: 1px solid black; padding: 5px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                .totales { font-weight: bold; }
+                @media print {
+                    button { display: none; }
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Entradas</h1>
+            ${generarTablaEntradas(ingresos)}
+            <h1>Salidas</h1>
+            ${generarTablaSalidas(egresos)}
+            <h2>Resumen</h2>
+            ${generarTablaResumen(totales)}
+            <h1>Depositos</h1>
+            ${generarTablaDepositos(depositos)}            
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="window.print()" class="btn btn-primary no-print" style="font-size: 16px; padding: 10px 20px;">Imprimir</button>
+            </div>            
+        </body>
+        </html>
+    `);
+    ventanaReporte.document.close();
+});
+
+function recopilarIngresos() {
+    var ingresos = [];
+    var filas = document.querySelectorAll('table tbody tr');
+    var conceptointegrado = "";
+
+    filas.forEach(function(fila) {
+        var celdas = fila.querySelectorAll('td');
+        if (celdas.length >= 6) {
+            conceptointegrado = celdas[7].textContent + " " + celdas[8].textContent;
+            var fecha = celdas[1].textContent;
+        
+            ingresos.push({
+                alumno: celdas[0].textContent,
+                fecha: fecha,
+                montoMP: parseFloat(celdas[2].textContent.replace('$', '').replace(',', '')) || 0,
+                montoBBVA: parseFloat(celdas[3].textContent.replace('$', '').replace(',', '')) || 0,               
+                montoEFECTIVO: parseFloat(celdas[4].textContent.replace('$', '').replace(',', '')) || 0,             
+                concepto: conceptointegrado,
+                curso: celdas[9].textContent,
+                comprobante: celdas[10].textContent,
+            });
+        }
+    });
+    return ingresos;
+}
+
+function recopilarEgresos() {
+    var egresos = [];
+    var filasEgresos = document.querySelectorAll('#egresos tbody tr');
+    filasEgresos.forEach(function(fila) {
+        var celdas = fila.querySelectorAll('td');
+        if (celdas.length >= 4) {
+            egresos.push({
+                numero: celdas[0].textContent,
+                fecha: celdas[1].textContent,
+                monto: parseFloat(celdas[2].textContent.replace('$', '').replace(',', '')) || 0,
+                detalle: celdas[3].textContent,
+            });
+        }
+    });
+    return egresos;
+}
+
+function recopilarDepositos() {
+    var depositos = [];
+    var filasDepositos = document.querySelectorAll('#deposito tbody tr');
+    filasDepositos.forEach(function(fila) {
+        var celdas = fila.querySelectorAll('td');
+        if (celdas.length >= 4) {
+            depositos.push({
+                cajafuerte: parseFloat(celdas[0].textContent.replace('$', '').replace(',', '')) || 0,
+                banco: parseFloat(celdas[1].textContent.replace('$', '').replace(',', '')) || 0,
+                mercadopago: parseFloat(celdas[2].textContent.replace('$', '').replace(',', '')) || 0,
+                saldocajasiguiente: parseFloat(celdas[3].textContent.replace('$', '').replace(',', '')) || 0,
+            });
+        }
+    });
+    return depositos;
+}
+
+function calcularTotales(ingresos, egresos) {
+    var totales = {
+        ingresos: {efectivo: 0, mPago: 0, bbva: 0, total: 0},
+        egresos: {total: 0},
+        saldo: {efectivo: 0, mPago: 0, bbva: 0, total: 0}
+    };
+
+    ingresos.forEach(function(ingreso) {
+        totales.ingresos.efectivo += ingreso.montoEFECTIVO;
+        totales.ingresos.mPago += ingreso.montoMP;
+        totales.ingresos.bbva += ingreso.montoBBVA;
+    });
+    totales.ingresos.total = totales.ingresos.efectivo + totales.ingresos.mPago + totales.ingresos.bbva;
+
+    egresos.forEach(function(egreso) {
+        totales.egresos.total += egreso.monto;
+    });
+
+    totales.saldo.efectivo = totales.ingresos.efectivo;
+    totales.saldo.mPago = totales.ingresos.mPago;
+    totales.saldo.bbva = totales.ingresos.bbva;
+    totales.saldo.total = totales.ingresos.total - totales.egresos.total;
+
+    return totales;
+}
+
+function generarTablaEntradas(ingresos) {
+    let tabla = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Alumno</th>
+                    <th>Fecha</th>
+                    <th>Monto MP</th>
+                    <th>Monto BBVA</th>
+                    <th>Efectivo</th>
+                    <th>Detalle</th>
+                    <th>Curso</th>
+                    <th>Comp.</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    ingresos.forEach(function(ingreso) {
+        tabla += `
+            <tr>
+                <td>${ingreso.alumno}</td>
+                <td>${ingreso.fecha}</td>
+                <td>$${ingreso.montoMP.toFixed(2)}</td>
+                <td>$${ingreso.montoBBVA.toFixed(2)}</td>
+                <td>$${ingreso.montoEFECTIVO.toFixed(2)}</td>
+                <td>${ingreso.concepto}</td>
+                <td>${ingreso.curso}</td>
+                <td>${ingreso.comprobante}</td>
+            </tr>
+        `;
+    });
+
+    tabla += '</tbody></table>';
+    return tabla;
+}
+
+function generarTablaSalidas(egresos) {
+    let tabla = `
+        <table>
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    egresos.forEach(function(egreso) {
+        tabla += `
+            <tr>
+                <td>${egreso.numero}</td>
+                <td>${egreso.fecha}</td>
+                <td>$${egreso.monto.toFixed(2)}</td>
+                <td>${egreso.detalle}</td>
+            </tr>
+        `;
+    });
+
+    tabla += '</tbody></table>';
+    return tabla;
+}
+
+function generarTablaDepositos(depositos) {
+    let tabla = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Caja Fuerte</th>
+                    <th>Banco</th>
+                    <th>Mercado Pago</th>
+                    <th>Proxima Caja</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    depositos.forEach(function(deposito) {
+        tabla += `
+            <tr>
+                <td>${deposito.cajafuerte.toFixed(2)}</td>
+                <td>${deposito.banco.toFixed(2)}</td>
+                <td>$${deposito.mercadopago.toFixed(2)}</td>
+                <td>${deposito.saldocajasiguiente.toFixed(2)}</td>
+            </tr>
+        `;
+    });
+
+    tabla += '</tbody></table>';
+    return tabla;
+}
+
+
+function generarTablaResumen(totales) {
+    return `
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Efectivo</th>
+                    <th>M Pago</th>
+                    <th>Bbva</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Total Ingresos</td>
+                    <td>$${totales.ingresos.efectivo.toFixed(2)}</td>
+                    <td>$${totales.ingresos.mPago.toFixed(2)}</td>
+                    <td>$${totales.ingresos.bbva.toFixed(2)}</td>
+                    <td>$${totales.ingresos.total.toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Total Egresos</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>$${totales.egresos.total.toFixed(2)}</td>
+                </tr>
+                <tr class="totales">
+                    <td>Saldo</td>
+                    <td>$${totales.saldo.efectivo.toFixed(2)}</td>
+                    <td>$${totales.saldo.mPago.toFixed(2)}</td>
+                    <td>$${totales.saldo.bbva.toFixed(2)}</td>
+                    <td>$${totales.saldo.total.toFixed(2)}</td>
+                </tr>
+            </tbody>
+        </table>
+    `;
+}             
+
+        </script>
 

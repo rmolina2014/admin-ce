@@ -25,14 +25,14 @@
        <div class="page-title">
          <div class="row">
            <div class="col-12 col-md-6 order-md-1 order-last">
-             <h3>Curso</h3>
+             <h3>Actualizacion de precios por %</h3>
              <!--p class="text-subtitle text-muted">The default layout.</p-->
            </div>
            <div class="col-12 col-md-6 order-md-2 order-first">
              <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                <ol class="breadcrumb">
                  <li class="breadcrumb-item"><a href="../panelcontrol/index.html">Panel de Control</a></li>
-                 <li class="breadcrumb-item active" aria-current="page">Cursos</li>
+                 <li class="breadcrumb-item active" aria-current="page">Actualizar valores por Curso</li>
                </ol>
              </nav>
            </div>
@@ -42,39 +42,44 @@
        <section class="section">
          <div class="card">
            <div class="card-header">
-             <h4 class="card-title">Editar Cursos</h4>
+             <h4 class="card-title">AVISO IMPORTANTE: Todas las cuotas IMPAGAS de los alumnos del curso se actualizaran</h4>
            </div>
            <div class="card-body">
              <!--- contenido -->
 
              <!---formulario-->
-<form method="POST" role="form" action="editar.php">
+<form method="POST" role="form" action="actualizarprecios.php" id="updateForm">
 
   <input type="hidden" name="id_carrera" value="<?php echo $item['id']; ?>">
   <div class="col-md-8 mb-3">
-    <label class="form-label">Nombre*</label>
-    <input name="nombre"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['nombre']); ?>" />
+    <label class="form-label">Nombre</label>
+    <input name="nombre"  class="form-control" type="text" tabindex="2" disabled required value="<?php echo utf8_encode($item['nombre']); ?>" />
   </div>
 
 
   <div class="col-md-8 mb-3">
-    <label class="form-label">Cantidad de cuotas*</label>
-    <input name="cantidadcuotas" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="^\d*\.?\d*$" class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['cantidad_cuotas']); ?>" />
+    <label class="form-label">Cantidad de cuotas</label>
+    <input name="cantidadcuotas"  class="form-control" type="text" tabindex="2" disabled required value="<?php echo utf8_encode($item['cantidad_cuotas']); ?>" />
   </div>
 
   <div class="col-md-8 mb-3">
-    <label class="form-label">Costo total curso*</label>
-    <input name="costocarrera" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="^\d*\.?\d*$"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['costo_carrera']); ?>" />
+    <label class="form-label">Costo total curso</label>
+    <input name="costocarrera"  class="form-control" type="text" tabindex="2" disabled required value="<?php echo utf8_encode($item['costo_carrera']); ?>" />
   </div>  
 
   <div class="col-md-8 mb-3">
-    <label class="form-label">Costo Inscripcion*</label>
-    <input name="costoinscripcion" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"  pattern="^\d*\.?\d*$" class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['inscripcion']); ?>" />
+    <label class="form-label">Costo Inscripcion</label>
+    <input name="costoinscripcion"  class="form-control" type="text" tabindex="2" disabled required value="<?php echo utf8_encode($item['inscripcion']); ?>" />
   </div>   
 
   <div class="col-md-8 mb-3">
-    <label class="form-label">Detalle*</label>
-    <input name="detalles"  class="form-control" type="text" tabindex="2" required value="<?php echo utf8_encode($item['detalles']); ?>" />
+    <label class="form-label">Detalle</label>
+    <input name="detalles"  class="form-control" type="text" tabindex="2" disabled required value="<?php echo utf8_encode($item['detalles']); ?>" />
+  </div>
+
+ <div class="col-md-8 mb-3">
+    <label class="form-label">Porcentaje de aumento*</label>
+    <input name="porcentajeaumento" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="^\d*\.?\d*$"  class="form-control" type="text" tabindex="2" required value="" />
   </div>   
 
     
@@ -84,13 +89,25 @@
   
     </button>
     
-    <button type="submit" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-       Guardar
+    <button type="button" class="btn btn-sm btn-warning d-inline-flex align-items-center" onclick="confirmUpdate()">
+       Actualizar precios
+    </button>    
+    <!--button type="submit" class="btn btn-sm btn-warning d-inline-flex align-items-center">
+       Actualizar precios
     
-    </button>
+    </button-->
   
   </div>
 </form>
+
+
+<script>
+function confirmUpdate() {
+    if (confirm("¿Está seguro de que desea actualizar los precios?")) {
+        document.getElementById("updateForm").submit();
+    }
+}
+</script>
 
 <!--- fin -->
              <!--- fin contenido -->
@@ -106,12 +123,8 @@ if (isset($_POST['id_carrera']) && !empty($_POST['id_carrera']))
 {
 
 $id = $_POST['id_carrera'];
-$nombre=$_POST['nombre'];
-$cantidadcuotas=$_POST['cantidadcuotas'];
-$costocurso=$_POST['costocarrera'];
-$costoinscripcion=$_POST['costoinscripcion'];
-$detalles=$_POST['detalles'];
-$todobien = $objeto->editar($id,$nombre,$cantidadcuotas,$costocurso,$costoinscripcion,$detalles);
+$porcentajeaumento = $_POST['porcentajeaumento'];
+$todobien = $objeto->actualizarprecios($id,$porcentajeaumento);
 if($todobien){
     echo "<script language=Javascript> location.href=\"index.php\"; </script>"; 
     //header('Location: listado.php');
@@ -122,7 +135,7 @@ if($todobien){
   ?>      
        <div class="alert alert-block alert-error fade in" style="max-width: 220px; margin: 0px auto 20px;">
        <button data-dismiss="alert" class="close" type="button">×</button>
-       Lo sentimos, no se pudo guardar ...
+       Lo sentimos, no se pudo actualizar ...
        </div> 
   <?php
   }     

@@ -71,17 +71,17 @@ if (isset($_POST['nombrecarrera']) && !empty($_POST['nombrecarrera'])) {
 
               <div class="col-md-8 mb-3">
                 <label class="form-label">Cantidad de cuotas*</label>
-                <input name="cantidadcuotas" class="form-control" id="cantidadcuotas" required  />
+                <input name="cantidadcuotas" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="^\d*\.?\d*$" class="form-control" id="cantidadcuotas" required  />
               </div>              
 
               <div class="col-md-8 mb-3">
                 <label class="form-label">Costo Total Curso*</label>
-                <input name="costocurso" class="form-control" id="costocurso" required  />
+                <input name="costocurso" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="^\d*\.?\d*$" class="form-control" id="costocurso" required  />
               </div>
 
               <div class="col-md-8 mb-3">
                 <label class="form-label">Costo Inscripcion*</label>
-                <input name="costoinscripcion" class="form-control" id="costoinscripcion" required  />
+                <input name="costoinscripcion" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="^\d*\.?\d*$" class="form-control" id="costoinscripcion" required  />
               </div>
 
               <div class="col-md-8 mb-3">

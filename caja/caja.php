@@ -270,10 +270,16 @@ VALUES (
     ingreso.origen,
     ingreso.detalle,
     persona.apellidonombre,
-    ingreso_tipo.nombre as tipo_de_ingreso
-  FROM `ingreso`,`persona`,`alumno`,`ingreso_tipo`
-  WHERE `caja_id`=$caja_id and ingreso.alumno_id=alumno.id and alumno.persona_id=persona.id and ingreso.ingreso_tipo_id=ingreso_tipo.id 
-  order by ingreso.id desc;";
+    ingreso_tipo.nombre AS tipo_de_ingreso,
+    carrera.nombre AS nombre_carrera
+FROM ingreso
+INNER JOIN alumno ON ingreso.alumno_id = alumno.id
+INNER JOIN persona ON alumno.persona_id = persona.id
+INNER JOIN ingreso_tipo ON ingreso.ingreso_tipo_id = ingreso_tipo.id
+LEFT JOIN carrera ON ingreso.carrera_id = carrera.id
+WHERE ingreso.caja_id = $caja_id 
+ORDER BY ingreso.id DESC;
+;";
 
     $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
     if (mysqli_num_rows($rs) > 0) {
@@ -308,6 +314,21 @@ FROM
     }
     return $data;
   }
+
+
+  // listado del deposito
+  public function listadoDepositos($caja_id)
+  {
+    $data = [];
+    $consulta = "SELECT `dep_caja_fuerte`, `dep_banco`, `dep_mp`, `dep_proxima_caja` FROM `caja` WHERE id=$caja_id";
+    $rs = mysqli_query(conexion::obtenerInstancia(), $consulta);
+    if (mysqli_num_rows($rs) > 0) {
+      while ($fila = mysqli_fetch_assoc($rs)) {
+        $data[] = $fila;
+      }
+    }
+    return $data;
+  }  
 
 
   public function totalIngresos($caja_id)
