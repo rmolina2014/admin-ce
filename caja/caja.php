@@ -98,7 +98,7 @@ class Caja
   }
 
 
-  public function abrircaja($fecha_apertura, $ingreso_total, $egreso_total, $fecha_cierre, $estado, $saldo)
+  public function abrircaja($fecha_apertura, $ingreso_total, $egreso_total, $fecha_cierre, $estado, $saldo,$usuario_id)
   {
     $sql = "INSERT INTO `caja`
             (
@@ -107,14 +107,15 @@ class Caja
              `egreso_total`,
              `fecha_cierre`,
              `estado`,
-             `saldo`)
+             `saldo`,`usuario_id`)
 VALUES (
         '$fecha_apertura',
         '$ingreso_total',
         '$egreso_total',
         '$fecha_cierre',
         '$estado',
-        '$saldo');";
+        '$saldo',
+        '$usuario_id');";
 
     //echo $sql;
     //exit;
@@ -133,7 +134,8 @@ VALUES (
     $dep_caja_fuerte,
     $dep_banco,
     $dep_mp,
-    $dep_proxima_caja
+    $dep_proxima_caja,
+    $usuario_id
   ) {
     $sql = "UPDATE `caja`
     SET 
@@ -144,7 +146,8 @@ VALUES (
       `dep_caja_fuerte` = '$dep_caja_fuerte',
       `dep_banco` = '$dep_banco',
       `dep_mp` = '$dep_mp',
-      `dep_proxima_caja` = '$dep_proxima_caja'
+      `dep_proxima_caja` = '$dep_proxima_caja',
+      `usuario_id` = '$usuario_id' 
     WHERE `id` = '$id';";
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);
     return $rs;
@@ -299,7 +302,8 @@ ORDER BY ingreso.id DESC;
 egreso.`caja_id` AS caja_id,
 egreso.`fecha_egreso` AS fecha_egreso,
 egreso.`monto` AS monto,
-egreso_tipo.`nombre` AS egreso_tipo
+egreso_tipo.`nombre` AS egreso_tipo,
+egreso.`tipo_pago` AS tipo_pago
 FROM
     `egreso`
     INNER JOIN `egreso_tipo` 

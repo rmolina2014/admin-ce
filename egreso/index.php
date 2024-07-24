@@ -59,6 +59,7 @@ if ($permisos == 0 && $ID != 1) {
                 <th>Importe</th>
                 <th>Detalle</th>
                 <th>Caja</th>
+                <th>Tipo Pago</th>
                 <th></th>
               </tr>
               <thead>
@@ -92,6 +93,9 @@ if ($permisos == 0 && $ID != 1) {
                     <td>
                       <?php echo $item['caja_id']; ?>
                     </td>
+                    <td>
+                      <?php echo $item['tipo_pago']; ?>
+                    </td>                    
                     <td>
                       <form method="POST" role="form" action="editar.php">
                         <input type="hidden" name="id" value="<?php echo $item['id']; ?>">

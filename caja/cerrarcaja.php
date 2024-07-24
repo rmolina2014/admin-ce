@@ -17,6 +17,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id']))
   $dep_banco = $_POST['dep_banco'];
   $dep_mp = $_POST['dep_mp'];
   $dep_proxima_caja = $_POST['dep_proxima_caja'];
+  $usuario_id = $_POST['usuario_id'];
 
   // cerrar caja
   $objecto = new Caja();
@@ -33,7 +34,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id']))
     $dep_proxima_caja
    */
 
-  $todobien = $objecto->cerrarcaja($caja_id,$fecha_cierre,'Cerrado', $saldo_efectivo, $saldo_virtual,$dep_caja_fuerte,$dep_banco,$dep_mp,$dep_proxima_caja);
+  $todobien = $objecto->cerrarcaja($caja_id,$fecha_cierre,'Cerrado', $saldo_efectivo, $saldo_virtual,$dep_caja_fuerte,$dep_banco,$dep_mp,$dep_proxima_caja,$usuario_id);
   if ($todobien) {
     
     // abrir proxima caja
@@ -43,12 +44,20 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id']))
     $fecha_cierre = date("Y-m-d H:i:s");
     $estado = 'Abierta';
     $saldo = $dep_proxima_caja;
-    $id_caja_nueva = $objecto->abrircaja($fecha_apertura, $ingreso_total, $egreso_total, $fecha_cierre, $estado, $saldo);
+    $id_caja_nueva = $objecto->abrircaja($fecha_apertura, $ingreso_total, $egreso_total, $fecha_cierre, $estado, $saldo,$usuario_id);
 
     // agregar el ingreso del saldo inicial
     //el tipo de ingreso 1 es ingreso de socios
     //el alumno_id=1 esta jarcodeado es el dni del instituto
+    
+    //ingreso inicial de efectivo siguiente caja
     $ingreso_inicial_caja = $objecto->insertar_ingreso($dep_proxima_caja, date("Y-m-d H:i:s"), $id_caja_nueva, $ID, 1,1,"INGRESO INICIAL CAJA ANTERIOR","EFECTIVO","Socios");
+    
+    //ingreso inicial BBVA
+    $ingreso_inicial_caja = $objecto->insertar_ingreso($dep_banco, date("Y-m-d H:i:s"), $id_caja_nueva, $ID, 1,1,"INGRESO INICIAL CAJA ANTERIOR","VIRTUAL BBVA","Socios");
+
+    //ingreso inicial Mercado Pago
+    $ingreso_inicial_caja = $objecto->insertar_ingreso($dep_mp, date("Y-m-d H:i:s"), $id_caja_nueva, $ID, 1,1,"INGRESO INICIAL CAJA ANTERIOR","VIRTUAL MP","Socios");
 
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
     //header('Location: listado.php');

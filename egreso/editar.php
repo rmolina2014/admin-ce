@@ -15,6 +15,7 @@
       $egreso_id = $item['id'];
       $caja_id = $item['caja_id'];
       $monto_original= $item['monto'];
+      $tipo_pago= $item['tipo_pago'];
   ?>
 
    <div id="main">
@@ -55,6 +56,7 @@
                <input type="hidden" name="egreso_id" value= "<?php echo $egreso_id; ?>" />
                <input type="hidden" name="caja_id" value= "<?php echo $caja_id; ?>" />
                <input type="hidden" name="monto_original" value= "<?php echo $monto_original; ?>" />
+               <input type="hidden" name="tipo_pago" value= "<?php echo $tipo_pago; ?>" />
                
                <div class="col-md-8 mb-3">
                  <label class="form-label">Tipo Egreso</label>
@@ -83,6 +85,16 @@
                </div>
 
 
+                        <div class="col-md-8 mb-3">
+                            <label>Forma de Pago :</label>
+                            <select class="form-control" name="tipo_pago" id="tipo_pago" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="EFECTIVO" <?php echo ($item['tipo_pago'] == 'EFECTIVO') ? 'selected' : ''; ?>>Efectivo</option>
+                                <option value="VIRTUAL MP" <?php echo ($item['tipo_pago'] == 'VIRTUAL MP') ? 'selected' : ''; ?>>Virtual MP</option>
+                            </select>
+                        </div>                         
+
+
                <div class="col-md-8 mb-3">
                  <button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center" data-dismiss="modal" onclick="location.href='index.php';"> Cancelar
                  </button>
@@ -109,8 +121,9 @@
           $monto = $_POST['monto'];
           $caja_id = $_POST['caja_id'];
           $monto_original = $_POST['monto_original'];
+          $tipo_pago = $_POST['tipo_pago'];
 
-          $todobien = $objeto->editar($egreso_id, $tipoegreso, $monto);
+          $todobien = $objeto->editar($egreso_id, $tipoegreso, $monto,$tipo_pago);
           if ($todobien) {
             $monto_actualizado =  $monto - $monto_original;
             $todobien = $caja->actualizaregresocaja($caja_id, $monto_actualizado ); 

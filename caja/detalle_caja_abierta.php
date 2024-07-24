@@ -185,17 +185,27 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                             <tr>
                                                 <th>N°</th>
                                                 <th>Fecha </th>
-                                                <th>Monto $</th>
                                                 <th>Detalle</th>
+                                                <th>Efectivo</th>
+                                                <th>Mercado Pago</th>
                                             </tr>
                                             <thead>
                                             <tbody>
                                                 <?php
                                                 $total_egreso = 0;
-                                                $ingresos = $objeto->listadoEgresos($caja_id);
-                                                foreach ($ingresos as $item) {
+                                                $sub_total_egreso_virtual_mp = 0;
+                                                $sub_total_egreso_efectivo = 0;
+                                                $egresos = $objeto->listadoEgresos($caja_id);
+                                                foreach ($egresos as $item) {
                                                     $total_egreso = $total_egreso + $item['monto'];
-                                                ?>
+                                                    if ($item['tipo_pago'] == "VIRTUAL MP") {
+                                                        $sub_total_egreso_virtual_mp = $sub_total_egreso_virtual_mp + $item['monto'];
+                                                        }                                                         
+
+                                                        if ($item['tipo_pago'] == "EFECTIVO")  {
+                                                            $sub_total_egreso_efectivo = $sub_total_egreso_efectivo + $item['monto'];
+                                                        }
+                                                    ?>
                                                     <tr>
                                                         <td>
                                                             <?php echo $item['id']; ?>
@@ -204,11 +214,22 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                             <?php echo $item['fecha_egreso']; ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo $item['monto']; ?>
-                                                        </td>
-                                                        <td>
                                                             <?php echo $item['egreso_tipo']; ?>
                                                         </td>
+                                                            <td>
+                                                                <?php 
+                                                                    if ($item['tipo_pago'] == "EFECTIVO") {
+                                                                        echo $item['monto'];
+                                                                    }else{ echo 0; }
+                                                                 ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php 
+                                                                    if ($item['tipo_pago'] == "VIRTUAL MP") {
+                                                                        echo $item['monto'];
+                                                                    }else{ echo 0; }
+                                                                 ?>
+                                                            </td>                                                        
                                                     </tr>
                                                 <?php
                                                 }
@@ -287,7 +308,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                         <h6 class="text-muted font-semibold">
                                             <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;">Virtual M.Pago</font>
+                                                <font style="vertical-align: inherit;">Ingresos Virtual M.Pago</font>
                                             </font>
                                         </h6>
                                         <h6 class="font-extrabold mb-0">
@@ -308,7 +329,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                         <h6 class="text-muted font-semibold">
                                             <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;">Virtual BBVA</font>
+                                                <font style="vertical-align: inherit;">Ingresos Virtual BBVA</font>
                                             </font>
                                         </h6>
                                         <h6 class="font-extrabold mb-0">
@@ -330,7 +351,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                         <h6 class="text-muted font-semibold">
                                             <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;">Efectivo</font>
+                                                <font style="vertical-align: inherit;">Ingresos Efectivo</font>
                                             </font>
                                         </h6>
                                         <h6 class="font-extrabold mb-0">
@@ -368,6 +389,78 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Egresos Virtual M.Pago</font>
+                                            </font>
+                                        </h6>
+                                        <h6 class="font-extrabold mb-0">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;"><?php echo number_format($sub_total_egreso_virtual_mp, 2, ',', '.'); ?></font>
+                                            </font>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Egresos Virtual BBVA</font>
+                                            </font>
+                                        </h6>
+                                        <h6 class="font-extrabold mb-0">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;"><?php echo number_format(0, 2, ',', '.'); ?></font>
+                                            </font>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Egresos Efectivo</font>
+                                            </font>
+                                        </h6>
+                                        <h6 class="font-extrabold mb-0">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;"><?php echo number_format($sub_total_egreso_efectivo, 2, ',', '.'); ?></font>
+                                            </font>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+
+
+
+
                     <div class="col-6 col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
@@ -389,6 +482,92 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                             </div>
                         </div>
                     </div>
+
+
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Saldo Virtual M.P.</font>
+                                            </font>
+                                        </h6>
+                                        <h6 class="font-extrabold mb-0">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">
+                                                    <?php
+                                                    $saldovmp = $sub_total_virtual_mp - $sub_total_egreso_virtual_mp;
+                                                    echo number_format($saldovmp, 2, ',', '.');
+                                                    ?>
+                                                </font>
+                                            </font>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Saldo Virtual BBVA</font>
+                                            </font>
+                                        </h6>
+                                        <h6 class="font-extrabold mb-0">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">
+                                                    <?php
+                                                    $saldovbbva = $sub_total_virtual_bbva;
+                                                    echo number_format($saldovbbva, 2, ',', '.');
+                                                    ?>
+                                                </font>
+                                            </font>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">Saldo Efectivo</font>
+                                            </font>
+                                        </h6>
+                                        <h6 class="font-extrabold mb-0">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">
+                                                    <?php
+                                                    $saldoefectivo = $sub_total_efectivo - $sub_total_egreso_efectivo;
+                                                    echo number_format($saldoefectivo, 2, ',', '.');
+                                                    ?>
+                                                </font>
+                                            </font>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+
+
+
                     <div class="col-6 col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
@@ -447,19 +626,22 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                 <input type="hidden" name="saldo" value="<?php echo $saldo; ?>">
                                                 <input type="hidden" name="ingreso_total" value="<?php echo $total_ingreso; ?>">
                                                 <input type="hidden" name="egreso_total" value="<?php echo $total_egreso; ?>">
-                                                <input type="hidden" name="saldo_efectivo" value="<?php echo $sub_total_efectivo; ?>">
-                                                <input type="hidden" name="saldo_virtual_mp" value="<?php echo $sub_total_virtual_mp; ?>">
-                                                <input type="hidden" name="saldo_virtual_bbva" value="<?php echo $sub_total_virtual_bbva; ?>">                                                
+                                                <input type="hidden" name="saldo_efectivo" value="<?php echo $saldoefectivo; ?>">
+                                                <input type="hidden" name="saldo_virtual_mp" value="<?php echo $saldovmp; ?>">
+                                                <input type="hidden" name="saldo_virtual_bbva" value="<?php echo $saldovbbva; ?>">
+                                                <?php $saldo_virtual=$saldovmp + $saldovbbva; ?>
+                                                <input type="hidden" name="saldo_virtual" value="<?php echo $saldo_virtual; ?>">
+                                                <input type="hidden" name="usuario_id" value="<?php echo $_SESSION['sesion_id']; ?>">                                                                                                
                                                 <input type="hidden" id="monto_total_deposito" name="monto_total_deposito" value="<?php echo $saldo; ?>">
                                                 <div class="form-body">
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="form-group " style="font-size: 18px;">
-                                                                <label for="first-name-vertical">Efectivo $ <?php echo number_format($sub_total_efectivo, 2, ',', '.'); ?></label>
+                                                                <label for="first-name-vertical">Efectivo $ <?php echo number_format($saldoefectivo, 2, ',', '.'); ?></label>
                                                                 <br>
-                                                                <label for="">Virtual MP $ <?php echo number_format($sub_total_virtual_mp, 2, ',', '.'); ?> </label>
+                                                                <label for="">Virtual MP $ <?php echo number_format($saldovmp, 2, ',', '.'); ?> </label>
                                                                 <br>
-                                                                <label for="">Virtual BBVA $ <?php echo number_format($sub_total_virtual_bbva, 2, ',', '.'); ?> </label>
+                                                                <label for="">Virtual BBVA $ <?php echo number_format($saldovbbva, 2, ',', '.'); ?> </label>
                                                                 <br>
                                                                 <label  for="">Total Ingresos $ <?php echo number_format($total_ingreso, 2, ',', '.'); ?> </label>
                                                                 <br>
@@ -489,7 +671,7 @@ if (isset($_POST['caja_id']) && !empty($_POST['caja_id'])) {
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="form-group">
-                                                                <label for="password-vertical">Saldo Inicial Proxima Caja</label>
+                                                                <label for="password-vertical">Efectivo Proxima Caja</label>
                                                                 <input type="text" class="form-control sumando" id="dep_proxima_caja" name="dep_proxima_caja" placeholder="Nota: Usar el . como decimal" oninput="validarSumaCierreCaja()">
                                                             </div>
                                                         </div>
@@ -592,8 +774,9 @@ function recopilarEgresos() {
             egresos.push({
                 numero: celdas[0].textContent,
                 fecha: celdas[1].textContent,
-                monto: parseFloat(celdas[2].textContent.replace('$', '').replace(',', '')) || 0,
-                detalle: celdas[3].textContent,
+                detalle: celdas[2].textContent,
+                efectivo: parseFloat(celdas[3].textContent.replace('$', '').replace(',', '')) || 0,
+                mercadopago: parseFloat(celdas[4].textContent.replace('$', '').replace(',', '')) || 0,
             });
         }
     });
@@ -620,7 +803,7 @@ function recopilarDepositos() {
 function calcularTotales(ingresos, egresos) {
     var totales = {
         ingresos: {efectivo: 0, mPago: 0, bbva: 0, total: 0},
-        egresos: {total: 0},
+        egresos: {efectivo: 0, mPago: 0,total: 0},
         saldo: {efectivo: 0, mPago: 0, bbva: 0, total: 0}
     };
 
@@ -632,11 +815,14 @@ function calcularTotales(ingresos, egresos) {
     totales.ingresos.total = totales.ingresos.efectivo + totales.ingresos.mPago + totales.ingresos.bbva;
 
     egresos.forEach(function(egreso) {
-        totales.egresos.total += egreso.monto;
+        totales.egresos.efectivo += egreso.efectivo;
+        totales.egresos.mPago += egreso.mercadopago;
+        
     });
+    totales.egresos.total += totales.egresos.efectivo + totales.egresos.mPago;
 
-    totales.saldo.efectivo = totales.ingresos.efectivo;
-    totales.saldo.mPago = totales.ingresos.mPago;
+    totales.saldo.efectivo = totales.ingresos.efectivo - totales.egresos.efectivo;
+    totales.saldo.mPago = totales.ingresos.mPago - totales.egresos.mPago;
     totales.saldo.bbva = totales.ingresos.bbva;
     totales.saldo.total = totales.ingresos.total - totales.egresos.total;
 
@@ -687,8 +873,9 @@ function generarTablaSalidas(egresos) {
                 <tr>
                     <th>N°</th>
                     <th>Fecha</th>
-                    <th>Monto</th>
                     <th>Detalle</th>
+                    <th>Efectivo</th>
+                    <th>Mercado Pago</th>
                 </tr>
             </thead>
             <tbody>
@@ -699,8 +886,9 @@ function generarTablaSalidas(egresos) {
             <tr>
                 <td>${egreso.numero}</td>
                 <td>${egreso.fecha}</td>
-                <td>$${egreso.monto.toFixed(2)}</td>
                 <td>${egreso.detalle}</td>
+                <td>${egreso.efectivo.toFixed(2)}</td>
+                <td>${egreso.mercadopago.toFixed(2)}</td>
             </tr>
         `;
     });
@@ -728,7 +916,7 @@ function generarTablaDepositos(depositos) {
             <tr>
                 <td>${deposito.cajafuerte.toFixed(2)}</td>
                 <td>${deposito.banco.toFixed(2)}</td>
-                <td>$${deposito.mercadopago.toFixed(2)}</td>
+                <td>${deposito.mercadopago.toFixed(2)}</td>
                 <td>${deposito.saldocajasiguiente.toFixed(2)}</td>
             </tr>
         `;
@@ -754,24 +942,24 @@ function generarTablaResumen(totales) {
             <tbody>
                 <tr>
                     <td>Total Ingresos</td>
-                    <td>$${totales.ingresos.efectivo.toFixed(2)}</td>
-                    <td>$${totales.ingresos.mPago.toFixed(2)}</td>
-                    <td>$${totales.ingresos.bbva.toFixed(2)}</td>
-                    <td>$${totales.ingresos.total.toFixed(2)}</td>
+                    <td>${totales.ingresos.efectivo.toFixed(2)}</td>
+                    <td>${totales.ingresos.mPago.toFixed(2)}</td>
+                    <td>${totales.ingresos.bbva.toFixed(2)}</td>
+                    <td>${totales.ingresos.total.toFixed(2)}</td>
                 </tr>
                 <tr>
                     <td>Total Egresos</td>
+                    <td>${totales.egresos.efectivo.toFixed(2)}</td>
+                    <td>${totales.egresos.mPago.toFixed(2)}</td>
                     <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>$${totales.egresos.total.toFixed(2)}</td>
+                    <td>${totales.egresos.total.toFixed(2)}</td>
                 </tr>
                 <tr class="totales">
                     <td>Saldo</td>
-                    <td>$${totales.saldo.efectivo.toFixed(2)}</td>
-                    <td>$${totales.saldo.mPago.toFixed(2)}</td>
-                    <td>$${totales.saldo.bbva.toFixed(2)}</td>
-                    <td>$${totales.saldo.total.toFixed(2)}</td>
+                    <td>${totales.saldo.efectivo.toFixed(2)}</td>
+                    <td>${totales.saldo.mPago.toFixed(2)}</td>
+                    <td>${totales.saldo.bbva.toFixed(2)}</td>
+                    <td>${totales.saldo.total.toFixed(2)}</td>
                 </tr>
             </tbody>
         </table>

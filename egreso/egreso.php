@@ -64,19 +64,22 @@ class Egreso
     $fecha_egreso,
     $caja_id,
     $usuario_id,
-    $egreso_tipo
+    $egreso_tipo,
+    $tipo_pago
   ) {
     $sql = "INSERT INTO `egreso`
     (`monto`,
      `fecha_egreso`,
      `caja_id`,
      `usuario_id`,
-     `egreso_tipo`)
+     `egreso_tipo`,
+     `tipo_pago`)
       VALUES ('$monto',
       '$fecha_egreso',
       '$caja_id',
       '$usuario_id',
-      '$egreso_tipo'
+      '$egreso_tipo',
+      '$tipo_pago'
       );";
     //echo $sql;
     //exit;
@@ -86,12 +89,13 @@ class Egreso
   }
 
 
-    public function editar($egreso_id, $tipoegreso, $monto)
+    public function editar($egreso_id, $tipoegreso, $monto,$tipo_pago)
   {
     $sql = "UPDATE `egreso`
     SET 
       `egreso_tipo` = '$tipoegreso',
-      `monto` = '$monto'
+      `monto` = '$monto',
+      `tipo_pago` = '$tipo_pago' 
        WHERE `id` = '$egreso_id'";
 
     $rs = mysqli_query(conexion::obtenerInstancia(), $sql);

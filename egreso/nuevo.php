@@ -14,13 +14,15 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
   $caja_id = $_POST['caja_id'];
   $usuario_id = $_POST['usuario_id'];
   $egreso_tipo = $_POST['egreso_tipo_id'];
+  $tipo_pago = $_POST['tipo_pago'];
 
   $todobien = $objeto->nuevo(
     $monto,
     $fecha_egreso,
     $caja_id,
     $usuario_id,
-    $egreso_tipo
+    $egreso_tipo,
+    $tipo_pago
   );
   if ($todobien) {
     echo "<script language=Javascript> location.href=\"index.php\"; </script>";
@@ -116,6 +118,15 @@ if (isset($_POST['monto']) && !empty($_POST['monto'])) {
                 <label class="form-label">Monto</label>
                 <input name="monto" class="form-control" type="monto" oninput="return soloNumeros(event);" required autofocus />
               </div>
+
+              <div class="col-md-8 mb-3">
+                <label>Forma de Pago :</label>
+                    <select class="form-control" name="tipo_pago" id="tipo_pago" required>
+                         <option value="">Seleccionar...</option>
+                         <option value="EFECTIVO">Efectivo</option>
+                         <option value="VIRTUAL MP">Virtual MP</option>
+                    </select>
+              </div>              
 
               <div class="col-md-8 mb-3">
                 <button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center" data-dismiss="modal" onclick="location.href='index.php';"> Cancelar
