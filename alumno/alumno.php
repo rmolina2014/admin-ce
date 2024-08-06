@@ -118,13 +118,14 @@ class Alumno
     return $data;
   }
 
-  public function editar($id, $fecha_nacimiento, $redes_sociales,  $estado)
+  public function editar($id, $fecha_nacimiento, $redes_sociales,  $estado,$observacion)
   {
     $sql = "UPDATE `alumno`
     SET 
       `fecha_nacimiento` = '$fecha_nacimiento',
       `redes_sociales` = '$redes_sociales',
-      `estado` = '$estado'
+      `estado` = '$estado',
+      `observacion` = '$observacion'
        WHERE `id` = '$id'";
 
     //echo $sql;
@@ -156,6 +157,7 @@ class Alumno
     alumno.`gruposanguineo` AS gruposanguineo,
     alumno.`redes_sociales` AS redes_sociales,
     alumno.`estado` AS estado,
+    alumno.`observacion` AS observacion,
     carrera.`nombre` AS carrera,
     carrera.`id` AS carrera_id,
     alumno.`id` AS alumno_id

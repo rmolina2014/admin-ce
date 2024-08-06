@@ -101,6 +101,12 @@ include("alumno.php");
                  </select>
                </div>
 
+                <div class="col-md-8 mb-3">
+                  <label class="form-label">Observacion</label>
+                  <input name="observacion" class="form-control" type="text" value="<?php echo $item['observacion']; ?>" />
+                </div>
+
+
                <div class="col-md-8 mb-3">
                  <button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center" data-dismiss="modal" onclick="location.href='index.php';"> Cancelar
                  </button>
@@ -127,11 +133,12 @@ include("alumno.php");
           $alumno_id = $_POST['alumno_id'];
           $estado = $_POST['estado'];
           $redes_sociales = $_POST['redes_sociales'];
+          $observacion = $_POST['observacion']; 
 
           //$fechaingreso = date("Y-m-d");
           //$estado = 'Activo';
 
-          $todobien = $objeto->editar($alumno_id, $fecha_nacimiento, $redes_sociales, $estado);
+          $todobien = $objeto->editar($alumno_id, $fecha_nacimiento, $redes_sociales, $estado, $observacion);
           if ($todobien) {
             echo "<script language=Javascript> location.href=\"index.php\"; </script>";
             //header('Location: listado.php');
